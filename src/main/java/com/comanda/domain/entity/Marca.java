@@ -1,5 +1,7 @@
 package com.comanda.domain.entity;
 
+import com.comanda.utils.TolowerCase;
+
 //mport br.com.omnisoftapi.utils.TolowerCase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +25,7 @@ public class Marca extends GeradorId {
 	@Column(length = 60, nullable = false)
 	private String nomeMarca;
 
-//	public void setNomeMarca(String nomeMarca) {
-//		this.nomeMarca = TolowerCase.normalizarString(nomeMarca);
-//	}
+	public void setNomeMarca(String nomeMarca) {
+		this.nomeMarca = TolowerCase.normalizarString(nomeMarca);
+	}
 }

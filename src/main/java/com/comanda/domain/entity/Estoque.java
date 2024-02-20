@@ -2,7 +2,7 @@ package com.comanda.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -24,8 +24,9 @@ public class Estoque extends GeradorId {
 	    @MapsId
 	    @JoinColumn(name = "produto_id")
 	    private Produto produto;
-	   private Integer quantidade=0;
-
+	   @Column
+	    private Integer quantidade=0;
+ 
 	
 
 }
