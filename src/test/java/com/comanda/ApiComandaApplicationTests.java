@@ -10,8 +10,7 @@ class ApiComandaApplicationTests {
 
 	@Test
 	void contextLoads() {
-		var p1= new  Produto();
-		p1.setDescricao(null);
+		
 	}
 
 }

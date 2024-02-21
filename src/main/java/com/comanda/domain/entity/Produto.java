@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -22,8 +23,7 @@ import lombok.Setter;
 public class Produto extends GeradorId {
 
 	private static final long serialVersionUID = 1L;
-	@NotNull
-	@NotEmpty(message = "Campo pode está vazio")
+	
 	@Column(length = 120)
 	private String nome;
 	@Column(length = 250)
