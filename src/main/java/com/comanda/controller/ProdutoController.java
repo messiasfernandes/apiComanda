@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.comanda.domain.sservice.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.input.ProdutoInput;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
@@ -41,8 +43,15 @@ public class ProdutoController implements ProdutoContrllerOpeAapi {
 
 	@PostMapping
 	@Override
-	public ResponseEntity<ProdutoDto> criar(@Valid @RequestBody ProdutoInput produto) {
+	public ResponseEntity<ProdutoDto> criar(@Valid @RequestBody ProdutoInput produto, HttpServletResponse response) {
 		var produtosalvao = produtoService.salvar(produtoConverter.toEntity(produto));
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDto(produtosalvao));
 	}
+	@GetMapping("{id}")
+	@Override
+	public ResponseEntity<ProdutoDto> buscar(@PathVariable Long id) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDto(produtoService.buccarporid(id)));
+	}
+
 }

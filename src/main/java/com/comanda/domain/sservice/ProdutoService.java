@@ -7,14 +7,17 @@ import org.springframework.stereotype.Service;
 
 import com.comanda.domain.dao.DaoProduto;
 import com.comanda.domain.entity.Produto;
+import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
 import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
 
 import jakarta.transaction.Transactional;
+
 @Service
 public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produto> {
 	@Autowired
-    private DaoProduto daoProduto;
+	private DaoProduto daoProduto;
+
 	@Override
 	public Page<Produto> buscar(String nome, Pageable pageable) {
 		Page<Produto> page = null;
@@ -22,7 +25,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 			nome = TolowerCase.normalizarString(nome);
 			page = daoProduto.Listar(nome, pageable);
 		}
-		
+
 		return page;
 	}
 
@@ -34,19 +37,18 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 	@Override
 	public Produto buccarporid(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		if (daoProduto.findById(id).isEmpty()) {
+			throw new RegistroNaoEncontrado("Produto não encotrada");
+		}
+		return daoProduto.findById(id).get();
 	}
+
+
   @Transactional(rollbackOn = Exception.class)
 	@Override
 	public Produto salvar(Produto objeto) {
-	  Produto produto=null;
-		 try {
-		produto=	daoProduto.save(objeto);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		return produto;
+           System.out.println(objeto.getId());
+		return daoProduto.save(objeto);
 	}
 
 }

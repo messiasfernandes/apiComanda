@@ -19,14 +19,12 @@ import lombok.Setter;
 public class Estoque extends GeradorId {
 
 	private static final long serialVersionUID = 1L;
-	   @JsonIgnore
-	 @OneToOne(fetch = FetchType.LAZY)
-	    @MapsId
-	    @JoinColumn(name = "produto_id")
-	    private Produto produto;
-	   @Column
-	    private Integer quantidade=0;
- 
-	
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	@JoinColumn(name = "produto_id")
+	private Produto produto;
+	@Column
+	private Integer quantidade = 0;
 
 }
