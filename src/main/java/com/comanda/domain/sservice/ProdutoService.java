@@ -37,7 +37,8 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 	@Override
 	public Produto buccarporid(Long id) {
-		if (daoProduto.findById(id).isEmpty()) {
+		if (daoProduto.findById(id).isEmpty())
+		{
 			throw new RegistroNaoEncontrado("Produto não encotrada");
 		}
 		return daoProduto.findById(id).get();

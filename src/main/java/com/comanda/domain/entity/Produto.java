@@ -35,5 +35,8 @@ public class Produto extends GeradorId {
 	@ManyToOne(fetch = FetchType.LAZY ,optional = true)
 	@JoinColumn(name = "marca_id")
 	private Marca marca;
+	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "produto_id")
+	private Preco preco;
 
 }

@@ -19,7 +19,6 @@ import com.comanda.domain.sservice.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.input.ProdutoInput;
 
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
@@ -43,7 +42,7 @@ public class ProdutoController implements ProdutoContrllerOpeAapi {
 
 	@PostMapping
 	@Override
-	public ResponseEntity<ProdutoDto> criar(@Valid @RequestBody ProdutoInput produto, HttpServletResponse response) {
+	public ResponseEntity<ProdutoDto> criar(@Valid @RequestBody ProdutoInput produto) {
 		var produtosalvao = produtoService.salvar(produtoConverter.toEntity(produto));
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDto(produtosalvao));
 	}

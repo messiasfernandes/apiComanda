@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "Produtos")
 public interface ProdutoContrllerOpeAapi extends ControllerCroossOring {
@@ -31,6 +30,6 @@ public interface ProdutoContrllerOpeAapi extends ControllerCroossOring {
 	@Operation(summary = "Salvar um Produto ")
 	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Produto salvo com sucesso"),
 			@ApiResponse(responseCode = "400", description = "problema com resquisão") })
-	public ResponseEntity<ProdutoDto> criar(@Param(value = "corpo") ProdutoInput produto, HttpServletResponse response);
+	public ResponseEntity<ProdutoDto> criar(@Param(value = "corpo") ProdutoInput produto);
 	ResponseEntity<ProdutoDto> buscar(@Param(value = "ID de um Produto") Long id);
 }

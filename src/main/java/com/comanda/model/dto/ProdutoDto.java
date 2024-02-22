@@ -1,5 +1,7 @@
 package com.comanda.model.dto;
 
+import java.math.BigDecimal;
+
 import lombok.Data;
 @Data
 public class ProdutoDto {
@@ -11,4 +13,6 @@ public class ProdutoDto {
 	private EstoqueDto estoque;
 
 	private MarcaDto marca;
+	private BigDecimal precovenda;
+	private PrecoDto preco;
 }
