@@ -8,27 +8,29 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @Entity
-@Table(name = "tab_estoque")
-public class Estoque extends GeradorId {
+@Table(name = "tab_produto_codigobarras")
+public class Produto_CodigoBarras extends GeradorId {
 
+	
 	private static final long serialVersionUID = 1L;
+	
+	@Column(length = 13)
+	private String codigobarras;
 	@JsonIgnore
-	@OneToOne(fetch = FetchType.LAZY)
-	@MapsId
-	@JoinColumn(name = "produto_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = false)
 	private Produto produto;
 	@Digits(integer = 9, fraction = 3)
-	@Column
-	private BigDecimal quantidade = BigDecimal.ZERO;
+	private BigDecimal desconto;
+	private Integer mutiplicador =1;
 
 }

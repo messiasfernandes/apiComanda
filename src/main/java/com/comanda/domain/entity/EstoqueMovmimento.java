@@ -1,5 +1,6 @@
 package com.comanda.domain.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,7 +36,7 @@ public class EstoqueMovmimento extends GeradorId{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn()
     private Produto produto;
-	private Integer qtde;
-	private Integer saldoanterior;
+	private BigDecimal qtde;
+	private BigDecimal saldoanterior;
 
 }

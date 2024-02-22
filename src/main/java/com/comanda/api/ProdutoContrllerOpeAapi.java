@@ -32,4 +32,8 @@ public interface ProdutoContrllerOpeAapi extends ControllerCroossOring {
 			@ApiResponse(responseCode = "400", description = "problema com resquisão") })
 	public ResponseEntity<ProdutoDto> criar(@Param(value = "corpo") ProdutoInput produto);
 	ResponseEntity<ProdutoDto> buscar(@Param(value = "ID de um Produto") Long id);
+	@Operation(summary = "Atualizar um Produto ")
+	@ApiResponses(value = { @ApiResponse(responseCode = "204", description = "Produto Atualizado com sucesso"),
+			@ApiResponse(responseCode = "400", description = "problema com resquisão") })
+	ResponseEntity<ProdutoDto> Atualizar( @Param(value = "id")Long id,  @Param(value = "corpo") ProdutoInput produto);
 }
