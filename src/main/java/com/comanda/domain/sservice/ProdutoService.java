@@ -11,6 +11,7 @@ import com.comanda.domain.dao.DaoPreco;
 import com.comanda.domain.dao.DaoProduto;
 import com.comanda.domain.entity.Preco;
 import com.comanda.domain.entity.Produto;
+import com.comanda.domain.entity.Produto_CodigoBarras;
 import com.comanda.domain.sservice.exeption.NegocioException;
 import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
 import com.comanda.utils.ServiceFuncoes;
@@ -30,6 +31,13 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 		if (!ehnumero(nome) && (qtdecaraceteres(nome) >= 0)) {
 			nome = TolowerCase.normalizarString(nome);
 			page = daoProduto.Listar(nome, pageable);
+		}
+		if ((ehnumero(nome)) && (qtdecaraceteres(nome) != 13)) {
+			Long id = Sonumero(nome);
+			page = daoProduto.buscarporId(id, pageable);
+		}
+		if ((ehnumero(nome)) && (qtdecaraceteres(nome) == 13)) {
+			page = daoProduto.buscarPorEan(nome, pageable);
 		}
 
 		return page;
@@ -72,13 +80,21 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	                objeto.getPreco().setProduto(objeto);
 	            }
 	        }
+	        if (!objeto.getProdutos_codigo().isEmpty()) {
+		         for(Produto_CodigoBarras prod_cod: objeto.getProdutos_codigo()) {
+		        	 System.out.println("pasou"+objeto.getProdutos_codigo().size());
+		        	 if (prod_cod.getCodigobarras().isBlank()&& prod_cod.getId()!=null ) {
+	                      prod_cod.setCodigobarras(geraCodigoEan());
+	                      prod_cod.setProduto(objeto);
+		        	 }
+		         }
+		 ///  	objeto.getProdutos_codigo().forEach(p->p.setProduto(objeto));
+		    	
+		    }
 	    } catch (NegocioException e) {
 	        throw new NegocioException("Erro ao persistir os dados");
 	    }
-	    if (objeto.getProdutos_codigo().size()>0) {
-	    	objeto.getProdutos_codigo().forEach(p->p.setProduto(objeto));
-	    	
-	    }
+	
 
 	    return daoProduto.save(objeto);
 	}

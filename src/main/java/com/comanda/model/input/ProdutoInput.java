@@ -16,7 +16,7 @@ public class ProdutoInput {
 	private Long id;
 	@Setter(value = AccessLevel.NONE)
 	@NotNull
-	 @NotBlank(message = "Campo  obrigatorio")
+    @NotBlank(message = "Campo  obrigatorio")
 	private String nome;
 	@Setter(value = AccessLevel.NONE)
 	private String descricao;

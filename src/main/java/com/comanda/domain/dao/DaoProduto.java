@@ -16,13 +16,29 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
 	           "LEFT JOIN FETCH p.preco pe " +
+	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
 	           "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro% " +
-	           "ORDER BY p.nome",
-	       countQuery = "SELECT COUNT(DISTINCT p.id) FROM Produto p " +
-	                    "LEFT JOIN  p.marca m " +
-	    		         "LEfT JOIN p.preco pe"
-+	                    "LEFT JOIN p.estoque e " +
-	                    "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%")
+	           "ORDER BY p.nome")
+//	       countQuery = "SELECT COUNT(DISTINCT p.id) FROM Produto p " +
+//	                    "LEFT JOIN  p.marca m " +
+//	    		         "LEfT JOIN p.preco pe"
+//+	                    "LEFT JOIN p.estoque e " +
+//	                    "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%")
 	Page<Produto> Listar(@Param("parametro") String parametro, Pageable pageable);
-
+	
+	@Query(value = "SELECT DISTINCT p FROM Produto p " +
+	           "LEFT JOIN FETCH p.marca m " +
+	           "LEFT JOIN FETCH p.estoque e " +
+	           "LEFT JOIN FETCH p.preco pe " +
+	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
+	           "WHERE pc.codigobarras = :parametro")
+	Page<Produto> buscarPorEan(@Param("parametro") String parametro, Pageable pageable);
+	
+	@Query(value = "SELECT DISTINCT p FROM Produto p " +
+	           "LEFT JOIN FETCH p.marca m " +
+	           "LEFT JOIN FETCH p.estoque e " +
+	           "LEFT JOIN FETCH p.preco pe " +
+	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
+			   "WHERE p.id =:parametro") 
+	Page<Produto> buscarporId( Long parametro, Pageable pageable);
 }

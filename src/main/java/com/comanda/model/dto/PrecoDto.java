@@ -7,7 +7,7 @@ import org.springframework.format.annotation.NumberFormat;
 import lombok.Data;
 @Data
 public class PrecoDto {
-  private Long id;
+    private Long id;
 	private BigDecimal precovenda;
 	
 	@NumberFormat(pattern = "#,###.00") 
