@@ -80,15 +80,9 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	                objeto.getPreco().setProduto(objeto);
 	            }
 	        }
-	        if (!objeto.getProdutos_codigo().isEmpty()) {
-		         for(Produto_CodigoBarras prod_cod: objeto.getProdutos_codigo()) {
-		        	 System.out.println("pasou"+objeto.getProdutos_codigo().size());
-		        	 if (prod_cod.getCodigobarras().isBlank()&& prod_cod.getId()!=null ) {
-	                      prod_cod.setCodigobarras(geraCodigoEan());
-	                      prod_cod.setProduto(objeto);
-		        	 }
-		         }
-		 ///  	objeto.getProdutos_codigo().forEach(p->p.setProduto(objeto));
+	        if (objeto.getProdutos_codigo().size()>0) {
+		      
+		  	objeto.getProdutos_codigo().forEach(p->p.setProduto(objeto));
 		    	
 		    }
 	    } catch (NegocioException e) {
