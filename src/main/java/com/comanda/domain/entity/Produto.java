@@ -43,7 +43,8 @@ public class Produto extends GeradorId {
 	@ManyToOne(fetch = FetchType.LAZY ,optional = true)
 	@JoinColumn(name = "marca_id")
 	private Marca marca;
-	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL, 
+		       optional = true)
 	@JoinColumn(name = "produto_id")
 	private Preco preco;
 	@Fetch(FetchMode.SUBSELECT)

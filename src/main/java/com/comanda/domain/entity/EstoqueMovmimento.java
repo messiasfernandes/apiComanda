@@ -36,7 +36,7 @@ public class EstoqueMovmimento extends GeradorId{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn()
     private Produto produto;
-	private BigDecimal qtde;
-	private BigDecimal saldoanterior;
-
+	private Integer qtde;
+	private Integer saldoanterior;
+     
 }

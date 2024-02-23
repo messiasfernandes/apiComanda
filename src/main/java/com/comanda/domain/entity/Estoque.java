@@ -1,12 +1,11 @@
 package com.comanda.domain.entity;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
@@ -19,9 +18,9 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "tab_estoque")
-public class Estoque extends GeradorId {
-
-	private static final long serialVersionUID = 1L;
+public class Estoque {
+    @Id
+	private Long id;
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
@@ -29,6 +28,6 @@ public class Estoque extends GeradorId {
 	private Produto produto;
 	@Digits(integer = 9, fraction = 3)
 	@Column
-	private BigDecimal quantidade = BigDecimal.ZERO;
+	private Integer quantidade = 0;
 
 }

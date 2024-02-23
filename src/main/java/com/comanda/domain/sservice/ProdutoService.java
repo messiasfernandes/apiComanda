@@ -24,7 +24,8 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Autowired
 	private DaoProduto daoProduto;
 	@Autowired
-    private DaoPreco daoPreco;
+	private DaoPreco daoPreco;
+
 	@Override
 	public Page<Produto> buscar(String nome, Pageable pageable) {
 		Page<Produto> page = null;
@@ -56,42 +57,26 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 		}
 		return daoProduto.findById(id).get();
 	}
+
 	@Transactional(rollbackOn = Exception.class)
 	@Override
 	public Produto salvar(Produto objeto) {
-	    try {
-	        if (objeto.getPreco() != null) {
-	            // Verifica se o objeto Preco já existe no banco de dados
-	            if (objeto.getPreco() != null && objeto.getId()!=null) {
-	                Optional<Preco> precoExistente = daoPreco.findById(objeto.getId());
-	                if (precoExistente.isPresent()) {
-	                    // Atualiza os valores do preco existente com os valores enviados na solicitação
-	                    Preco precoAtualizado = precoExistente.get();
-	                    precoAtualizado.setPrecovenda(objeto.getPreco().getPrecovenda());
-	                    precoAtualizado.setPrecocusto(objeto.getPreco().getPrecocusto());
-	                    precoAtualizado.setCustomedio(objeto.getPreco().getCustomedio());
-	                    
-	                    // Salva o preco atualizado no banco de dados
-	                    objeto.setPreco(daoPreco.save(precoAtualizado));
-	                }
-	            }
-	            // Se o Preco não existir no banco de dados, associa o preco enviado ao Produto
-	            else {
-	                objeto.getPreco().setProduto(objeto);
-	            }
-	        }
-	        if (objeto.getProdutos_codigo().size()>0) {
-		      
-		  	objeto.getProdutos_codigo().forEach(p->p.setProduto(objeto));
-		    	
-		    }
-	    } catch (NegocioException e) {
-	        throw new NegocioException("Erro ao persistir os dados");
-	    }
-	
+		try {
+			if (objeto.getPreco() != null) {
 
-	    return daoProduto.save(objeto);
+				objeto.getPreco().setProduto(objeto);
+			}
+
+			if (objeto.getProdutos_codigo().size() > 0) {
+
+				objeto.getProdutos_codigo().forEach(p -> p.setProduto(objeto));
+
+			}
+		} catch (NegocioException e) {
+			throw new NegocioException("Erro ao persistir os dados");
+		}
+
+		return daoProduto.save(objeto);
 	}
-
 
 }
