@@ -25,6 +25,7 @@ public class ProdutoInput {
 
 	private MarcaInput marca;
 	private PrecoInput preco;
+	private SubGrupoInput subgrupo;
 	public void setNome(String nome) {
 		this.nome = TolowerCase.normalizarString(nome);
 	}

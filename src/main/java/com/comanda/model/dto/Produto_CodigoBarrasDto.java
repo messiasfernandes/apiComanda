@@ -5,9 +5,7 @@ import java.math.BigDecimal;
 import com.comanda.domain.enumerado.UnidadeMedida;
 
 import jakarta.validation.constraints.Digits;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 @Data
 public class Produto_CodigoBarrasDto {
 	private String codigobarras;

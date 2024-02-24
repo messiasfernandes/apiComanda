@@ -1,17 +1,14 @@
 package com.comanda.domain.sservice;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.comanda.domain.dao.DaoPreco;
 import com.comanda.domain.dao.DaoProduto;
-import com.comanda.domain.entity.Preco;
 import com.comanda.domain.entity.Produto;
-import com.comanda.domain.entity.Produto_CodigoBarras;
+import com.comanda.domain.sservice.exeption.EntidadeEmUsoExeption;
 import com.comanda.domain.sservice.exeption.NegocioException;
 import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
 import com.comanda.utils.ServiceFuncoes;
@@ -23,8 +20,7 @@ import jakarta.transaction.Transactional;
 public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produto> {
 	@Autowired
 	private DaoProduto daoProduto;
-	@Autowired
-	private DaoPreco daoPreco;
+
 
 	@Override
 	public Page<Produto> buscar(String nome, Pageable pageable) {
@@ -43,19 +39,28 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 		return page;
 	}
-
+    @Transactional
 	@Override
 	public void excluir(Long codigo) {
-		// TODO Auto-generated method stub
+    	try {
+           buccarporid(codigo);
+			daoProduto.deleteById(codigo);
+			daoProduto.flush();
+		} catch (DataIntegrityViolationException e) {
+			throw new EntidadeEmUsoExeption(
+					"Operação não permitida!! Este registro pode estar asssociado a outra tabela");
+		}
 
 	}
 
 	@Override
 	public Produto buccarporid(Long id) {
-		if (daoProduto.findById(id).isEmpty()) {
-			throw new RegistroNaoEncontrado("Produto não encotrado");
-		}
-		return daoProduto.findById(id).get();
+//		if (daoProduto.findById(id).isEmpty()) {
+//			
+//			daoProduto.findById(id).orElseThrow(()->new RegistroNaoEncontrado("Produto não encotrado"));
+//			
+//		}
+		return daoProduto.findById(id).orElseThrow(()->new RegistroNaoEncontrado("Produto não encotrado"));
 	}
 
 	@Transactional(rollbackOn = Exception.class)

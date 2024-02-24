@@ -36,4 +36,6 @@ public interface ProdutoContrllerOpeAapi extends ControllerCroossOring {
 	@ApiResponses(value = { @ApiResponse(responseCode = "204", description = "Produto Atualizado com sucesso"),
 			@ApiResponse(responseCode = "400", description = "problema com resquisão") })
 	ResponseEntity<ProdutoDto> Atualizar( @Param(value = "id")Long id,  @Param(value = "corpo") ProdutoInput produto);
+	
+	ResponseEntity<Void> remover(@Param(value = "ID de uma Produto") Long id);
 }

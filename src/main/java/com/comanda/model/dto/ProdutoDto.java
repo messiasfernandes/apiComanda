@@ -18,6 +18,6 @@ public class ProdutoDto {
 	private MarcaDto marca;
 	
     private PrecoDto preco;
-
+    private SubGrupoDTO subgrupo;
 	private Set<Produto_CodigoBarras> produtos_codigo = new HashSet<>();
 }
