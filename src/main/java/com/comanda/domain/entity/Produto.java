@@ -1,6 +1,8 @@
 package com.comanda.domain.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.BatchSize;
@@ -52,4 +54,10 @@ public class Produto extends GeradorId {
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "subgrupo_id")
 	private SubGrupo subgrupo;
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Variacao> variacoes = new ArrayList<>();
 }
+	
+	
+

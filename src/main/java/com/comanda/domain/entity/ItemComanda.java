@@ -18,7 +18,7 @@ import lombok.Setter;
 public class ItemComanda extends GeradorId {
 	
 	private static final long serialVersionUID = 1L;
-   @JsonBackReference
+ //  @JsonBackReference
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn

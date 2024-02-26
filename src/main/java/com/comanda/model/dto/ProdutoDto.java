@@ -1,9 +1,12 @@
 package com.comanda.model.dto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.comanda.domain.entity.Produto_CodigoBarras;
+import com.comanda.domain.entity.Variacao;
 
 import lombok.Data;
 @Data
@@ -20,4 +23,5 @@ public class ProdutoDto {
     private PrecoDto preco;
     private SubGrupoDTO subgrupo;
 	private Set<Produto_CodigoBarras> produtos_codigo = new HashSet<>();
+	private List<Variacao> variacoes = new ArrayList<>();
 }

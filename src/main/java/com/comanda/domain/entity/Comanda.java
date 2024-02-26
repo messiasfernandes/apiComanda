@@ -43,7 +43,7 @@ public class Comanda implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn()
 	private Mesa mesa;
-	@JsonManagedReference
+	//@JsonManagedReference
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemComanda> itemsdaComanda = new ArrayList<>();

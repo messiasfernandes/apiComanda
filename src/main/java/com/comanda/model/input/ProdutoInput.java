@@ -1,9 +1,12 @@
 package com.comanda.model.input;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.comanda.domain.entity.Produto_CodigoBarras;
+import com.comanda.domain.entity.Variacao;
 import com.comanda.utils.TolowerCase;
 
 import jakarta.validation.constraints.NotBlank;
@@ -33,4 +36,5 @@ public class ProdutoInput {
 		this.descricao = TolowerCase.normalizarString(descricao);
 	}
 	private Set<Produto_CodigoBarras> produtos_codigo = new HashSet<>();
+	private List<Variacao> variacoes = new ArrayList<>();
 }
