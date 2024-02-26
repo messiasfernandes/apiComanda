@@ -15,7 +15,7 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	@Query(value = "SELECT DISTINCT p FROM Produto p " +
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
-	           "LEFT JOIN FETCH p.preco pe " +
+	         //  "LEFT JOIN FETCH p.preco pe " +
 	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
 	           "LEFT JOIN FETCH p.subgrupo s " +
 	           "LEFT JOIN FETCH p.subgrupo.grupo sg " + 
@@ -32,7 +32,7 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	@Query(value = "SELECT DISTINCT p FROM Produto p " +
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
-	           "LEFT JOIN FETCH p.preco pe " +
+	      //     "LEFT JOIN FETCH p.preco pe " +
 	           "LEFT JOIN FETCH p.produtos_codigo pc " +
 	           "LEFT JOIN FETCH p.subgrupo s " +
 	           "LEFT JOIN FETCH p.subgrupo.grupo sg " + 
@@ -42,7 +42,7 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	@Query(value = "SELECT DISTINCT p FROM Produto p " +
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
-	           "LEFT JOIN FETCH p.preco pe " +
+	        //   "LEFT JOIN FETCH p.preco pe " +
 	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
 	           "LEFT JOIN FETCH p.subgrupo s " +
 	           "LEFT JOIN FETCH p.subgrupo.grupo sg " + 

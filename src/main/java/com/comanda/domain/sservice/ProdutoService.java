@@ -67,16 +67,16 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Override
 	public Produto salvar(Produto objeto) {
 		try {
-			if (objeto.getPreco() != null) {
-
-				objeto.getPreco().setProduto(objeto);
-			}
-
-			if (objeto.getProdutos_codigo().size() > 0) {
-
-				objeto.getProdutos_codigo().forEach(p -> p.setProduto(objeto));
-
-			}
+//			if (objeto.getPreco() != null) {
+//
+//				objeto.getPreco().setProduto(objeto);
+//			}
+//
+//			if (objeto.getProdutos_codigo().size() > 0) {
+//
+//				objeto.getProdutos_codigo().forEach(p -> p.setProduto(objeto));
+//
+//			}
 		} catch (NegocioException e) {
 			throw new NegocioException("Erro ao persistir os dados");
 		}

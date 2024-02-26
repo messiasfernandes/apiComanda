@@ -1,5 +1,6 @@
 package com.comanda.domain.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Digits;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,14 +42,16 @@ public class Produto extends GeradorId {
 	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "produto_id")
 	private Estoque estoque;
+	@Digits(integer = 9, fraction = 3)
+	// @Setter(value = AccessLevel.NONE)
+	private BigDecimal precovenda;
+	@Getter(value = AccessLevel.NONE)
+	@Transient
+	private BigDecimal preco;
 	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
-	@ManyToOne(fetch = FetchType.LAZY ,optional = true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "marca_id")
 	private Marca marca;
-	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL, 
-		       optional = true)
-	@JoinColumn(name = "produto_id")
-	private Preco preco;
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
@@ -57,7 +63,19 @@ public class Produto extends GeradorId {
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Variacao> variacoes = new ArrayList<>();
-}
-	
-	
 
+	public BigDecimal getPreco() {
+		if (variacoes.size() > 0) {
+
+			for (int i = 0; i < variacoes.size(); i++) {
+				preco = precovenda.add(variacoes.get(i).getValor());
+
+			}
+		} else {
+			preco = precovenda;
+		}
+
+		System.out.println(preco);
+		return preco;
+	}
+}
