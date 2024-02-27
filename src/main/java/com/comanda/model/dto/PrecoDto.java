@@ -17,5 +17,5 @@ public class PrecoDto {
 
 	@NumberFormat(pattern = "#,###.00",style = Style.CURRENCY) 
 	private BigDecimal customedio;
-    private BigDecimal precoVaricao;
+  
 }

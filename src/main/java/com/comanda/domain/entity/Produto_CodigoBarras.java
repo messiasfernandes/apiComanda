@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,8 +27,8 @@ import lombok.Setter;
 public class Produto_CodigoBarras extends GeradorId {
 
 	private static final long serialVersionUID = 1L;
-
-	@Column(length = 13)
+	
+	@Column()
 	private String codigobarras;
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)

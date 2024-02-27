@@ -29,8 +29,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "variacoes")
+
 public class Variacao extends GeradorId {
 
 	/**

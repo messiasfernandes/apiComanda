@@ -8,11 +8,13 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class Produto_CodigoBarrasInput {
-
+	@NotNull
+    @Size(min = 13)
 	private String codigobarras;
 
 	@Digits(integer = 9, fraction = 3)

@@ -15,10 +15,10 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	@Query(value = "SELECT DISTINCT p FROM Produto p " +
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
-	         //  "LEFT JOIN FETCH p.preco pe " +
+	           "LEFT JOIN FETCH p.preco pe " +
 	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
 	           "LEFT JOIN FETCH p.subgrupo s " +
-	           "LEFT JOIN FETCH p.subgrupo.grupo sg " + 
+	           "INNER JOIN FETCH p.subgrupo.grupo sg " + 
 	           "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%  OR s.nomeSubgrupo LIKE %:parametro% " +
 	           "OR sg.nomeGrupo LIKE %:parametro% "+
 	           "ORDER BY  p.nome")
@@ -32,20 +32,20 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	@Query(value = "SELECT DISTINCT p FROM Produto p " +
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
-	      //     "LEFT JOIN FETCH p.preco pe " +
+	           "LEFT JOIN FETCH p.preco pe " +
 	           "LEFT JOIN FETCH p.produtos_codigo pc " +
 	           "LEFT JOIN FETCH p.subgrupo s " +
-	           "LEFT JOIN FETCH p.subgrupo.grupo sg " + 
+	           "INNER JOIN FETCH p.subgrupo.grupo sg " + 
 	           "WHERE pc.codigobarras = :parametro")
 	Page<Produto> buscarPorEan(@Param("parametro") String parametro, Pageable pageable);
 	
 	@Query(value = "SELECT DISTINCT p FROM Produto p " +
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
-	        //   "LEFT JOIN FETCH p.preco pe " +
+	           "LEFT JOIN FETCH p.preco pe " +
 	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
 	           "LEFT JOIN FETCH p.subgrupo s " +
-	           "LEFT JOIN FETCH p.subgrupo.grupo sg " + 
+	           "INNER JOIN FETCH p.subgrupo.grupo sg " + 
 			   "WHERE p.id =:parametro") 
 	Page<Produto> buscarporId( Long parametro, Pageable pageable);
 }

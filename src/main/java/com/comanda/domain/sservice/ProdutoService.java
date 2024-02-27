@@ -55,11 +55,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 	@Override
 	public Produto buccarporid(Long id) {
-//		if (daoProduto.findById(id).isEmpty()) {
-//			
-//			daoProduto.findById(id).orElseThrow(()->new RegistroNaoEncontrado("Produto não encotrado"));
-//			
-//		}
+
 		return daoProduto.findById(id).orElseThrow(()->new RegistroNaoEncontrado("Produto não encotrado"));
 	}
 
@@ -67,16 +63,16 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Override
 	public Produto salvar(Produto objeto) {
 		try {
-//			if (objeto.getPreco() != null) {
-//
-//				objeto.getPreco().setProduto(objeto);
-//			}
-//
-//			if (objeto.getProdutos_codigo().size() > 0) {
-//
-//				objeto.getProdutos_codigo().forEach(p -> p.setProduto(objeto));
-//
-//			}
+			if (objeto.getPreco() != null) {
+
+				objeto.getPreco().setProduto(objeto);
+			}
+
+			if (objeto.getProdutos_codigo().size() > 0) {
+
+				objeto.getProdutos_codigo().forEach(p -> p.setProduto(objeto));
+
+			}
 		} catch (NegocioException e) {
 			throw new NegocioException("Erro ao persistir os dados");
 		}

@@ -1,6 +1,9 @@
 package com.comanda.domain.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,9 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,34 +20,26 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "tab_precos")
-public class Preco  {
+public class Preco implements Serializable {
 
 	
-//	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 	@Id
     private Long id;
-
+	@Digits(integer = 9, fraction = 3)
+	// @Setter(value = AccessLevel.NONE)
+	private BigDecimal precovenda;
 	//@Setter(value = AccessLevel.NONE)
 	@Digits(integer = 9, fraction = 3)
 	private BigDecimal precocusto;
 
 	@Digits(integer = 9, fraction = 3)
+	
 	private BigDecimal customedio;
-	//@JsonIgnore
+	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
-	@JoinColumn(name = "variacao_id")
-	private Variacao variacao;
+	@JoinColumn(name = "produto_id")
+	private Produto produto;
 
-	@Getter(value = AccessLevel.NONE)
-    @Transient
-    private BigDecimal precoVaricao;
-//	public BigDecimal getPrecoVaricao() {
-//		if(produto.getVariacoes().size()>0) {
-//			for (int i=0; i<produto.getVariacoes().size();i++) {
-//				precoVaricao= produto.getPrecovenda().add( produto.getVariacoes().get(i).getValor_variacao());
-//			}
-//		}
-//		return precoVaricao;
-//	}
 }
