@@ -9,6 +9,8 @@ import com.comanda.domain.entity.Produto;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.input.ProdutoInput;
 
+import jakarta.validation.Valid;
+
 @Component
 public class ProdutoConverter {
 	@Autowired

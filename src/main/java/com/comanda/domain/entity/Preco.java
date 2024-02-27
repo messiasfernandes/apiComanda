@@ -22,19 +22,18 @@ import lombok.Setter;
 @Table(name = "tab_precos")
 public class Preco implements Serializable {
 
-	
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	@Id
-    private Long id;
+	private Long id;
 	@Digits(integer = 9, fraction = 3)
 	// @Setter(value = AccessLevel.NONE)
 	private BigDecimal precovenda;
-	//@Setter(value = AccessLevel.NONE)
+	// @Setter(value = AccessLevel.NONE)
 	@Digits(integer = 9, fraction = 3)
 	private BigDecimal precocusto;
 
 	@Digits(integer = 9, fraction = 3)
-	
+
 	private BigDecimal customedio;
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)

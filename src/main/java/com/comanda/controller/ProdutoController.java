@@ -45,7 +45,7 @@ public class ProdutoController implements ProdutoContrllerOpeAapi {
 
 	@PostMapping
 	@Override
-	public ResponseEntity<ProdutoDto> criar(@Valid @RequestBody ProdutoInput produto) {
+	public ResponseEntity<ProdutoDto> criar( @RequestBody @Valid ProdutoInput produto) {
 		var produtosalvo = produtoService.salvar(produtoConverter.toEntity(produto));
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDto(produtosalvo));
 	}

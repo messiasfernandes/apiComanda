@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -76,6 +77,14 @@ public class ControllerExrption {
     public ResponseEntity<Object> handleNotFound(NoResourceFoundException ex) {
 		var status = HttpStatus.NOT_FOUND;
 		var problema = Problema.builder().status(status.value()).titulo("url não encontrada ou com erro! Confira ar url e tente novamente").dataHora(OffsetDateTime.now())
+				.build();
+		;
+        return ResponseEntity.status(status).body(problema);
+    }
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Object> jsonErro (HttpMessageNotReadableException ex) {
+		var status = HttpStatus.BAD_REQUEST;
+		var problema = Problema.builder().status(status.value()).titulo("EHouve um erro no preenchimento dos dados. Por favor, verifique se os dados estão corretos e tente novamente."+ ex.getMessage()).dataHora(OffsetDateTime.now())
 				.build();
 		;
         return ResponseEntity.status(status).body(problema);
