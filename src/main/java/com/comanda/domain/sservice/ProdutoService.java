@@ -61,7 +61,21 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Transactional(rollbackOn = Exception.class)
 
 	public Produto alterar (Produto objeto) {
-		
+		try {
+			if (objeto.getPreco() != null) {
+
+				objeto.getPreco().setProduto(objeto);
+			}
+
+			if (objeto.getProdutoDetalhe().size() > 0) {
+
+				objeto.getProdutoDetalhe().forEach(p -> p.setProduto(objeto));
+
+			}
+		} catch (NegocioException e) {
+			throw new NegocioException("Erro ao persistir os dados");
+		}
+
 		return objeto;
 	}
 	@Transactional(rollbackOn = Exception.class)
