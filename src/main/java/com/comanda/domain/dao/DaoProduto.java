@@ -16,7 +16,7 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
 	           "LEFT JOIN FETCH p.preco pe " +
-	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
+	           "LEFT JOIN FETCH p.produtoDetalhe pc " + 
 	           "LEFT JOIN FETCH p.subgrupo s " +
 	           "INNER JOIN FETCH p.subgrupo.grupo sg " + 
 	           "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%  OR s.nomeSubgrupo LIKE %:parametro% " +
@@ -33,7 +33,7 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
 	           "LEFT JOIN FETCH p.preco pe " +
-	           "LEFT JOIN FETCH p.produtos_codigo pc " +
+	           "LEFT JOIN FETCH p.produtoDetalhe pc " +
 	           "LEFT JOIN FETCH p.subgrupo s " +
 	           "INNER JOIN FETCH p.subgrupo.grupo sg " + 
 	           "WHERE pc.codigobarras = :parametro")
@@ -43,7 +43,7 @@ public interface DaoProduto extends JpaRepository<Produto, Long> {
 	           "LEFT JOIN FETCH p.marca m " +
 	           "LEFT JOIN FETCH p.estoque e " +
 	           "LEFT JOIN FETCH p.preco pe " +
-	           "LEFT JOIN FETCH p.produtos_codigo pc " + 
+	           "LEFT JOIN FETCH p.produtoDetalhe pc " + 
 	           "LEFT JOIN FETCH p.subgrupo s " +
 	           "INNER JOIN FETCH p.subgrupo.grupo sg " + 
 			   "WHERE p.id =:parametro") 

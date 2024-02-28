@@ -9,8 +9,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.comanda.domain.enumerado.StatusPagamentoComanda;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

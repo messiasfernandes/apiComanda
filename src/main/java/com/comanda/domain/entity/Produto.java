@@ -1,6 +1,5 @@
 package com.comanda.domain.entity;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,9 +18,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import jakarta.validation.constraints.Digits;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +29,7 @@ public class Produto extends GeradorId {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(length = 120)
+	@Column(length = 150)
 	private String nome;
 	@Column(length = 250)
 	private String descricao;
@@ -49,7 +45,7 @@ public class Produto extends GeradorId {
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
-	private Set<Produto_CodigoBarras> produtos_codigo = new HashSet<>();
+	private Set<ProdutoDetalhe> produtoDetalhe = new HashSet<>();
 	@JsonIgnoreProperties(value = { "nomeSubgrupo" }, allowGetters = true)
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "subgrupo_id")

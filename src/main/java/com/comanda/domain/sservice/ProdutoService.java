@@ -58,7 +58,12 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 		return daoProduto.findById(id).orElseThrow(()->new RegistroNaoEncontrado("Produto não encotrado"));
 	}
+	@Transactional(rollbackOn = Exception.class)
 
+	public Produto alterar (Produto objeto) {
+		
+		return objeto;
+	}
 	@Transactional(rollbackOn = Exception.class)
 	@Override
 	public Produto salvar(Produto objeto) {
@@ -68,9 +73,9 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 				objeto.getPreco().setProduto(objeto);
 			}
 
-			if (objeto.getProdutos_codigo().size() > 0) {
+			if (objeto.getProdutoDetalhe().size() > 0) {
 
-				objeto.getProdutos_codigo().forEach(p -> p.setProduto(objeto));
+				objeto.getProdutoDetalhe().forEach(p -> p.setProduto(objeto));
 
 			}
 		} catch (NegocioException e) {

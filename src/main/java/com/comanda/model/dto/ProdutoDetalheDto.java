@@ -7,7 +7,7 @@ import com.comanda.domain.enumerado.UnidadeMedida;
 import jakarta.validation.constraints.Digits;
 import lombok.Data;
 @Data
-public class Produto_CodigoBarrasDto {
+public class ProdutoDetalheDto {
 	
 	private String codigobarras;
 

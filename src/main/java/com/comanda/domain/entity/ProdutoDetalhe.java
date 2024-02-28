@@ -15,7 +15,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,12 +22,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tab_produto_codigobarras")
-public class Produto_CodigoBarras extends GeradorId {
+@Table(name = "tab_produtoDetalhe")
+public class ProdutoDetalhe extends GeradorId {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column()
+	@Column(length = 13)
 	private String codigobarras;
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)

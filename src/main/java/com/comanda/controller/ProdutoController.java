@@ -62,7 +62,7 @@ public class ProdutoController implements ProdutoContrllerOpeAapi {
 	public ResponseEntity<ProdutoDto> Atualizar(@PathVariable Long id, @Valid @RequestBody ProdutoInput produto) {
 
 		produto.setId(id);
-		var produtoEditado = produtoService.salvar(produtoConverter.toEntity(produto));
+		var produtoEditado = produtoService.alterar(produtoConverter.toEntity(produto));
 		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDto(produtoEditado));
 	}
 

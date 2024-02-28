@@ -3,7 +3,6 @@ package com.comanda.model.input;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.comanda.domain.entity.Produto_CodigoBarras;
 import com.comanda.utils.TolowerCase;
 
 import jakarta.validation.Valid;
@@ -12,7 +11,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
-import lombok.val;
 @Data
 public class ProdutoInput {
 	private Long id;
@@ -35,6 +33,6 @@ public class ProdutoInput {
 		this.descricao = TolowerCase.normalizarString(descricao);
 	}
 	@Valid
-	private Set<Produto_CodigoBarrasInput> produtos_codigo = new HashSet<>();
+	private Set<produtoDetalheInput> produtoDetalhe = new HashSet<>();
 	
 }
