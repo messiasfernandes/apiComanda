@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.comanda.api.ProdutoContrllerOpeAapi;
 import com.comanda.converter.ProdutoConverter;
+import com.comanda.domain.entity.Produto;
 import com.comanda.domain.sservice.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.input.ProdutoInput;
@@ -45,9 +47,10 @@ public class ProdutoController implements ProdutoContrllerOpeAapi {
 
 	@PostMapping
 	@Override
-	public ResponseEntity<ProdutoDto> criar( @RequestBody @Valid ProdutoInput produto) {
+	public ResponseEntity<ProdutoDto> criar( @RequestBody @Valid ProdutoInput produto, UriComponentsBuilder uri) {
 		var produtosalvo = produtoService.salvar(produtoConverter.toEntity(produto));
-		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDto(produtosalvo));
+		var url = uri.path("/produtuos/{id}").buildAndExpand(produtosalvo.getId()).toUri();
+		return ResponseEntity. created(url).body(produtoConverter.toDto(produtosalvo));
 	}
 
 	@GetMapping("{id}")
@@ -57,13 +60,10 @@ public class ProdutoController implements ProdutoContrllerOpeAapi {
 		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDto(produtoService.buccarporid(id)));
 	}
 
-	@PutMapping("{id}")
+	@PutMapping
 	@Override
-	public ResponseEntity<ProdutoDto> Atualizar(@PathVariable Long id, @Valid @RequestBody ProdutoInput produto) {
-
-		produto.setId(id);
-		var produtoEditado = produtoService.alterar(produtoConverter.toEntity(produto));
-		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDto(produtoEditado));
+	public ResponseEntity<ProdutoDto> Atualizar( @Valid @RequestBody ProdutoInput produto) {
+		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDto(produtoService.Alterar(produto)));
 	}
 
 	@DeleteMapping("{id}")

@@ -36,8 +36,6 @@ public class Produto extends GeradorId {
 	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "produto_id")
 	private Estoque estoque;
-
-	
 	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "marca_id")

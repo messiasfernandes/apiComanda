@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Digits;
 import lombok.Data;
 @Data
 public class ProdutoDetalheDto {
-	
+	private Long id;
 	private String codigobarras;
 
 	@Digits(integer = 9, fraction = 3)

@@ -6,11 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.comanda.converter.ProdutoConverter;
 import com.comanda.domain.dao.DaoProduto;
 import com.comanda.domain.entity.Produto;
 import com.comanda.domain.sservice.exeption.EntidadeEmUsoExeption;
 import com.comanda.domain.sservice.exeption.NegocioException;
 import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
+import com.comanda.model.input.ProdutoInput;
 import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
 
@@ -20,17 +22,22 @@ import jakarta.transaction.Transactional;
 public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produto> {
 	@Autowired
 	private DaoProduto daoProduto;
-
+	@Autowired
+      private ProdutoConverter produtoConverter;
+	private Produto produtoEditado;
 
 	@Override
 	public Page<Produto> buscar(String nome, Pageable pageable) {
+		 System.out.println("passou"+ nome);
 		Page<Produto> page = null;
 		if (!ehnumero(nome) && (qtdecaraceteres(nome) >= 0)) {
+		 System.out.println("nome"+ nome);	
 			nome = TolowerCase.normalizarString(nome);
 			page = daoProduto.Listar(nome, pageable);
 		}
 		if ((ehnumero(nome)) && (qtdecaraceteres(nome) != 13)) {
 			Long id = Sonumero(nome);
+			 System.out.println("id"+ id);	
 			page = daoProduto.buscarporId(id, pageable);
 		}
 		if ((ehnumero(nome)) && (qtdecaraceteres(nome) == 13)) {
@@ -58,26 +65,15 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 		return daoProduto.findById(id).orElseThrow(()->new RegistroNaoEncontrado("Produto não encotrado"));
 	}
-	@Transactional(rollbackOn = Exception.class)
-
-	public Produto alterar (Produto objeto) {
-		try {
-			if (objeto.getPreco() != null) {
-
-				objeto.getPreco().setProduto(objeto);
-			}
-
-			if (objeto.getProdutoDetalhe().size() > 0) {
-
-				objeto.getProdutoDetalhe().forEach(p -> p.setProduto(objeto));
-
-			}
-		} catch (NegocioException e) {
-			throw new NegocioException("Erro ao persistir os dados");
-		}
-
-		return objeto;
+	@Transactional()
+	public Produto Alterar (  ProdutoInput  objeto) {
+     produtoEditado = daoProduto.getReferenceById(objeto.getId());
+       produtoEditado= produtoConverter.toEntity(objeto);
+       return daoProduto.save(produtoEditado);
+    		 //daoProduto.save(daoProduto.findById(id).map( p-> produtoConverter.toEntity(objeto) ).get());
 	}
+	
+
 	@Transactional(rollbackOn = Exception.class)
 	@Override
 	public Produto salvar(Produto objeto) {

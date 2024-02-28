@@ -22,10 +22,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 @Data
 @Entity
+@Table(name = "tab_comanda")
 public class Comanda implements Serializable {
 
 	private static final long serialVersionUID = 1L;
