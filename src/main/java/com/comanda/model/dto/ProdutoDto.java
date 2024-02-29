@@ -1,6 +1,8 @@
 package com.comanda.model.dto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import lombok.Data;
@@ -17,7 +19,7 @@ public class ProdutoDto {
 	private PrecoDto preco;
 
     private SubGrupoDTO subgrupo;
-	private Set<ProdutoDetalheDto> produtoDetalhe = new HashSet<>();
+	private List<ProdutoDetalheDto> produtoDetalhe = new ArrayList<>();
 
 
 

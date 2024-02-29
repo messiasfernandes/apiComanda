@@ -15,7 +15,7 @@ import com.comanda.utils.ServiceFuncoes;
 public class GerarEan13Controler implements GerarEan13OpenApi{
    @PostMapping
 	@Override
-	public ResponseEntity<Ean13Record> geararCodioEan13() {
+	public ResponseEntity<Ean13Record> gerarCodioEan13() {
 		ServiceFuncoes service = new ServiceFuncoes();
 		var ean13Record = new Ean13Record(service.geraCodigoEan());
 		return ResponseEntity.status(HttpStatus.CREATED).body(ean13Record);

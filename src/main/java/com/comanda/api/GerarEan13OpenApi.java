@@ -7,7 +7,7 @@ import com.comanda.model.dto.Ean13Record;
 public interface GerarEan13OpenApi extends ControllerCroossOring {
 
 	
-	public ResponseEntity<Ean13Record> geararCodioEan13();
+	ResponseEntity<Ean13Record> gerarCodioEan13();
 
 		
 	

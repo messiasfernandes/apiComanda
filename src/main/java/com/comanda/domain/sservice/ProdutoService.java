@@ -20,79 +20,86 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produto> {
-	@Autowired
-	private DaoProduto daoProduto;
-	@Autowired
-      private ProdutoConverter produtoConverter;
-	private Produto produtoEditado;
+    @Autowired
+    private DaoProduto daoProduto;
+    @Autowired
+    private ProdutoConverter produtoConverter;
 
-	@Override
-	public Page<Produto> buscar(String nome, Pageable pageable) {
-		 System.out.println("passou"+ nome);
-		Page<Produto> page = null;
-		if (!ehnumero(nome) && (qtdecaraceteres(nome) >= 0)) {
-		 System.out.println("nome"+ nome);	
-			nome = TolowerCase.normalizarString(nome);
-			page = daoProduto.Listar(nome, pageable);
-		}
-		if ((ehnumero(nome)) && (qtdecaraceteres(nome) != 13)) {
-			Long id = Sonumero(nome);
-			 System.out.println("id"+ id);	
-			page = daoProduto.buscarporId(id, pageable);
-		}
-		if ((ehnumero(nome)) && (qtdecaraceteres(nome) == 13)) {
-			page = daoProduto.buscarPorEan(nome, pageable);
-		}
 
-		return page;
-	}
+    @Override
+    public Page<Produto> buscar(String nome, Pageable pageable) {
+        System.out.println("passou" + nome);
+        Page<Produto> page = null;
+        if (!ehnumero(nome) && (qtdecaraceteres(nome) >= 0)) {
+            System.out.println("nome" + nome);
+            nome = TolowerCase.normalizarString(nome);
+            page = daoProduto.Listar(nome, pageable);
+        }
+        if ((ehnumero(nome)) && (qtdecaraceteres(nome) != 13)) {
+            Long id = Sonumero(nome);
+            System.out.println("id" + id);
+            page = daoProduto.buscarporId(id, pageable);
+        }
+        if ((ehnumero(nome)) && (qtdecaraceteres(nome) == 13)) {
+            page = daoProduto.buscarPorEan(nome, pageable);
+        }
+
+        return page;
+    }
+
     @Transactional
-	@Override
-	public void excluir(Long codigo) {
-    	try {
-           buccarporid(codigo);
-			daoProduto.deleteById(codigo);
-			daoProduto.flush();
-		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoExeption(
-					"Operação não permitida!! Este registro pode estar asssociado a outra tabela");
-		}
+    @Override
+    public void excluir(Long codigo) {
+        try {
+            buccarporid(codigo);
+            daoProduto.deleteById(codigo);
+            daoProduto.flush();
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoExeption(
+                    "Operação não permitida!! Este registro pode estar asssociado a outra tabela");
+        }
 
-	}
+    }
 
-	@Override
-	public Produto buccarporid(Long id) {
+    @Override
+    public Produto buccarporid(Long id) {
 
-		return daoProduto.findById(id).orElseThrow(()->new RegistroNaoEncontrado("Produto não encotrado"));
-	}
-	@Transactional()
-	public Produto Alterar (  ProdutoInput  objeto) {
-     produtoEditado = daoProduto.getReferenceById(objeto.getId());
-       produtoEditado= produtoConverter.toEntity(objeto);
-       return daoProduto.save(produtoEditado);
-    		 //daoProduto.save(daoProduto.findById(id).map( p-> produtoConverter.toEntity(objeto) ).get());
-	}
-	
+        return daoProduto.findById(id).orElseThrow(() -> new RegistroNaoEncontrado("Produto não encontrado"));
+    }
 
-	@Transactional(rollbackOn = Exception.class)
-	@Override
-	public Produto salvar(Produto objeto) {
-		try {
-			if (objeto.getPreco() != null) {
+    @Transactional()
+    public Produto Alterar(ProdutoInput objeto) {
+        var produtoEditado = daoProduto.getReferenceById(objeto.getId());
+        produtoEditado = produtoConverter.toEntity(objeto);
+        if (!objeto.getProdutoDetalhe().isEmpty()) {
+            System.out.println(objeto.getProdutoDetalhe().size());
+            produtoEditado.getProdutoDetalhe().forEach(p -> p.setProduto(produtoConverter.toEntity(objeto)));
+        }
 
-				objeto.getPreco().setProduto(objeto);
-			}
+        return daoProduto.save(produtoEditado);
+        //daoProduto.save(daoProduto.findById(id).map( p-> produtoConverter.toEntity(objeto) ).get());
+    }
 
-			if (objeto.getProdutoDetalhe().size() > 0) {
 
-				objeto.getProdutoDetalhe().forEach(p -> p.setProduto(objeto));
+    @Transactional(rollbackOn = Exception.class)
+    @Override
+    public Produto salvar(Produto objeto) {
+        try {
+            if (objeto.getPreco() != null) {
 
-			}
-		} catch (NegocioException e) {
-			throw new NegocioException("Erro ao persistir os dados");
-		}
+                objeto.getPreco().setProduto(objeto);
+            }
 
-		return daoProduto.save(objeto);
-	}
+            if (!objeto.getProdutoDetalhe().isEmpty()) {
+
+                objeto.getProdutoDetalhe().forEach(p -> p.setProduto(objeto));
+
+            }
+        } catch (NegocioException e) {
+            throw new NegocioException("Erro ao persistir os dados");
+        }
+
+        return daoProduto.save(objeto);
+    }
 
 }

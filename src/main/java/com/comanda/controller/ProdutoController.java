@@ -17,18 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.comanda.api.ProdutoContrllerOpeAapi;
+import com.comanda.controller.event.RecursoCriadoEvent;
 import com.comanda.converter.ProdutoConverter;
 import com.comanda.domain.entity.Produto;
 import com.comanda.domain.sservice.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.input.ProdutoInput;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping("/produtos")
-public class ProdutoController implements ProdutoContrllerOpeAapi {
+public class ProdutoController extends ControllerEvent implements ProdutoContrllerOpeAapi {
 	@Autowired
 	private ProdutoService produtoService;
 	@Autowired
@@ -47,10 +49,10 @@ public class ProdutoController implements ProdutoContrllerOpeAapi {
 
 	@PostMapping
 	@Override
-	public ResponseEntity<ProdutoDto> criar( @RequestBody @Valid ProdutoInput produto, UriComponentsBuilder uri) {
+	public ResponseEntity<ProdutoDto> criar( @RequestBody @Valid ProdutoInput produto, HttpServletResponse response) {
 		var produtosalvo = produtoService.salvar(produtoConverter.toEntity(produto));
-		var url = uri.path("/produtuos/{id}").buildAndExpand(produtosalvo.getId()).toUri();
-		return ResponseEntity. created(url).body(produtoConverter.toDto(produtosalvo));
+		criaevento(produtosalvo.getId(), response);
+		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDto(produtosalvo));
 	}
 
 	@GetMapping("{id}")

@@ -1,6 +1,8 @@
 package com.comanda.model.input;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.comanda.utils.TolowerCase;
@@ -33,6 +35,6 @@ public class ProdutoInput {
 		this.descricao = TolowerCase.normalizarString(descricao);
 	}
 	@Valid
-	private Set<produtoDetalheInput> produtoDetalhe = new HashSet<>();
+	private List<produtoDetalheInput> produtoDetalhe = new ArrayList<>();
 	
 }

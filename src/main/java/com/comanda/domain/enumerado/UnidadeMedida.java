@@ -1,11 +1,14 @@
 package com.comanda.domain.enumerado;
 
 public enum UnidadeMedida {
-	Unidade,
-	Peca, 
-	Metro, 
-	Grama,
-	Litro,
-	Caixa,
-	Fardo
+    Caixa,
+    Fardo,
+    Grama,
+    Litro,
+    Metro,
+    Pacote,
+    Peca,
+    Unidade
+
+
 }
