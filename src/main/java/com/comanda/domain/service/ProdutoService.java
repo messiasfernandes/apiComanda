@@ -1,4 +1,4 @@
-package com.comanda.domain.sservice;
+package com.comanda.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.comanda.converter.ProdutoConverter;
-import com.comanda.domain.dao.DaoProduto;
 import com.comanda.domain.entity.Produto;
+import com.comanda.domain.repository.ProdutosRepository;
 import com.comanda.domain.sservice.exeption.EntidadeEmUsoExeption;
 import com.comanda.domain.sservice.exeption.NegocioException;
 import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
@@ -21,7 +21,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produto> {
     @Autowired
-    private DaoProduto daoProduto;
+    private ProdutosRepository daoProduto;
     @Autowired
     private ProdutoConverter produtoConverter;
 

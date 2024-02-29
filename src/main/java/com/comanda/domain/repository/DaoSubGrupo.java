@@ -1,4 +1,4 @@
-package com.comanda.domain.dao;
+package com.comanda.domain.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

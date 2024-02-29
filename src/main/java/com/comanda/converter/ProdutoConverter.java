@@ -7,24 +7,38 @@ import org.springframework.stereotype.Component;
 
 import com.comanda.domain.entity.Produto;
 import com.comanda.model.dto.ProdutoDto;
+import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
+import com.comanda.model.recorddto.ProdutoListaDtoR;
 
 @Component
 public class ProdutoConverter {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public ProdutoDto toDto(Produto objeto) {
+	public ProdutoDto toDtoDetalhe(Produto objeto) {
 
 		return modelMapper.map(objeto, ProdutoDto.class);
 	}
+	public ProdutoListagemDTo toDto(Produto objeto) {
 
+		return modelMapper.map(objeto, ProdutoListagemDTo.class);
+	}
 	public Produto toEntity(ProdutoInput objeto) {
 		return modelMapper.map(objeto, Produto.class);
 	}
 
-	public Page<ProdutoDto> topage(Page<Produto> objetos) {
+	public Page<ProdutoListagemDTo> topage(Page<Produto> objetos) {
 
 		return objetos.map(obj -> toDto(obj));
 	}
+	
+	public ProdutoListaDtoR toRecDTo(Produto produto) {
+		return new ProdutoListaDtoR(produto);
+	}
+	public Page<ProdutoListaDtoR> topageRecDto(Page<Produto> objetos) {
+
+		return objetos.map(obj -> toRecDTo(obj));
+	}
+	
 }

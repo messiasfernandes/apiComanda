@@ -1,12 +1,12 @@
-package com.comanda.domain.sservice;
+package com.comanda.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.comanda.domain.dao.DaoSubGrupo;
 import com.comanda.domain.entity.SubGrupo;
+import com.comanda.domain.repository.DaoSubGrupo;
 import com.comanda.domain.sservice.exeption.NegocioException;
 import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
 import com.comanda.utils.ServiceFuncoes;

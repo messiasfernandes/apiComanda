@@ -20,9 +20,11 @@ import com.comanda.api.ProdutoContrllerOpeAapi;
 import com.comanda.controller.event.RecursoCriadoEvent;
 import com.comanda.converter.ProdutoConverter;
 import com.comanda.domain.entity.Produto;
-import com.comanda.domain.sservice.ProdutoService;
+import com.comanda.domain.service.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
+import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
+import com.comanda.model.recorddto.ProdutoListaDtoR;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -38,34 +40,44 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 
 	@GetMapping
 	@Override
-	public ResponseEntity<Page<ProdutoDto>> listar(
+	public ResponseEntity<Page<ProdutoListaDtoR>> listar(
 			@RequestParam(value = "parametro", required = false, defaultValue = "") String parametro,
 			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "size", defaultValue = "10") Integer size, Pageable page) {
 
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(produtoConverter.topage(produtoService.buscar(parametro, page)));
+				.body(produtoConverter.topageRecDto(produtoService.buscar(parametro, page)));
 	}
+//	@GetMapping
+//	public ResponseEntity<Page<ProdutoListaDtoR>> listagem(
+//			@RequestParam(value = "parametro", required = false, defaultValue = "") String parametro,
+//			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
+//			@RequestParam(value = "size", defaultValue = "10") Integer size, Pageable page) {
+//
+//		return ResponseEntity.status(HttpStatus.OK)
+//				.body(produtoConverter.topageRecDto(produtoService.buscar(parametro, page)));
+//	}
+
 
 	@PostMapping
 	@Override
 	public ResponseEntity<ProdutoDto> criar( @RequestBody @Valid ProdutoInput produto, HttpServletResponse response) {
 		var produtosalvo = produtoService.salvar(produtoConverter.toEntity(produto));
 		criaevento(produtosalvo.getId(), response);
-		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDto(produtosalvo));
+		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDtoDetalhe(produtosalvo));
 	}
 
 	@GetMapping("{id}")
 	@Override
-	public ResponseEntity<ProdutoDto> buscar(@PathVariable Long id) {
+	public ResponseEntity<ProdutoDto> detallhar (@PathVariable Long id) {
 
-		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDto(produtoService.buccarporid(id)));
+		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDtoDetalhe(produtoService.buccarporid(id)));
 	}
 
 	@PutMapping
 	@Override
 	public ResponseEntity<ProdutoDto> Atualizar( @Valid @RequestBody ProdutoInput produto) {
-		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDto(produtoService.Alterar(produto)));
+		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDtoDetalhe(produtoService.Alterar(produto)));
 	}
 
 	@DeleteMapping("{id}")

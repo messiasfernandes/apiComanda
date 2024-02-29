@@ -20,7 +20,7 @@ import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
-public class ControllerExrption {
+public class ControllerdeErros {
 
 	@ExceptionHandler({ ConstraintViolationException.class })
 	public ResponseEntity<Object> cpfoCnpjviolation(ConstraintViolationException ex, WebRequest request) {
@@ -33,7 +33,7 @@ public class ControllerExrption {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	protected ResponseEntity<Object> validaCampos(MethodArgumentNotValidException ex, WebRequest request) {
+	protected ResponseEntity<Object> validarCampos(MethodArgumentNotValidException ex, WebRequest request) {
 		List<Problema.Campo> campos = ex.getBindingResult().getFieldErrors().stream()
 				.map(error -> new Problema.Campo(error.getField(), error.getDefaultMessage()))
 				.collect(Collectors.toList());
@@ -84,7 +84,7 @@ public class ControllerExrption {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object> jsonErro (HttpMessageNotReadableException ex) {
 		var status = HttpStatus.BAD_REQUEST;
-		var problema = Problema.builder().status(status.value()).titulo("EHouve um erro no preenchimento dos dados. Por favor, verifique se os dados estão corretos e tente novamente."+ ex.getMessage()).dataHora(OffsetDateTime.now())
+		var problema = Problema.builder().status(status.value()).titulo("Houve um erro no preenchimento dos dados. Por favor, verifique se os dados estão corretos e tente novamente."+ ex.getMessage()).dataHora(OffsetDateTime.now())
 				.build();
 		;
         return ResponseEntity.status(status).body(problema);

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.comanda.api.GerarEan13OpenApi;
-import com.comanda.model.dto.Ean13Record;
+import com.comanda.model.recorddto.Ean13Record;
 import com.comanda.utils.ServiceFuncoes;
 
 @RestController

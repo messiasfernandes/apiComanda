@@ -1,4 +1,4 @@
-package com.comanda.domain.sservice;
+package com.comanda.domain.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

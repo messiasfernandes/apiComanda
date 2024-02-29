@@ -1,4 +1,4 @@
-package com.comanda.domain.dao;
+package com.comanda.domain.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.comanda.domain.entity.Produto;
 @Repository
-public interface DaoProduto extends JpaRepository<Produto, Long> {
+public interface ProdutosRepository extends JpaRepository<Produto, Long> {
 
 
 	@Query(value = "SELECT DISTINCT p FROM Produto p " +

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.comanda.converter.SubGrupoConverter;
-import com.comanda.domain.sservice.SubGrupoService;
+import com.comanda.domain.service.SubGrupoService;
 import com.comanda.model.dto.SubGrupoDTO;
 import com.comanda.model.input.SubGrupoInput;
 

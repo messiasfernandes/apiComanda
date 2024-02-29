@@ -2,6 +2,8 @@ package com.comanda.model.input;
 
 import java.math.BigDecimal;
 
+import org.hibernate.validator.constraints.EAN;
+
 import com.comanda.domain.enumerado.UnidadeMedida;
 
 import jakarta.persistence.EnumType;
@@ -15,6 +17,7 @@ import lombok.Data;
 @Data
 public class produtoDetalheInput {
 	private Long id;
+	@EAN
 	@NotBlank
     @Size(min = 13, max = 13, message = "o campo precisar ter {min} caracteres ")
 	//@Pattern(regexp = "\\d{13}")

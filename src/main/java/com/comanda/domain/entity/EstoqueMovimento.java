@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "tab_estoque_movimentacao")
-public class EstoqueMovmimento extends GeradorId{
+public class EstoqueMovimento extends GeradorId{
 
 
 	private static final long serialVersionUID = 1L;
