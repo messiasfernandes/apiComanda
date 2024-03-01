@@ -11,7 +11,7 @@ import com.comanda.domain.repository.EstoqueRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-public class ServiceEstoque implements ServiceModel<Estoque> {
+public class EstoqueService implements ServiceModel<Estoque> {
 	@Autowired
    private EstoqueRepository estoqueRepository;
 	@Override

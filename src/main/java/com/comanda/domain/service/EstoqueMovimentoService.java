@@ -18,11 +18,11 @@ import com.comanda.utils.ServiceFuncoes;
 import jakarta.transaction.Transactional;
 
 @Service
-public class ServiceEstoqueMovimento extends ServiceFuncoes implements ServiceModel<EstoqueMovimento> {
+public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceModel<EstoqueMovimento> {
 	@Autowired
 	private MovimentoEstoqueRepository movimentoEstoqueRepository;
 	@Autowired
-	private ServiceEstoque serviceEstoque;
+	private EstoqueService serviceEstoque;
 
 	@Override
 	public Page<EstoqueMovimento> buscar(String nome, Pageable pageable) {
@@ -53,8 +53,8 @@ public class ServiceEstoqueMovimento extends ServiceFuncoes implements ServiceMo
 		return movimentoEstoqueRepository.save(objeto);
 	}
 
-	public Page<EstoqueMovimento> listar(String paramentro, String tipo, LocalDate datanicio, LocalDate datafim, Pageable pageable) {
-		return movimentoEstoqueRepository.listar(paramentro, datanicio, datafim, pageable);
+	public Page<EstoqueMovimento> listar(String paramentro, TipoMovimentacao tipo, LocalDate datanicio, LocalDate datafim, Pageable pageable) {
+		return movimentoEstoqueRepository.listar(paramentro,tipo, datanicio, datafim, pageable);
 	}
 
 	private EstoqueMovimento verificarMovimento(EstoqueMovimento movimento) {

@@ -14,15 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.comanda.api.ProdutoContrllerOpeAapi;
-import com.comanda.controller.event.RecursoCriadoEvent;
 import com.comanda.converter.ProdutoConverter;
-import com.comanda.domain.entity.Produto;
 import com.comanda.domain.service.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
-import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
 import com.comanda.model.recorddto.ProdutoListaDtoR;
 
