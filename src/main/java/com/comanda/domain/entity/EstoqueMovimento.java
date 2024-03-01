@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.comanda.domain.enumerado.TipoMovimentacao;
+import com.comanda.model.form.EstoqueMovimentoFormR;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
@@ -28,7 +29,7 @@ public class EstoqueMovimento extends GeradorId{
 	@Column(length = 15, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoMovimentacao tipoMovimentacao;
-	@Column(columnDefinition = "TIMESTAMP")
+	//@Column(columnDefinition = "TIMESTAMP")
 	@DateTimeFormat(pattern = " dd/MM/yyyy HH:mm ")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime datamovimento;
@@ -37,5 +38,9 @@ public class EstoqueMovimento extends GeradorId{
     private Produto produto;
 	private Integer qtde;
 	private Integer saldoanterior;
-     
+   public EstoqueMovimento(EstoqueMovimentoFormR estoqueMovimentoFormR) {
+	  this.tipoMovimentacao= estoqueMovimentoFormR.tipoMovimentacao();
+	  this.produto.setId(estoqueMovimentoFormR.idProduto());
+	  this.qtde= estoqueMovimentoFormR.qtde();
+}  
 }

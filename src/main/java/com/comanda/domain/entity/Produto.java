@@ -7,6 +7,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.comanda.model.form.ProdutoFormR;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -48,10 +49,11 @@ public class Produto extends GeradorId {
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "subgrupo_id")
 	private SubGrupo subgrupo;
-	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL, 
-      optional = true)
+	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "produto_id")
 	private Preco preco;
 
-
+	public Produto(ProdutoFormR produto) {
+		this.setId(produto.id());
+	}
 }
