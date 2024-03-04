@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import com.comanda.domain.entity.Produto;
 import com.comanda.domain.entity.ProdutoDetalhe;
 
-public record ProdutoListaDtoR(Long id, String nome, BigDecimal preco,
+public record ProdutoListaDtoR(Long id, String produto, BigDecimal preco,
 
-		String nomeMarca, String nomeSubgrupo, List<ProdutoDetalheDtoR> produtoDetalhe) {
+		String marca, String subgrupo, List<ProdutoDetalheDtoR> produtoDetalhe) {
 
 	public ProdutoListaDtoR(Produto produto) {
 	    this(produto.getId(), produto.getNome(), produto.getPreco().getPrecovenda(),

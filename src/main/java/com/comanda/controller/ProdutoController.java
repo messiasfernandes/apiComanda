@@ -19,7 +19,9 @@ import com.comanda.api.ProdutoContrllerOpeAapi;
 import com.comanda.converter.ProdutoConverter;
 import com.comanda.domain.service.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
+import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
+import com.comanda.model.recorddto.DetalharProdutoR;
 import com.comanda.model.recorddto.ProdutoListaDtoR;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,13 +38,13 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 
 	@GetMapping
 	@Override
-	public ResponseEntity<Page<ProdutoListaDtoR>> listar(
+	public ResponseEntity<Page<ProdutoListagemDTo>> listar(
 			@RequestParam(value = "parametro", required = false, defaultValue = "") String parametro,
 			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "size", defaultValue = "10") Integer size, Pageable page) {
 
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(produtoConverter.topageRecDto(produtoService.buscar(parametro, page)));
+				.body(produtoConverter.topage(produtoService.buscar(parametro, page)));
 	}
 //	@GetMapping
 //	public ResponseEntity<Page<ProdutoListaDtoR>> listagem(
@@ -61,6 +63,7 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 		var produtosalvo = produtoService.salvar(produtoConverter.toEntity(produto));
 		criaevento(produtosalvo.getId(), response);
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDtoDetalhe(produtosalvo));
+	
 	}
 
 	@GetMapping("{id}")

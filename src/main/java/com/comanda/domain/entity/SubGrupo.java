@@ -29,7 +29,7 @@ public class SubGrupo  extends GeradorId{
 	public void setNomeSubgrupo(String nomeSubgrupo) {
 		this.nomeSubgrupo = TolowerCase.normalizarString(nomeSubgrupo);
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
 	private Grupo grupo;
 

@@ -1,5 +1,7 @@
 package com.comanda.model.form;
 
-public record ProdutoFormR( Long id) {
+import com.comanda.domain.entity.Produto;
 
+public record ProdutoFormR( Long id) {
+    
 }

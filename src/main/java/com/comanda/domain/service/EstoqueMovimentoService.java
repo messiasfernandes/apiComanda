@@ -12,8 +12,9 @@ import com.comanda.domain.entity.Estoque;
 import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.domain.enumerado.TipoMovimentacao;
 import com.comanda.domain.repository.MovimentoEstoqueRepository;
-import com.comanda.domain.sservice.exeption.NegocioException;
+import com.comanda.domain.service.exeption.NegocioException;
 import com.comanda.utils.ServiceFuncoes;
+import com.comanda.utils.TolowerCase;
 
 import jakarta.transaction.Transactional;
 
@@ -23,6 +24,8 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	private MovimentoEstoqueRepository movimentoEstoqueRepository;
 	@Autowired
 	private EstoqueService serviceEstoque;
+	@Autowired
+	private ProdutoService produtoService;
 
 	@Override
 	public Page<EstoqueMovimento> buscar(String nome, Pageable pageable) {
@@ -45,7 +48,9 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	@Transactional
 	@Override
 	public EstoqueMovimento salvar(EstoqueMovimento objeto) {
-
+		
+        var produto =produtoService.buccarporid(objeto.getProduto().getId());
+        objeto.setProduto(produto);
 		verificarMovimento(objeto);
 		objeto.setDatamovimento(LocalDateTime.now());
 		// objeto.setDatamovimento(LocalDateTime.of(2023, Month.APRIL, 12, 22, 30));
@@ -54,6 +59,7 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	}
 
 	public Page<EstoqueMovimento> listar(String paramentro, TipoMovimentacao tipo, LocalDate datanicio, LocalDate datafim, Pageable pageable) {
+		paramentro= TolowerCase.normalizarString(paramentro);
 		return movimentoEstoqueRepository.listar(paramentro,tipo, datanicio, datafim, pageable);
 	}
 
@@ -70,7 +76,7 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 			}
 		} else {
 
-			serviceEstoque.salvar(baixarEstoque(movimento).getProduto().getEstoque());
+		movimento.getProduto().setEstoque(	serviceEstoque.salvar(baixarEstoque(movimento).getProduto().getEstoque()));
 		}
 
 		return movimento;

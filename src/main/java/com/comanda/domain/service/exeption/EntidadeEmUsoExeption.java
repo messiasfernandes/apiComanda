@@ -1,4 +1,4 @@
-package com.comanda.domain.sservice.exeption;
+package com.comanda.domain.service.exeption;
 
 import org.springframework.dao.DataIntegrityViolationException;
 

@@ -2,6 +2,7 @@ package com.comanda.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,14 +10,15 @@ import org.springframework.stereotype.Service;
 import com.comanda.converter.ProdutoConverter;
 import com.comanda.domain.entity.Produto;
 import com.comanda.domain.repository.ProdutosRepository;
-import com.comanda.domain.sservice.exeption.EntidadeEmUsoExeption;
-import com.comanda.domain.sservice.exeption.NegocioException;
-import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
+import com.comanda.domain.service.exeption.EntidadeEmUsoExeption;
+import com.comanda.domain.service.exeption.NegocioException;
+import com.comanda.domain.service.exeption.RegistroNaoEncontrado;
 import com.comanda.model.input.ProdutoInput;
 import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
 
 import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 
 @Service
 public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produto> {
@@ -63,10 +65,9 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
     @Override
     public Produto buccarporid(Long id) {
-
+    
         return daoProduto.findById(id).orElseThrow(() -> new RegistroNaoEncontrado("Produto não encontrado"));
     }
-
     @Transactional()
     public Produto Alterar(ProdutoInput objeto) {
         var produtoEditado = daoProduto.getReferenceById(objeto.getId());

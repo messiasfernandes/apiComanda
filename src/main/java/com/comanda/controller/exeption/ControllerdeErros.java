@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import com.comanda.domain.sservice.exeption.EntidadeEmUsoExeption;
-import com.comanda.domain.sservice.exeption.NegocioException;
-import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
+import com.comanda.domain.service.exeption.EntidadeEmUsoExeption;
+import com.comanda.domain.service.exeption.NegocioException;
+import com.comanda.domain.service.exeption.RegistroNaoEncontrado;
 
 import jakarta.validation.ConstraintViolationException;
 

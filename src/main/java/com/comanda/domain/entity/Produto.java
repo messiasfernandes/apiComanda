@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import com.comanda.model.form.ProdutoFormR;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -38,22 +35,20 @@ public class Produto extends GeradorId {
 	@JoinColumn(name = "produto_id")
 	private Estoque estoque;
 	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "marca_id")
 	private Marca marca;
-	@Fetch(FetchMode.SUBSELECT)
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+	// @Fetch(FetchMode.SUBSELECT)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
 	private List<ProdutoDetalhe> produtoDetalhe = new ArrayList<>();
 	@JsonIgnoreProperties(value = { "nomeSubgrupo" }, allowGetters = true)
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "subgrupo_id")
 	private SubGrupo subgrupo;
-	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+	@OneToOne(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "produto_id")
 	private Preco preco;
 
-	public Produto(ProdutoFormR produto) {
-		this.setId(produto.id());
-	}
+
 }

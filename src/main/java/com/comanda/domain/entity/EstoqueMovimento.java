@@ -38,9 +38,14 @@ public class EstoqueMovimento extends GeradorId{
     private Produto produto;
 	private Integer qtde;
 	private Integer saldoanterior;
+	public EstoqueMovimento() {
+		// TODO Auto-generated constructor stub
+	}
    public EstoqueMovimento(EstoqueMovimentoFormR estoqueMovimentoFormR) {
-	  this.tipoMovimentacao= estoqueMovimentoFormR.tipoMovimentacao();
-	  this.produto.setId(estoqueMovimentoFormR.idProduto());
+	
+	  this.tipoMovimentacao= estoqueMovimentoFormR.tipo();
+	  this.produto =new Produto();
+	  this.produto.setId(estoqueMovimentoFormR.produto().id());
 	  this.qtde= estoqueMovimentoFormR.qtde();
 }  
 }

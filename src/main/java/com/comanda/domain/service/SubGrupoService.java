@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.comanda.domain.entity.SubGrupo;
 import com.comanda.domain.repository.DaoSubGrupo;
-import com.comanda.domain.sservice.exeption.NegocioException;
-import com.comanda.domain.sservice.exeption.RegistroNaoEncontrado;
+import com.comanda.domain.service.exeption.NegocioException;
+import com.comanda.domain.service.exeption.RegistroNaoEncontrado;
 import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
 

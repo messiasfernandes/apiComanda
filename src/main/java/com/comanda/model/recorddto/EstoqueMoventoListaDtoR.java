@@ -13,9 +13,13 @@ public record EstoqueMoventoListaDtoR(String produto, TipoMovimentacao tipoMovim
 		Integer qtde, Integer estoque, Integer saldoanterior) {
 
 	public EstoqueMoventoListaDtoR(EstoqueMovimento estoqueMovimento) {
+
 		this(estoqueMovimento.getProduto().getNome(), estoqueMovimento.getTipoMovimentacao(),
 				estoqueMovimento.getDatamovimento(), estoqueMovimento.getQtde(),
-				estoqueMovimento.getProduto().getEstoque().getQuantidade(), estoqueMovimento.getSaldoanterior());
+				estoqueMovimento.getProduto().getEstoque() != null
+						? estoqueMovimento.getProduto().getEstoque().getQuantidade()
+						: estoqueMovimento.getQtde(),
+				estoqueMovimento.getSaldoanterior());
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.comanda.domain.repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +24,7 @@ public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimen
 			+ "LEFT JOIN FETCH p.subgrupo s "  
 			+ "LEFT JOIN FETCH s.grupo g  " 
 		    + "WHERE (p.nome LIKE %:parametro% ) " 
-			+ "AND (em.tipoMovimentacao = :tipo) " + "AND (DATE(em.datamovimento) BETWEEN :dataInicio AND :dataFim) " + 																									
+			+ "AND (em.tipoMovimentacao = :tipo) " + "AND (CAST(em.datamovimento as Date) BETWEEN :dataInicio AND :dataFim) " + 																									
 			"ORDER BY em.datamovimento DESC")
 	Page<EstoqueMovimento> listar(@Param("parametro") String parametro, @Param("tipo") TipoMovimentacao tipo,
 			@Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFim,
