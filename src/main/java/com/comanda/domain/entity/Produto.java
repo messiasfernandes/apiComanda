@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.annotations.BatchSize;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,7 +27,7 @@ import lombok.Setter;
 public class Produto extends GeradorId {
 
 	private static final long serialVersionUID = 1L;
-
+@JsonProperty("produto")
 	@Column(length = 150)
 	private String nome;
 	@Column(length = 250)

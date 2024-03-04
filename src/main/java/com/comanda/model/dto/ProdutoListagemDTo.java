@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.comanda.domain.enumerado.SituacaoEstoque;
 
 import lombok.Data;
 
@@ -12,10 +12,11 @@ import lombok.Data;
 public class ProdutoListagemDTo {
     private Long id;
     private String produto;
-    private BigDecimal precovenda;
-    private String nomeMarca;
-    @JsonAlias("subgrupo")
-    private String nomeSubgrupo;
-  
+    private BigDecimal precovenda = BigDecimal.ZERO;
+    private String marca;
+    private SituacaoEstoque situacao;
+    private String subgrupo;
+ //   @JsonIgnore
+   // private PrecoDto preco;
     private List<ProdsutoDetalheLista> produtoDetalhe = new ArrayList<>();
 }

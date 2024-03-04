@@ -76,6 +76,10 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
             System.out.println(objeto.getProdutoDetalhe().size());
             produtoEditado.getProdutoDetalhe().forEach(p -> p.setProduto(produtoConverter.toEntity(objeto)));
         }
+        if (produtoEditado.getPreco() != null) {
+
+            produtoEditado.getPreco().setProduto(produtoEditado);
+        }
 
         return daoProduto.save(produtoEditado);
         //daoProduto.save(daoProduto.findById(id).map( p-> produtoConverter.toEntity(objeto) ).get());
