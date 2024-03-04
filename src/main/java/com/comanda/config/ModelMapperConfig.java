@@ -21,13 +21,7 @@ public class ModelMapperConfig {
     	
     	var modelMapper = new ModelMapper();
     	
-    	Converter<Integer, SituacaoEstoque> SituacaoEstoqueConverter =ctx
-    			->ctx.getSource()>0 ?SituacaoEstoque.Disponviel: SituacaoEstoque.Estgotado;
-    			
-    			modelMapper.createTypeMap(Estoque.class, ProdutoListagemDTo.class)
-    			.addMappings(mapper-> mapper.using(SituacaoEstoqueConverter).
-
-    			map(Estoque::getQuantidade, ProdutoListagemDTo:: setSituacao));
+    
 		modelMapper.addMappings(new PropertyMap<Produto, ProdutoListagemDTo>() {
 
 			@Override
@@ -35,10 +29,17 @@ public class ModelMapperConfig {
 			      String meuproduto = source.getNome();
 			      map().setProduto(meuproduto);
 			      map().setPrecovenda( source.getPreco().getPrecovenda() );
-			        
+			     
 			      
 			}
 		});
+		Converter<Integer, SituacaoEstoque> SituacaoEstoqueConverter =ctx
+    			->ctx.getSource()>0 ?SituacaoEstoque.Disponviel: SituacaoEstoque.Estgotado;
+    			
+    			modelMapper.createTypeMap(Estoque.class, ProdutoListagemDTo.class)
+    			.addMappings(mapper-> mapper.using(SituacaoEstoqueConverter).
+
+    			map(Estoque::getQuantidade, ProdutoListagemDTo:: setSituacao));
 		return modelMapper;
 	}
 	
