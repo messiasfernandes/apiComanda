@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.annotations.BatchSize;
 
+import com.comanda.utils.TolowerCase;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,6 +18,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,7 +30,7 @@ import lombok.Setter;
 public class Produto extends GeradorId {
 
 	private static final long serialVersionUID = 1L;
-@JsonProperty("produto")
+	@Setter(value = AccessLevel.NONE)
 	@Column(length = 150)
 	private String nome;
 	@Column(length = 250)
@@ -50,6 +53,18 @@ public class Produto extends GeradorId {
 	@OneToOne(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "produto_id")
 	private Preco preco;
-
-
+	@Getter(value = AccessLevel.NONE)
+	@Transient
+	private Integer qtdeEstoque;
+public Integer getQtdeEstoque() {
+	if(estoque != null) {
+		qtdeEstoque= estoque.getQuantidade();
+	}else {
+		qtdeEstoque=0;
+	}
+	return qtdeEstoque;
+}
+	public void setNome(String nome) {
+		this.nome = TolowerCase.normalizarString(nome);
+	}
 }

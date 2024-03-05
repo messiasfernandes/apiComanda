@@ -24,7 +24,7 @@ public class Marca extends GeradorId {
 
 	
 	private static final long serialVersionUID = 1L;
-	@JsonAlias( "marca")
+
 	@Setter(value = AccessLevel.NONE)
 	@NotNull
 	@Column(length = 60, nullable = false)
