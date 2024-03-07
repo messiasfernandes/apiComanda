@@ -19,7 +19,7 @@ public class ModelMapperConfig {
 
 		var modelMapper = new ModelMapper();
 		Converter<Integer, SituacaoEstoque> SituacaoEstoqueConverter = ctx -> ctx.getSource() > 0
-				? SituacaoEstoque.Disponviel
+				? SituacaoEstoque.Disponvel
 				: SituacaoEstoque.Estgotado;
 
 		modelMapper.createTypeMap(Produto.class, ProdutoListagemDTo.class)
