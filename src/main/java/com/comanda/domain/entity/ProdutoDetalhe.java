@@ -45,7 +45,7 @@ public class ProdutoDetalhe extends GeradorId {
 	public Integer getQtdePorUnidade() {
 		if (produto.getEstoque() != null) {
 
-			return qtdePorUnidade = produto.getEstoque().getQuantidade() / mutiplicador;
+			return qtdePorUnidade = produto.getEstoque().getQuantidade().intValue() / mutiplicador;
 		} else {
 			return qtdePorUnidade;
 		}

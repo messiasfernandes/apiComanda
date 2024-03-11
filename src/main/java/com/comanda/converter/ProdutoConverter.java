@@ -1,25 +1,16 @@
 package com.comanda.converter;
 
-import java.math.BigDecimal;
-
-import org.bouncycastle.crypto.agreement.srp.SRP6Client;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import com.comanda.domain.entity.Preco;
 import com.comanda.domain.entity.Produto;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
 import com.comanda.model.recorddto.DetalharProdutoR;
 import com.comanda.model.recorddto.ProdutoListaDtoR;
-
-import jakarta.annotation.PostConstruct;
 
 @Component
 public class ProdutoConverter {

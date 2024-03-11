@@ -1,5 +1,6 @@
 package com.comanda.domain.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -71,7 +72,7 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 
 				serviceEstoque.salvar(movimento.getProduto().getEstoque());
 			} else {
-				movimento.setSaldoanterior(0);
+				movimento.setSaldoanterior(BigDecimal.ZERO);
 				serviceEstoque.salvar(adicionarEstoque(movimento));
 			}
 		} else {
@@ -88,14 +89,14 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 			throw new NegocioException("Não possivel baixar estoque de um produto que não tenha estoque");
 		}
 		movimento.setSaldoanterior(movimento.getProduto().getEstoque().getQuantidade());
-		movimento.getProduto().getEstoque().setQuantidade(movimento.getSaldoanterior() - movimento.getQtde());
+		movimento.getProduto().getEstoque().setQuantidade(movimento.getSaldoanterior().subtract( movimento.getQtde()));
 		movimento.getProduto().getEstoque().setProduto(movimento.getProduto());
 		return movimento;
 	}
 
 	private EstoqueMovimento SomarEstoque(EstoqueMovimento movimento) {
 		movimento.setSaldoanterior(movimento.getProduto().getEstoque().getQuantidade());
-		movimento.getProduto().getEstoque().setQuantidade(movimento.getSaldoanterior() + movimento.getQtde());
+		movimento.getProduto().getEstoque().setQuantidade(movimento.getSaldoanterior().add( movimento.getQtde()));
 		movimento.getProduto().getEstoque().setProduto(movimento.getProduto());
 
 		return movimento;

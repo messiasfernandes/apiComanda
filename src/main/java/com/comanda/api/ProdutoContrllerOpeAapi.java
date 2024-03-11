@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
-import com.comanda.model.recorddto.DetalharProdutoR;
 import com.comanda.model.recorddto.ProdutoListaDtoR;
 
 import io.swagger.v3.oas.annotations.Operation;

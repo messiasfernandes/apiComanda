@@ -1,5 +1,6 @@
 package com.comanda.model.recorddto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public record EstoqueMoventoListaDtoR(String produto, TipoMovimentacao tipoMovimentacao,
 		@DateTimeFormat(pattern = " dd/MM/yyyy HH:mm ") @JsonFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime datamovimento,
-		Integer qtde, Integer estoque, Integer saldoanterior) {
+		BigDecimal qtde, BigDecimal estoque, BigDecimal saldoanterior) {
 
 	public EstoqueMoventoListaDtoR(EstoqueMovimento estoqueMovimento) {
 

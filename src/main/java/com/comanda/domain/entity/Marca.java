@@ -1,9 +1,6 @@
 package com.comanda.domain.entity;
 
 import com.comanda.utils.TolowerCase;
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 //mport br.com.omnisoftapi.utils.TolowerCase;
 import jakarta.persistence.Column;

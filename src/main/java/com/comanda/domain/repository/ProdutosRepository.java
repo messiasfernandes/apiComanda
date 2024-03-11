@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.comanda.domain.entity.Produto;
 
-import jakarta.transaction.Transactional;
-
 @Repository
 public interface ProdutosRepository extends JpaRepository<Produto, Long> {
 

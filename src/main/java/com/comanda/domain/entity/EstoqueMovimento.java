@@ -1,5 +1,6 @@
 package com.comanda.domain.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,6 +17,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -36,8 +38,10 @@ public class EstoqueMovimento extends GeradorId{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn()
     private Produto produto;
-	private Integer qtde;
-	private Integer saldoanterior;
+	@Digits(integer = 9, fraction = 3)
+	private BigDecimal qtde;
+	@Digits(integer = 9, fraction = 3)
+	private BigDecimal  saldoanterior;
 	public EstoqueMovimento() {
 		// TODO Auto-generated constructor stub
 	}
@@ -46,6 +50,6 @@ public class EstoqueMovimento extends GeradorId{
 	  this.tipoMovimentacao= estoqueMovimentoFormR.tipo();
 	  this.produto =new Produto();
 	  this.produto.setId(estoqueMovimentoFormR.produto().id());
-	  this.qtde= estoqueMovimentoFormR.qtde();
+	   this.qtde= estoqueMovimentoFormR.qtde();
 }  
 }

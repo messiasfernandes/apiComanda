@@ -2,7 +2,6 @@ package com.comanda.model.recorddto;
 
 import java.math.BigDecimal;
 
-import com.comanda.domain.entity.Produto;
 import com.comanda.domain.entity.ProdutoDetalhe;
 import com.comanda.domain.enumerado.UnidadeMedida;
 
@@ -19,7 +18,7 @@ public record ProdutoDetalheDtoR(Long id, String codigobarras, BigDecimal descon
 
 	private static Integer calcularEstoqueDisponivel(ProdutoDetalhe produtoDetalhe) {
 		if (produtoDetalhe.getProduto().getEstoque() != null) {
-			return produtoDetalhe.getProduto().getEstoque().getQuantidade() / produtoDetalhe.getMutiplicador();
+			return produtoDetalhe.getProduto().getEstoque().getQuantidade().intValue() / produtoDetalhe.getMutiplicador();
 		} else
 			return 0;
 	}

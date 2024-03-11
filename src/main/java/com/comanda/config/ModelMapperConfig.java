@@ -6,7 +6,6 @@ import org.modelmapper.PropertyMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.comanda.domain.entity.Estoque;
 import com.comanda.domain.entity.Produto;
 import com.comanda.domain.enumerado.SituacaoEstoque;
 import com.comanda.model.dto.ProdutoListagemDTo;

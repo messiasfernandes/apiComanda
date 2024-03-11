@@ -5,13 +5,15 @@ import java.util.List;
 
 import org.hibernate.annotations.BatchSize;
 
+import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -35,6 +37,8 @@ public class Produto extends GeradorId {
 	private String nome;
 	@Column(length = 250)
 	private String descricao;
+	@Column(length = 250)
+	private String imagem;
 	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "produto_id")
 	private Estoque estoque;
@@ -53,12 +57,17 @@ public class Produto extends GeradorId {
 	@OneToOne(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "produto_id")
 	private Preco preco;
+	@Column(length = 15)
+	@Enumerated(EnumType.STRING)
+	private TipoProduto tipoProduto;
+	@Column(length = 15)
+	private String codigoFabricante;
 	@Getter(value = AccessLevel.NONE)
 	@Transient
 	private Integer qtdeEstoque;
 public Integer getQtdeEstoque() {
 	if(estoque != null) {
-		qtdeEstoque= estoque.getQuantidade();
+		qtdeEstoque= estoque.getQuantidade().intValue();
 	}else {
 		qtdeEstoque=0;
 	}

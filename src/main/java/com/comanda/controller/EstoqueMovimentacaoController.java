@@ -1,7 +1,6 @@
 package com.comanda.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,11 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.comanda.converter.EstoqueMovimemtoConvereter;
 import com.comanda.domain.enumerado.TipoMovimentacao;
 import com.comanda.domain.service.EstoqueMovimentoService;
-import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.form.EstoqueMovimentoFormR;
-import com.comanda.model.input.ProdutoInput;
 import com.comanda.model.recorddto.EstoqueMoventoListaDtoR;
-import com.comanda.model.recorddto.EstoqueMovimentoDToR;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

@@ -3,8 +3,12 @@ package com.comanda.model.input;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,12 +24,15 @@ public class ProdutoInput {
 	private String nome;
 	@Setter(value = AccessLevel.NONE)
 	private String descricao;
-
+	private String imagem;
 	private EstoqueInput estoque;
 
 	private MarcaInput marca;
 	private PrecoInput preco;
 	private SubGrupoInput subgrupo;
+	@Enumerated(EnumType.STRING)
+	
+	private String codigoFabricante;
 	public void setNome(String nome) {
 		this.nome = TolowerCase.normalizarString(nome);
 	}

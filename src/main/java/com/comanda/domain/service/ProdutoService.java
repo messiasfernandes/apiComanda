@@ -2,7 +2,6 @@ package com.comanda.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
 
 import jakarta.transaction.Transactional;
-import jakarta.transaction.Transactional.TxType;
 
 @Service
 public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produto> {

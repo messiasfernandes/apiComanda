@@ -21,8 +21,6 @@ import com.comanda.domain.service.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
-import com.comanda.model.recorddto.DetalharProdutoR;
-import com.comanda.model.recorddto.ProdutoListaDtoR;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

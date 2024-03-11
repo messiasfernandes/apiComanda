@@ -1,5 +1,7 @@
 package com.comanda.domain.entity;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -28,6 +30,6 @@ public class Estoque {
 	private Produto produto;
 	@Digits(integer = 9, fraction = 3)
 	@Column
-	private Integer quantidade = 0;
+	private BigDecimal quantidade = BigDecimal.ZERO;
 
 }
