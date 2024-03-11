@@ -8,7 +8,7 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
 import lombok.Data;
 @Data
-public class ProdsutoDetalheLista {
+public class ProdutoDetalheLista {
 	private Long id;
 	private String codigobarras;
 

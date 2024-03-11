@@ -18,5 +18,5 @@ public class ProdutoListagemDTo {
     private String subgrupo;
  //   @JsonIgnore
    // private PrecoDto preco;
-    private List<ProdsutoDetalheLista> produtoDetalhe = new ArrayList<>();
+    private List<ProdutoDetalheLista> produtoDetalhe = new ArrayList<>();
 }
