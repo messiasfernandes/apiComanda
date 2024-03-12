@@ -3,6 +3,8 @@ package com.comanda.model.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.comanda.domain.enumerado.TipoProduto;
+
 import lombok.Data;
 @Data
 public class ProdutoDto {
@@ -17,6 +19,9 @@ public class ProdutoDto {
 	private PrecoDto preco;
 
     private SubGrupoDTO subgrupo;
+	private String imagem;
+	private TipoProduto tipoProduto;
+	private String codigoFabricante;
 	private List<ProdutoDetalheDto> produtoDetalhe = new ArrayList<>();
 
 

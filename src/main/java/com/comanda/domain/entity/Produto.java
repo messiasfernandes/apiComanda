@@ -69,7 +69,7 @@ public Integer getQtdeEstoque() {
 	if(estoque != null) {
 		qtdeEstoque= estoque.getQuantidade().intValue();
 	}else {
-		qtdeEstoque=0;
+		qtdeEstoque = 0;
 	}
 	return qtdeEstoque;
 }

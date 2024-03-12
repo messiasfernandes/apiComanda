@@ -17,8 +17,6 @@ public class ProdutoDetalheDto {
 	private Integer mutiplicador =1;
 	//@Getter(value = AccessLevel.NONE)
 	private UnidadeMedida unidadeMedida;
-	private String imagem;
-	private TipoProduto tipoProduto;
-	private String codigoFabricante;
+
 
 }
