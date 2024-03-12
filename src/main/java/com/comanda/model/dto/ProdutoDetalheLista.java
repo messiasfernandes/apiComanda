@@ -2,6 +2,7 @@ package com.comanda.model.dto;
 
 import java.math.BigDecimal;
 
+import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.domain.enumerado.UnidadeMedida;
 
 import jakarta.persistence.Transient;
@@ -19,4 +20,5 @@ public class ProdutoDetalheLista {
 	@Transient
 	private Integer qtdePorUnidade=0;
 	private UnidadeMedida unidadeMedida;
+	
 }
