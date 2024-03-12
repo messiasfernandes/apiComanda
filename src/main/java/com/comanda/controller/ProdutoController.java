@@ -74,6 +74,7 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 	@PutMapping
 	@Override
 	public ResponseEntity<ProdutoDto> Atualizar( @Valid @RequestBody ProdutoInput produto) {
+		System.out.println(produto.getTipoProduto());
 		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDtoDetalhe(produtoService.Alterar(produto)));
 	}
 

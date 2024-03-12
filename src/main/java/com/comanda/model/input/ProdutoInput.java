@@ -31,7 +31,7 @@ public class ProdutoInput {
 	private PrecoInput preco;
 	private SubGrupoInput subgrupo;
 	@Enumerated(EnumType.STRING)
-	
+	private TipoProduto tipoProduto;
 	private String codigoFabricante;
 	public void setNome(String nome) {
 		this.nome = TolowerCase.normalizarString(nome);

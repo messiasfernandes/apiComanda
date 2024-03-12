@@ -2,6 +2,7 @@ package com.comanda.model.dto;
 
 import java.math.BigDecimal;
 
+import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.domain.enumerado.UnidadeMedida;
 
 import jakarta.validation.constraints.Digits;
@@ -16,5 +17,8 @@ public class ProdutoDetalheDto {
 	private Integer mutiplicador =1;
 	//@Getter(value = AccessLevel.NONE)
 	private UnidadeMedida unidadeMedida;
-	
+	private String imagem;
+	private TipoProduto tipoProduto;
+	private String codigoFabricante;
+
 }
