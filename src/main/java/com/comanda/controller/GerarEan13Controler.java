@@ -11,7 +11,7 @@ import com.comanda.model.recorddto.Ean13Record;
 import com.comanda.utils.ServiceFuncoes;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/gerarean13")
 public class GerarEan13Controler implements GerarEan13OpenApi{
    @PostMapping
 	@Override

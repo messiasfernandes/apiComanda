@@ -2,7 +2,6 @@ package com.comanda.model.dto;
 
 import java.math.BigDecimal;
 
-import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.domain.enumerado.UnidadeMedida;
 
 import jakarta.persistence.Transient;

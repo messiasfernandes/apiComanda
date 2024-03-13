@@ -6,7 +6,6 @@ import java.util.List;
 import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
