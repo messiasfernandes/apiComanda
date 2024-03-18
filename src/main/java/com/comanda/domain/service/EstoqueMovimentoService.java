@@ -54,27 +54,26 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		Integer qtde = 0;
 		var produto = produtoService.buccarporid(objeto.getProduto().getId());
 		objeto.setProduto(produto);
-		if (
-				 !objeto.getProduto().getComponentes().isEmpty()) {
+		if (objeto.getTipoMovimentacao().equals(TipoMovimentacao.Saida)) {
+		if (!objeto.getProduto().getComponentes().isEmpty()) {
 
 			for (int i = 0; i < produto.getComponentes().size(); i++) {
-			
-				qtde = objeto.getQtde().intValue() * produto.getProdutoDetalhe().get(i).getMutiplicador();
-			//	componente2.setProduto(produto);
 
-				System.out.println(qtde);
+				qtde = objeto.getQtde().intValue() * produto.getProdutoDetalhe().get(i).getMutiplicador();
+				// componente2.setProduto(produto);
+
+				System.out.println("qtde" + qtde);
 				System.out.println(produto.getComponentes().get(i).getProduto().getNome());
-				if(objeto.getTipoMovimentacao()==(TipoMovimentacao.Saida)) {
-				movimentoEstoqueRepository.save(	VerificarComponente(produto.getComponentes().get(i), qtde, objeto.getTipoMovimentacao()));
+				
+					movimentoEstoqueRepository.save(VerificarComponente(produto.getComponentes().get(i),
+							qtde, objeto.getTipoMovimentacao()));
 				}
 				
 			}
 
-			// objeto.setQtde( new
-			// BigDecimal(componente.getProduto().getEstoque().getQuantidade().intValue()
-			// /componente.getQtde().intValue())) ;
+			
 
-			verificarMovimento(objeto);
+			//verificarMovimento(objeto);
 
 		} else {
 			verificarMovimento(objeto);
@@ -142,39 +141,41 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	}
 
 	private EstoqueMovimento VerificarComponente(Componente componente, Integer qtde, TipoMovimentacao tipo) {
-	    var movimento = new EstoqueMovimento();
-	    movimento.setProduto(componente.getProduto());
-	    movimento.setDatamovimento(LocalDateTime.now());
-	    movimento.setTipoMovimentacao(tipo);
-	    movimento.setQtde(new BigDecimal(qtde));
-    System.out.println( "movineto"+   movimento.getQtde());
-    
-	    if (tipo == TipoMovimentacao.Entrada) {
-	        if (movimento.getProduto().getEstoque() != null) {
-	            SomarEstoque(movimento);
-	            serviceEstoque.salvar(movimento.getProduto().getEstoque());
-	        }
-	    }else {
-	        movimento.setSaldoanterior(BigDecimal.ZERO);
-	        System.out.println( "arr"+componente.getQtde());
-	     //   var qtdec = componente.getQtde().intValue()* componente.getProduto().getEstoque().getQuantidade().intValue();
-	        movimento.getProduto()
-			.setEstoque(serviceEstoque.salvar(BaixarEstoqueComponte(movimento, qtde).getProduto().getEstoque()));
-	    }
-	    return movimento;
+		var movimento = new EstoqueMovimento();
+		movimento.setProduto(componente.getProduto());
+		movimento.setDatamovimento(LocalDateTime.now());
+		movimento.setTipoMovimentacao(tipo);
+		movimento.setQtde(new BigDecimal(qtde));
+		System.out.println("movineto" + movimento.getQtde());
+
+		if (tipo == TipoMovimentacao.Entrada) {
+			if (movimento.getProduto().getEstoque() != null) {
+				SomarEstoque(movimento);
+				serviceEstoque.salvar(movimento.getProduto().getEstoque());
+			}
+		} else {
+			movimento.setSaldoanterior(BigDecimal.ZERO);
+			System.out.println("arr" + componente.getQtde());
+			// var qtdec = componente.getQtde().intValue()*
+			// componente.getProduto().getEstoque().getQuantidade().intValue();
+			movimento.getProduto().setEstoque(
+					serviceEstoque.salvar(BaixarEstoqueComponte(movimento, qtde).getProduto().getEstoque()));
+		}
+		return movimento;
 	}
 
-   private EstoqueMovimento BaixarEstoqueComponte(EstoqueMovimento movimento, Integer qtde) {
-	   if (movimento.getProduto().getEstoque() == null) {
+	private EstoqueMovimento BaixarEstoqueComponte(EstoqueMovimento movimento, Integer qtde) {
+		if (movimento.getProduto().getEstoque() == null) {
 			throw new NegocioException("Não possivel baixar estoque de um produto que não tenha estoque");
 		}
 
 		movimento.setSaldoanterior(movimento.getProduto().getEstoque().getQuantidade());
-		movimento.getProduto().getEstoque().setQuantidade(movimento.getProduto().getEstoque().getQuantidade().subtract(new BigDecimal(qtde)));
+		movimento.getProduto().getEstoque()
+				.setQuantidade(movimento.getProduto().getEstoque().getQuantidade().subtract(new BigDecimal(qtde)));
 		movimento.getProduto().getEstoque().setProduto(movimento.getProduto());
-  System.out.println(movimento.getProduto().getEstoque().getQuantidade());
+		System.out.println(movimento.getProduto().getEstoque().getQuantidade());
 		return movimento;
-   }
+	}
 }
 //	
 //	@Transactional(rollbackOn = Exception.class)
