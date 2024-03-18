@@ -2,6 +2,7 @@ package com.comanda.model.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.comanda.domain.enumerado.TipoProduto;
 
@@ -24,7 +25,7 @@ public class ProdutoDto {
 	private String codigoFabricante;
 	private List<ProdutoDetalheDto> produtoDetalhe = new ArrayList<>();
 
-
+	private List<ComponeteDTO> componentes;
 
 	
 

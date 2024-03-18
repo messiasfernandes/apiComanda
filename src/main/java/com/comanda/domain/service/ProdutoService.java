@@ -78,6 +78,11 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
             produtoEditado.getPreco().setProduto(produtoEditado);
         }
+        if(!produtoEditado.getComponentes().isEmpty()) {
+        	
+        	produtoEditado.getComponentes().forEach(c-> c.getProduto().setPreco(c.getProduto().getPreco()));
+        	produtoEditado.getComponentes().forEach(c-> c.setProduto(c.getProduto()));
+        }
 
         return daoProduto.save(produtoEditado);
         //daoProduto.save(daoProduto.findById(id).map( p-> produtoConverter.toEntity(objeto) ).get());
@@ -97,6 +102,10 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
                 objeto.getProdutoDetalhe().forEach(p -> p.setProduto(objeto));
 
+            }
+            if(!objeto.getComponentes().isEmpty()) {
+            	objeto.getComponentes().forEach(c-> c.getProduto().setPreco(c.getProduto().getPreco()));
+            	objeto.getComponentes().forEach(c-> c.setProduto(c.getProduto()));
             }
         } catch (NegocioException e) {
             throw new NegocioException("Erro ao persistir os dados");

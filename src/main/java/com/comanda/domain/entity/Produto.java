@@ -1,5 +1,6 @@
 package com.comanda.domain.entity;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import lombok.Setter;
 @Table(name = "tab_produtos")
 public class Produto extends GeradorId {
 
+
 	private static final long serialVersionUID = 1L;
 	@Setter(value = AccessLevel.NONE)
 	@Column(length = 150)
@@ -67,7 +69,7 @@ public class Produto extends GeradorId {
 	@Column(length = 15)
 	private String codigoFabricante;
 	@Fetch(FetchMode.SUBSELECT)
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "produto_componente", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "componente_id"))
 	private List<Componente> componentes;
 

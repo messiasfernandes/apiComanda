@@ -19,7 +19,7 @@ public class ProdutoInput {
 	private Long id;
 	@Setter(value = AccessLevel.NONE)
 	@NotNull
-    @NotBlank(message = "Campo  obrigatorio")
+    @NotBlank(message = "Campo  obrigatório")
 	private String nome;
 	@Setter(value = AccessLevel.NONE)
 	private String descricao;
@@ -40,5 +40,6 @@ public class ProdutoInput {
 	}
 	@Valid
 	private List<produtoDetalheInput> produtoDetalhe = new ArrayList<>();
+	private List<ComponenteInput> componentes;
 	
 }
