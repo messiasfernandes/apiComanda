@@ -35,7 +35,7 @@ public class Componente extends GeradorId {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn()
 	private Produto produto;
-	@Fetch(FetchMode.SUBSELECT)
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "componentes")
-	private List<Produto> produtos;
+//	@Fetch(FetchMode.SUBSELECT)
+//	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "componentes")
+//	private List<Produto> produtos;
 }

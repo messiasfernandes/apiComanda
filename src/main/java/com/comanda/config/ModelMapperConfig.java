@@ -29,9 +29,7 @@ public class ModelMapperConfig {
 
 			@Override
 			protected void configure() {
-				String meuproduto = source.getNome();
-				map().setProduto(meuproduto);
-				map().setPrecovenda(source.getPreco().getPrecovenda());
+			
 
 			}
 		});

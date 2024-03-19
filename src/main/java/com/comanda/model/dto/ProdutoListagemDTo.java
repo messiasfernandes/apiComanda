@@ -1,6 +1,5 @@
 package com.comanda.model.dto;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +10,14 @@ import lombok.Data;
 @Data
 public class ProdutoListagemDTo {
     private Long id;
-    private String produto;
-    private BigDecimal precovenda = BigDecimal.ZERO;
-    private String marca;
+    private String nome;
+   // private EstoqueDto estoque;
+
+	private MarcaDto marca;
+
+
+    private SubGrupoDTO subgrupo;
     private SituacaoEstoque situacao;
-    private String subgrupo;
- //   @JsonIgnore
-   // private PrecoDto preco;
+   private PrecoDto preco;
     private List<ProdutoDetalheLista> produtoDetalhe = new ArrayList<>();
 }
