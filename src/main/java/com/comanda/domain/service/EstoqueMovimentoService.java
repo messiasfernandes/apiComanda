@@ -51,36 +51,22 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	@Transactional
 	@Override
 	public EstoqueMovimento salvar(EstoqueMovimento objeto) {
-		Integer qtde = 0;
+	
 		var produto = produtoService.buccarporid(objeto.getProduto().getId());
+	
 		objeto.setProduto(produto);
-		if (objeto.getTipoMovimentacao().equals(TipoMovimentacao.Saida)) {
-		if (!objeto.getProduto().getComponentes().isEmpty()) {
-
-			for (int i = 0; i < produto.getComponentes().size(); i++) {
-
-				qtde = objeto.getQtde().intValue() * produto.getProdutoDetalhe().get(i).getMutiplicador();
-				// componente2.setProduto(produto);
-
-				System.out.println("qtde" + qtde);
-				System.out.println(produto.getComponentes().get(i).getProduto().getNome());
+		objeto.setDatamovimento(LocalDateTime.now());
+		verificarMovimento(objeto);
+		if(!produto.getComponentes().isEmpty()) {
+			if(objeto.getTipoMovimentacao().equals(TipoMovimentacao.Saida)) {
+				for (int i = 0; i < produto.getComponentes().size(); i++) {
 				
 					movimentoEstoqueRepository.save(VerificarComponente(produto.getComponentes().get(i),
-							qtde, objeto.getTipoMovimentacao()));
+							produto.getComponentes().get(i).getQtde().intValueExact(), objeto.getTipoMovimentacao()));
 				}
-				
 			}
-
-			
-
-			//verificarMovimento(objeto);
-
-		} else {
-			verificarMovimento(objeto);
 		}
-		objeto.setDatamovimento(LocalDateTime.now());
-		// objeto.setDatamovimento(LocalDateTime.of(2023, Month.APRIL, 12, 22, 30));
-		System.out.println(objeto.getDatamovimento());
+		
 		return movimentoEstoqueRepository.save(objeto);
 	}
 
@@ -91,7 +77,7 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	}
 
 	private EstoqueMovimento verificarMovimento(EstoqueMovimento movimento) {
-		if (movimento.getTipoMovimentacao() == TipoMovimentacao.Entrada) {
+		if (movimento.getTipoMovimentacao() == TipoMovimentacao.Entrada  ||movimento.getTipoMovimentacao().equals(TipoMovimentacao.Devolucao)) {
 			if (movimento.getProduto().getEstoque() != null) {
 
 				SomarEstoque(movimento);
@@ -102,7 +88,7 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 				serviceEstoque.salvar(adicionarEstoque(movimento));
 			}
 
-		} else {
+		} 	if (movimento.getTipoMovimentacao().equals(TipoMovimentacao.Saida) ) {
 			movimento.getProduto()
 					.setEstoque(serviceEstoque.salvar(baixarEstoque(movimento).getProduto().getEstoque()));
 		}
