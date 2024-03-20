@@ -13,11 +13,11 @@ public class ProdutoListagemDTo {
     private String nome;
    // private EstoqueDto estoque;
 
-	private MarcaDto marca;
+	private String marca;
 
 
-    private SubGrupoDTO subgrupo;
+    private String subgrupo;
     private SituacaoEstoque situacao;
-   private PrecoDto preco;
+     private PrecoDto preco;
     private List<ProdutoDetalheLista> produtoDetalhe = new ArrayList<>();
 }
