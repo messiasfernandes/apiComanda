@@ -35,7 +35,6 @@ import lombok.Setter;
 @Table(name = "tab_produtos")
 public class Produto extends GeradorId {
 
-
 	private static final long serialVersionUID = 1L;
 	@Setter(value = AccessLevel.NONE)
 	@Column(length = 150)
@@ -68,7 +67,7 @@ public class Produto extends GeradorId {
 	@Column(length = 15)
 	private String codigoFabricante;
 	@Fetch(FetchMode.SUBSELECT)
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+	//@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "produto_componente", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "componente_id"))
 	private List<Componente> componentes;
@@ -76,14 +75,16 @@ public class Produto extends GeradorId {
 	@Getter(value = AccessLevel.NONE)
 	@Transient
 	private Integer qtdeEstoque;
-public Integer getQtdeEstoque() {
-	if(estoque != null) {
-		qtdeEstoque= estoque.getQuantidade().intValue();
-	}else {
-		qtdeEstoque = 0;
+
+	public Integer getQtdeEstoque() {
+		if (estoque != null) {
+			qtdeEstoque = estoque.getQuantidade().intValue();
+		} else {
+			qtdeEstoque = 0;
+		}
+		return qtdeEstoque;
 	}
-	return qtdeEstoque;
-}
+
 	public void setNome(String nome) {
 		this.nome = TolowerCase.normalizarString(nome);
 	}

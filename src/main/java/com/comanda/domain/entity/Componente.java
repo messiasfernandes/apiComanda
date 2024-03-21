@@ -33,8 +33,9 @@ public class Componente extends GeradorId {
 	private BigDecimal subtotal;
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn()
+	@JoinColumn(nullable = false)
 	private Produto produto;
+	
 	@Fetch(FetchMode.SUBSELECT)
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "componentes")
 	private List<Produto> produtos;

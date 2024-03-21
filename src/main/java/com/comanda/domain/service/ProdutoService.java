@@ -104,7 +104,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
             }
             if(!objeto.getComponentes().isEmpty()) {
-            	objeto.getComponentes().forEach(c-> c.getProduto().setPreco(c.getProduto().getPreco()));
+            	//objeto.getComponentes().forEach(c-> c.getProduto().setPreco(c.getProduto().getPreco()));
             	objeto.getComponentes().forEach(c-> c.setProduto(c.getProduto()));
             }
         } catch (NegocioException e) {

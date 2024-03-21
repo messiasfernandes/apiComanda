@@ -2,7 +2,6 @@ package com.comanda.model.dto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.comanda.domain.enumerado.TipoProduto;
 

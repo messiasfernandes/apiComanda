@@ -2,8 +2,6 @@ package com.comanda.model.dto;
 
 import java.math.BigDecimal;
 
-import com.comanda.model.input.ProdutoComponenteInput;
-
 import lombok.Data;
 
 @Data

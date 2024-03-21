@@ -19,10 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 
 public class Variacao extends GeradorId {
 
