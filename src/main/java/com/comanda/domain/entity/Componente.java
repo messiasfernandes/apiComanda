@@ -32,10 +32,10 @@ public class Componente extends GeradorId {
 	@Column
 	private BigDecimal subtotal;
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn()
 	private Produto produto;
-//	@Fetch(FetchMode.SUBSELECT)
-//	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "componentes")
-//	private List<Produto> produtos;
+	@Fetch(FetchMode.SUBSELECT)
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "componentes")
+	private List<Produto> produtos;
 }

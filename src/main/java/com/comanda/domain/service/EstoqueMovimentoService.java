@@ -13,7 +13,6 @@ import com.comanda.domain.entity.Componente;
 import com.comanda.domain.entity.Estoque;
 import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.domain.enumerado.TipoMovimentacao;
-import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.domain.repository.MovimentoEstoqueRepository;
 import com.comanda.domain.service.exeption.NegocioException;
 import com.comanda.utils.ServiceFuncoes;
