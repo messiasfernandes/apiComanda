@@ -10,12 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.comanda.converter.ProdutoConverter;
 import com.comanda.domain.entity.Produto;
-
 import com.comanda.domain.repository.ProdutosRepository;
 import com.comanda.domain.service.exeption.EntidadeEmUsoExeption;
 import com.comanda.domain.service.exeption.NegocioException;
 import com.comanda.domain.service.exeption.RegistroNaoEncontrado;
-
+import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.input.ProdutoInput;
 import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
@@ -143,4 +142,6 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 //	public boolean conveter(ProdutoInput produto){
 //		return produto.getComponentes().addAll(comoponentista);
 //	}
+	
+	 
 }

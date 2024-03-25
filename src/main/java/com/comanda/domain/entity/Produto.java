@@ -1,5 +1,6 @@
 package com.comanda.domain.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -46,7 +47,7 @@ public class Produto extends GeradorId {
 	private String descricao;
 	@Column(length = 250)
 	private String imagem;
-	@OneToOne(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "produto_id")
 	private Estoque estoque;
 	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
@@ -101,6 +102,7 @@ public class Produto extends GeradorId {
 				+ preco + ", tipoProduto=" + tipoProduto + ", codigoFabricante=" + codigoFabricante + ", componentes="
 				+ componentes + ", qtdeEstoque=" + qtdeEstoque + "]";
 	}
-	
+
+
 	
 }
