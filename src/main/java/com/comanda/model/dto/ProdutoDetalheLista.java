@@ -19,5 +19,6 @@ public class ProdutoDetalheLista {
 	@Transient
 	private Integer qtdePorUnidade=0;
 	private UnidadeMedida unidadeMedida;
+
 	
 }

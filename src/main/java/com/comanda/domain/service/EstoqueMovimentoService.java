@@ -58,10 +58,8 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		verificarMovimento(objeto);
 		if(!produto.getComponentes().isEmpty()) {
 			if(objeto.getTipoMovimentacao().equals(TipoMovimentacao.Saida)) {
-				for (int i = 0; i < produto.getComponentes().size(); i++) {
-				
-					movimentoEstoqueRepository.save(VerificarComponente(produto.getComponentes().get(i),
-							produto.getComponentes().get(i).getQtde().intValueExact(), objeto.getTipoMovimentacao()));
+				for (Componente componente : produto.getComponentes()) {
+					movimentoEstoqueRepository.save(VerificarComponente(componente, componente.getQtde().intValueExact(), objeto.getTipoMovimentacao()));
 				}
 			}
 		}

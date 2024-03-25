@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import com.comanda.domain.entity.Componente;
 import com.comanda.domain.entity.Produto;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.dto.ProdutoListagemDTo;
@@ -45,6 +46,7 @@ public class ProdutoConverter {
 	}
 
 	public Produto toEntity(ProdutoInput objeto) {
+		 
 		return modelMapper.map(objeto, Produto.class);
 	}
 

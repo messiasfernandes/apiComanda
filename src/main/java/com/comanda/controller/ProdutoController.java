@@ -58,6 +58,9 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 	@PostMapping
 	@Override
 	public ResponseEntity<ProdutoDto> criar( @RequestBody @Valid ProdutoInput produto, HttpServletResponse response) {
+	
+		//produto.definirIdsAutomaticamente();
+		//produto.conveter();
 		var produtosalvo = produtoService.salvar(produtoConverter.toEntity(produto));
 		criaevento(produtosalvo.getId(), response);
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDtoDetalhe(produtosalvo));
@@ -74,7 +77,8 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 	@PutMapping
 	@Override
 	public ResponseEntity<ProdutoDto> Atualizar( @Valid @RequestBody ProdutoInput produto) {
-		System.out.println(produto.getTipoProduto());
+		System.out.println(produto.getComponentes().size());
+	//var produtocomId=	produtoService.definirIdsAutomaticamente(produto);
 		return ResponseEntity.status(HttpStatus.OK).body(produtoConverter.toDtoDetalhe(produtoService.Alterar(produto)));
 	}
 

@@ -11,5 +11,5 @@ public class ComponenteInput {
 
 	private BigDecimal subtotal;
 	
-	private ProdutoComponenteInput produto;
+	private ProdutoInput produto;
 }
