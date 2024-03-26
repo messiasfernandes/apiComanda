@@ -1,7 +1,5 @@
 package com.comanda.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.comanda.api.ProdutoContrllerOpeAapi;
 import com.comanda.converter.ProdutoConverter;
-import com.comanda.domain.entity.Produto;
 import com.comanda.domain.service.ProdutoService;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.dto.ProdutoListagemDTo;
@@ -81,5 +78,6 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 		produtoService.excluir(id);
 		return ResponseEntity.noContent().build();
 	}
+	
 
 }

@@ -5,13 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.comanda.domain.entity.Componente;
 import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Transient;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

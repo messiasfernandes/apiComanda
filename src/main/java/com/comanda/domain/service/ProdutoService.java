@@ -1,7 +1,5 @@
 package com.comanda.domain.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -14,7 +12,6 @@ import com.comanda.domain.repository.ProdutosRepository;
 import com.comanda.domain.service.exeption.EntidadeEmUsoExeption;
 import com.comanda.domain.service.exeption.NegocioException;
 import com.comanda.domain.service.exeption.RegistroNaoEncontrado;
-import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.input.ProdutoInput;
 import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
@@ -24,7 +21,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produto> {
 	@Autowired
-	private ProdutosRepository daoProduto;
+	private ProdutosRepository produtoRepository;
 
 	@Autowired
 	private ProdutoConverter produtoConverter;
@@ -37,16 +34,16 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 		if (!ehnumero(nome) && (qtdecaraceteres(nome) >= 0)) {
 
 			nome = TolowerCase.normalizarString(nome);
-			page = daoProduto.Listar(nome, pageable);
+			page = produtoRepository.Listar(nome, pageable);
 
 		}
 		if ((ehnumero(nome)) && (qtdecaraceteres(nome) != 13)) {
 			Long id = Sonumero(nome);
 			System.out.println("id" + id);
-			page = daoProduto.buscarporId(id, pageable);
+			page = produtoRepository.buscarporId(id, pageable);
 		}
 		if ((ehnumero(nome)) && (qtdecaraceteres(nome) == 13)) {
-			page = daoProduto.buscarPorEan(nome, pageable);
+			page = produtoRepository.buscarPorEan(nome, pageable);
 		}
 
 		return page;
@@ -57,8 +54,8 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	public void excluir(Long codigo) {
 		try {
 			buccarporid(codigo);
-			daoProduto.deleteById(codigo);
-			daoProduto.flush();
+			produtoRepository.deleteById(codigo);
+			produtoRepository.flush();
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoExeption(
 					"Operação não permitida!! Este registro pode estar asssociado a outra tabela");
@@ -69,7 +66,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Override
 	public Produto buccarporid(Long id) {
 
-		var produto = daoProduto.findId(id).orElseThrow(() -> new RegistroNaoEncontrado("Produto não encontrado"));
+		var produto = produtoRepository.findId(id).orElseThrow(() -> new RegistroNaoEncontrado("Produto não encontrado"));
 
 		return produto;
 	}
@@ -77,7 +74,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Transactional()
 	public Produto Alterar(ProdutoInput objeto) {
 		System.out.println("produtoinput"+objeto);
-		var produtoEditado = daoProduto.getReferenceById(objeto.getId());
+		var produtoEditado = produtoRepository.getReferenceById(objeto.getId());
 		produtoEditado = produtoConverter.toEntity(objeto);
 		System.out.println(produtoEditado);
 		if (!objeto.getProdutoDetalhe().isEmpty()) {
@@ -95,8 +92,8 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 		}
 
-		return daoProduto.save(produtoEditado);
-		// daoProduto.save(daoProduto.findById(id).map( p->
+		return produtoRepository.save(produtoEditado);
+		// produtoRepository.save(produtoRepository.findById(id).map( p->
 		// produtoConverter.toEntity(objeto) ).get());
 	}
 
@@ -122,26 +119,8 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 			throw new NegocioException("Erro ao persistir os dados");
 		}
 
-		return daoProduto.save(objeto);
+		return produtoRepository.save(objeto);
 	}
-//	@Transient
-//	List <ComponenteInput> comoponentista = new ArrayList<>();
-//	public ProdutoInput definirIdsAutomaticamente(ProdutoInput produtoi) {
-//		
-//		Long proximoId = componentesRepository.obterProximoId();
-//		for (ComponenteInput componente : produtoi.getComoponentista()) {
-//		
-//				componente.setId(proximoId);	
-//			System.out.println("comopoo"+	componente.getProduto().getNome());
-//		
-//	           
-//			proximoId++;
-//		}
-//		return produtoi;
-////	}
-//	public boolean conveter(ProdutoInput produto){
-//		return produto.getComponentes().addAll(comoponentista);
-//	}
-	
+
 	 
 }

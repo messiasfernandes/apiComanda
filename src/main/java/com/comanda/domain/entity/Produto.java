@@ -1,6 +1,5 @@
 package com.comanda.domain.entity;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.hibernate.annotations.FetchMode;
 
 import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -47,26 +45,26 @@ public class Produto extends GeradorId {
 	private String descricao;
 	@Column(length = 250)
 	private String imagem;
-	@OneToOne(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "produto_id")
 	private Estoque estoque;
 	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
-	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "marca_id")
-	 @BatchSize(size = 10)
+	
 	private Marca marca;
 	 @Fetch(FetchMode.SUBSELECT)
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
 	private List<ProdutoDetalhe> produtoDetalhe = new ArrayList<>();
 	@JsonIgnoreProperties(value = { "nomeSubgrupo" }, allowGetters = true)
-	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "subgrupo_id")
-	 @BatchSize(size = 10)
+	
 	private SubGrupo subgrupo;
-	@OneToOne(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
+	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "produto_id")
-	 @BatchSize(size = 10)
+	
 	private Preco preco;
 	@Column(length = 15)
 	@Enumerated(EnumType.STRING)
@@ -75,9 +73,9 @@ public class Produto extends GeradorId {
 	private String codigoFabricante;
 
 	@Fetch(FetchMode.SUBSELECT)
-	@BatchSize(size = 10)
-	//@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@BatchSize(size = 5)
+	//@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	@JoinTable(name = "composisao", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "componente_id"))
 	private Set<Componente> componentes = new HashSet<>();
 
