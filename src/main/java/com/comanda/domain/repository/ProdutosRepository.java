@@ -31,7 +31,7 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long> {
 
 	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
 			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
-		//	+ "LEFT JOIN FETCH p.componentes c "
+		+ "LEFT JOIN FETCH p.componentes c "
 			+ "LEFT JOIN FETCH p.subgrupo.grupo sg " + "WHERE pc.codigobarras = :parametro")
 	Page<Produto> buscarPorEan(@Param("parametro") String parametro, Pageable pageable);
 
@@ -43,7 +43,7 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long> {
 
 	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
 			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
-		//+ "LEFT JOIN FETCH p.componentes c "
+	+ "LEFT JOIN FETCH p.componentes c "
 			+ "LEFT JOIN FETCH p.subgrupo.grupo sg " + "WHERE p.id =:id")
 	Optional<Produto> findId(Long id);
 	
