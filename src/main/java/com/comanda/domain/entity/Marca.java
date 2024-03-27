@@ -1,6 +1,7 @@
 package com.comanda.domain.entity;
 
 import com.comanda.utils.TolowerCase;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 //mport br.com.omnisoftapi.utils.TolowerCase;
 import jakarta.persistence.Column;
@@ -11,12 +12,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-
+@JsonIgnoreProperties(ignoreUnknown = true, 
+value = {"hibernateLazyInitializer", "handler", "created"})
 @Setter
 @Getter
 @Entity
 @Table(name = "tab_marca")
-
 public class Marca extends GeradorId {
 
 	

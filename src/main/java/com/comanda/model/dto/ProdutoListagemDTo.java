@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import com.comanda.domain.enumerado.SituacaoEstoque;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
-
+@JsonInclude(Include.NON_EMPTY)
 @Data
 public class ProdutoListagemDTo {
     private Long id;
@@ -21,8 +23,10 @@ public class ProdutoListagemDTo {
     private String subgrupo;
     private SituacaoEstoque situacao;
      private PrecoDto preco;
+     
     private List<ProdutoDetalheLista> produtoDetalhe = new ArrayList<>();
 	//private Set<ComponeteDTO> componentes;
+   
     private Set<ComponeteDTO> componentes = new HashSet<>();
     
 }
