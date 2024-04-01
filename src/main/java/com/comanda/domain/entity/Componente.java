@@ -43,9 +43,9 @@ public class Componente implements Serializable {
 	private BigDecimal qtde;
 	@Column
 	private BigDecimal subtotal;
-	 
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+
+//	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(nullable = false)
 	private Produto produto;
 	

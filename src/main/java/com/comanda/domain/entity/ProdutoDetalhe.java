@@ -3,6 +3,7 @@ package com.comanda.domain.entity;
 import java.math.BigDecimal;
 
 import com.comanda.domain.enumerado.UnidadeMedida;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +29,7 @@ public class ProdutoDetalhe extends GeradorId {
 	
 	@Column(length = 13)
 	private String codigobarras;
-	//@JsonIgnore
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	private Produto produto;

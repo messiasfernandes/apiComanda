@@ -5,11 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.comanda.domain.entity.Componente;
+import com.comanda.domain.enumerado.SituacaoEstoque;
 import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Transient;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,14 +36,15 @@ public class ProdutoInput {
 	private String descricao;
 	private String imagem;
 	private EstoqueInput estoque;
-
-	private MarcaInput marca;
+//	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
+	private MarcaInput marca = new MarcaInput();
 	private PrecoInput preco =new PrecoInput();
 	private SubGrupoInput subgrupo;
 	@Enumerated(EnumType.STRING)
 	private TipoProduto tipoProduto;
 	private String codigoFabricante;
-
+	@JsonIgnoreProperties
+	 private SituacaoEstoque situacao;
 	public void setNome(String nome) {
 		this.nome = TolowerCase.normalizarString(nome);
 	}
@@ -52,7 +57,15 @@ public class ProdutoInput {
 	private List<produtoDetalheInput> produtoDetalhe = new ArrayList<>();
 	
 	
-	private Set<ComponenteInput> componentes = new HashSet<>();
+	private Set<Componente> componentes = new HashSet<>();
+
+	@Override
+	public String toString() {
+		return "ProdutoInput [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", imagem=" + imagem
+				+ ", estoque=" + estoque + ", marca=" + marca + ", preco=" + preco + ", subgrupo=" + subgrupo
+				+ ", tipoProduto=" + tipoProduto + ", codigoFabricante=" + codigoFabricante + ", produtoDetalhe="
+				+ produtoDetalhe + ", componentes=" + componentes + "]";
+	}
 
 //	public void definirIdsAutomaticamente() {
 //		
@@ -74,4 +87,5 @@ public class ProdutoInput {
 //		}
 //	}
 //	
+	
 }

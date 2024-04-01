@@ -81,12 +81,12 @@ public class ControllerdeErros {
 		;
         return ResponseEntity.status(status).body(problema);
     }
-	@ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Object> jsonErro (HttpMessageNotReadableException ex) {
-		var status = HttpStatus.BAD_REQUEST;
-		var problema = Problema.builder().status(status.value()).titulo("Houve um erro no preenchimento dos dados. Por favor, verifique se os dados estão corretos e tente novamente."+ ex.getMessage()).dataHora(OffsetDateTime.now())
-				.build();
-		;
-        return ResponseEntity.status(status).body(problema);
-    }
+//	@ExceptionHandler(HttpMessageNotReadableException.class)
+//    public ResponseEntity<Object> jsonErro (HttpMessageNotReadableException ex) {
+//		var status = HttpStatus.BAD_REQUEST;
+//		var problema = Problema.builder().status(status.value()).titulo("Houve um erro no preenchimento dos dados. Por favor, verifique se os dados estão corretos e tente novamente."+ ex.getMessage()).dataHora(OffsetDateTime.now())
+//				.build();
+//		;
+//        return ResponseEntity.status(status).body(problema);
+//    }
 }

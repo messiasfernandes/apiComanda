@@ -9,6 +9,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.comanda.domain.enumerado.SituacaoEstoque;
 import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -51,8 +52,9 @@ public class Produto extends GeradorId {
 	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
 	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "marca_id")
-	
 	private Marca marca;
+	@Transient
+	 private SituacaoEstoque situacao;
 	 @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)

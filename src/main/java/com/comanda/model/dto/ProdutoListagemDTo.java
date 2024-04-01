@@ -17,10 +17,10 @@ public class ProdutoListagemDTo {
     private String nome;
    // private EstoqueDto estoque;
 
-	private String marca;
+	private MarcaDto marca;
 
 
-    private String subgrupo;
+    private SubGrupoDTO subgrupo;
     private SituacaoEstoque situacao;
      private PrecoDto preco;
      
