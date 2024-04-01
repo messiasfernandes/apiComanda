@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.comanda.domain.entity.Produto;
+import com.comanda.model.dto.ProdutoComponenteDTo;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
@@ -26,7 +27,7 @@ public class ProdutoConverter {
 			    
 			
 		return modelMapper.map(objeto, ProdutoDto.class);
-		// new DetalharProdutoR(objeto);
+		
 	
 	}
 
@@ -73,5 +74,14 @@ public class ProdutoConverter {
 	public List<ProdutoListagemDTo> toCollectionDto(List<Produto> objetos) {
 		return objetos.stream().map(this::toDto).collect(Collectors.toList());
 	}
+	public Page<ProdutoComponenteDTo> topageComp(Page<Produto> objetos) {
 
+		return objetos.map(obj -> toDtoComp(obj));
+	}
+	public ProdutoComponenteDTo toDtoComp(Produto objeto) {
+
+		
+
+		return modelMapper.map(objeto, ProdutoComponenteDTo.class);
+	}
 }

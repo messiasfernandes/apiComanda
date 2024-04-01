@@ -32,9 +32,9 @@ public class Variacao implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(nullable = false)
 	private Caracteristica caracteristica;
-	@NotBlank
-	@Column(length = 80)
-	private String opcao;
+//	@NotBlank
+//	@Column(length = 80)
+//	private String opcao;
 	//@JsonManagedReference
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)

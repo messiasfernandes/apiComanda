@@ -1,11 +1,19 @@
 package com.comanda.domain.entity;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.comanda.domain.enumerado.UnidadeMedida;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -41,7 +49,11 @@ public class ProdutoDetalhe extends GeradorId {
 	@Transient
 	@Getter(value = AccessLevel.NONE)
 	private Integer qtdePorUnidade = 0;
-
+	@Fetch(FetchMode.SUBSELECT)
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "produto_atributo", joinColumns = @JoinColumn(name = "id"))
+	@BatchSize(size = 10)
+	private Set<Atributo> atributos = new HashSet<>();
 	public Integer getQtdePorUnidade() {
 		if (produto.getEstoque() != null) {
 

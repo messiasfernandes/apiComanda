@@ -66,7 +66,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Override
 	public Produto buccarporid(Long id) {
 
-		var produto = produtoRepository.findId(id).orElseThrow(() -> new RegistroNaoEncontrado("Produto não encontrado"));
+		var produto = produtoRepository.findProdutoWithDetalhesAndComponentes(id).orElseThrow(() -> new RegistroNaoEncontrado("Produto não encontrado"));
 
 		return produto;
 	}
@@ -76,7 +76,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 		System.out.println("produtoinput"+objeto);
 		var produtoEditado = produtoRepository.getReferenceById(objeto.getId());
 		produtoEditado = produtoConverter.toEntity(objeto);
-		System.out.println(produtoEditado);
+		
 		if (!objeto.getProdutoDetalhe().isEmpty()) {
 			System.out.println(objeto.getProdutoDetalhe().size());
 			produtoEditado.getProdutoDetalhe().forEach(p -> p.setProduto(produtoConverter.toEntity(objeto)));

@@ -26,7 +26,7 @@ public class ProdutoDto {
 	private String codigoFabricante;
 	private List<ProdutoDetalheDto> produtoDetalhe = new ArrayList<>();
 
-	private Set<ComponeteDTO> componentes = new HashSet<>();
+    private Set<ComponeteDTO> componentes = new HashSet<>();
 
 
 	

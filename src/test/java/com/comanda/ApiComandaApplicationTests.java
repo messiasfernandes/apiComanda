@@ -54,7 +54,7 @@ class ApiComandaApplicationTests {
 		Componente c1 = new Componente();
 		c1.setId(componentesRepository.obterProximoId());
 		c1.setProduto(produto.get());
-		var produto2 = produtosRepository.findId(33l).get();
+		var produto2 = produtosRepository.findProdutoWithDetalhesAndComponentes(33l).get();
 		Componente c2 = new Componente();
 		c2.setId(componentesRepository.obterProximoId());
 		System.out.println(c2.getId());

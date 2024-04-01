@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Transient;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -43,8 +43,7 @@ public class ProdutoInput {
 	@Enumerated(EnumType.STRING)
 	private TipoProduto tipoProduto;
 	private String codigoFabricante;
-	@JsonIgnoreProperties
-	 private SituacaoEstoque situacao;
+
 	public void setNome(String nome) {
 		this.nome = TolowerCase.normalizarString(nome);
 	}

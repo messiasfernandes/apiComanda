@@ -53,8 +53,7 @@ public class Produto extends GeradorId {
 	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "marca_id")
 	private Marca marca;
-	@Transient
-	 private SituacaoEstoque situacao;
+	
 	 @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
@@ -76,7 +75,7 @@ public class Produto extends GeradorId {
 
 	@Fetch(FetchMode.SUBSELECT)
 	@BatchSize(size = 5)
-	//@OneToMany(fetch = FetchType.EAGER, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	@JoinTable(name = "composisao", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "componente_id"))
 	private Set<Componente> componentes = new HashSet<>();
@@ -98,13 +97,7 @@ public class Produto extends GeradorId {
 		this.nome = TolowerCase.normalizarString(nome);
 	}
 
-	@Override
-	public String toString() {
-		return "Produto [nome=" + nome + ", descricao=" + descricao + ", imagem=" + imagem + ", estoque=" + estoque
-				+ ", marca=" + marca + ", produtoDetalhe=" + produtoDetalhe + ", subgrupo=" + subgrupo + ", preco="
-				+ preco + ", tipoProduto=" + tipoProduto + ", codigoFabricante=" + codigoFabricante + ", componentes="
-				+ componentes + ", qtdeEstoque=" + qtdeEstoque + "]";
-	}
+
 
 
 	

@@ -35,7 +35,8 @@ public class Grade extends GeradorId {
 	@Digits(integer = 9, fraction = 3)
 	@Column
 	private BigDecimal quantidade = BigDecimal.ZERO;
-	@JsonManagedReference
+	
+	//@JsonBackReference
 	 @Fetch(FetchMode.SUBSELECT)
 		@OneToMany(fetch = FetchType.EAGER, mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
 		@BatchSize(size = 10)

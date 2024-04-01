@@ -1,7 +1,10 @@
 package com.comanda.model.dto;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.comanda.domain.entity.Atributo;
 import com.comanda.domain.enumerado.UnidadeMedida;
 
 import jakarta.persistence.Transient;
@@ -19,6 +22,6 @@ public class ProdutoDetalheLista {
 	@Transient
 	private Integer qtdePorUnidade=0;
 	private UnidadeMedida unidadeMedida;
-
+	 private Set<Atributo> atributos = new HashSet<>();
 	
 }

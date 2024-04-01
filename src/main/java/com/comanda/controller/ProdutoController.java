@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.comanda.api.ProdutoContrllerOpeAapi;
 import com.comanda.converter.ProdutoConverter;
 import com.comanda.domain.service.ProdutoService;
+import com.comanda.model.dto.ProdutoComponenteDTo;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
@@ -43,13 +44,22 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(produtoConverter.topage(produtoService.buscar(parametro, page)));
 	}
+	//@GetMapping("/componentes")
+	
+	public ResponseEntity<Page<ProdutoComponenteDTo>> listarProdComponentes(
+			@RequestParam(value = "parametro", required = false, defaultValue = "") String parametro,
+			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
+			@RequestParam(value = "size", defaultValue = "10") Integer size, Pageable page) {
+
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(produtoConverter.topageComp(produtoService.buscar(parametro, page)));
+	}
 
 	@PostMapping
 	@Override
 	public ResponseEntity<ProdutoDto> criar(@RequestBody @Valid ProdutoInput produto, HttpServletResponse response) {
 
-		// produto.definirIdsAutomaticamente();
-		// produto.conveter();
+	
 		var produtosalvo = produtoService.salvar(produtoConverter.toEntity(produto));
 		criaevento(produtosalvo.getId(), response);
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoConverter.toDtoDetalhe(produtosalvo));
