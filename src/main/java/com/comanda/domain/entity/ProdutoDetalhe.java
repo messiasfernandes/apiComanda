@@ -1,5 +1,6 @@
 package com.comanda.domain.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +12,6 @@ import org.hibernate.annotations.FetchMode;
 import com.comanda.domain.enumerado.UnidadeMedida;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -19,24 +19,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
 @Table(name = "tab_produtoDetalhe")
-public class ProdutoDetalhe extends GeradorId {
+public class ProdutoDetalhe implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@Column(length = 13)
 	private String codigobarras;
 	@JsonIgnore
@@ -51,9 +56,13 @@ public class ProdutoDetalhe extends GeradorId {
 	@Transient
 	@Getter(value = AccessLevel.NONE)
 	private Integer qtdePorUnidade = 0;
+
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produtoDetalhe", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(FetchMode.SUBSELECT)
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produtoDetalhe", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "produto_atributos", joinColumns = @JoinColumn(name = "produtodetalhe_id"))
 	@BatchSize(size = 10)
+	
 	private Set<Atributo> atributos = new HashSet<>();
 	public Integer getQtdePorUnidade() {
 		if (produto.getEstoque() != null) {

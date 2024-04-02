@@ -13,8 +13,6 @@ import com.comanda.model.dto.ProdutoComponenteDTo;
 import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.dto.ProdutoListagemDTo;
 import com.comanda.model.input.ProdutoInput;
-import com.comanda.model.recorddto.DetalharProdutoR;
-import com.comanda.model.recorddto.ProdutoListaDtoR;
 
 @Component
 public class ProdutoConverter {
@@ -58,18 +56,18 @@ public class ProdutoConverter {
 		return objetos.map(obj -> toDto(obj));
 	}
 
-	public ProdutoListaDtoR toRecDTo(Produto produto) {
-		return new ProdutoListaDtoR(produto);
-	}
+//	public ProdutoListaDtoR toRecDTo(Produto produto) {
+//		return new ProdutoListaDtoR(produto);
+//	}
 
-	public Page<ProdutoListaDtoR> topageRecDto(Page<Produto> objetos) {
+//	public Page<ProdutoListaDtoR> topageRecDto(Page<Produto> objetos) {
+//
+//		return objetos.map(obj -> toRecDTo(obj));
+//	}
 
-		return objetos.map(obj -> toRecDTo(obj));
-	}
-
-	public DetalharProdutoR toRecDto(Produto produto) {
-		return new DetalharProdutoR(produto);
-	}
+//	public DetalharProdutoR toRecDto(Produto produto) {
+//		return new DetalharProdutoR(produto);
+//	}
 	
 	public List<ProdutoListagemDTo> toCollectionDto(List<Produto> objetos) {
 		return objetos.stream().map(this::toDto).collect(Collectors.toList());

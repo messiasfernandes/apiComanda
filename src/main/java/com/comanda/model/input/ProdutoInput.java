@@ -6,14 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import com.comanda.domain.entity.Componente;
-import com.comanda.domain.enumerado.SituacaoEstoque;
 import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

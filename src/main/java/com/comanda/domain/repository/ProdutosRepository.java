@@ -17,26 +17,40 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long>, Produt
 
 	@Query(value = "SELECT DISTINCT (p) FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
 			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
-			+ "LEFT JOIN FETCH p.subgrupo.grupo sg " + "LEFT JOIN FETCH pc.atributos a "
-
+			+ "LEFT JOIN FETCH p.subgrupo.grupo sg " +
+			"LEFT JOIN FETCH pc.atributos a "
+		+	"LEFT JOIN FETCH p.componentes c "
+		+	"LEFT JOIN FETCH c.produto pco "
+		+	"LEFT JOIN FETCH pco.estoque ec "
+		+	"LEFT JOIN FETCH pco.preco pp "
+		+	"LEFT JOIN FETCH pco.subgrupo pcs "
+		+	"LEFT JOIN FETCH pcs.grupo pcg "
 			+ "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%  OR s.nomeSubgrupo LIKE %:parametro% "
 			+ "OR sg.nomeGrupo LIKE %:parametro% " + "ORDER BY  p.nome ")
-//	       countQuery = "SELECT COUNT(DISTINCT p.id) FROM Produto p " +
-//	                    "LEFT JOIN  p.marca m " +
-//	    		         "LEfT JOIN p.preco pe"
-//+	                    "LEFT JOIN p.estoque e " +
-//	                    "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%")
 	Page<Produto> Listar(@Param("parametro") String parametro, Pageable pageable);
 
 	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
 			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
-
+			+"LEFT JOIN FETCH pc.atributos a "
+			+	"LEFT JOIN FETCH p.componentes c "
+			+	"LEFT JOIN FETCH c.produto pco "
+			+	"LEFT JOIN FETCH pco.estoque ec "
+			+	"LEFT JOIN FETCH pco.preco pp "
+			+	"LEFT JOIN FETCH pco.subgrupo pcs "
+			+	"LEFT JOIN FETCH pcs.grupo pcg "
 			+ "WHERE     pc.codigobarras = :parametro")
 	Page<Produto> buscarPorEan(@Param("parametro") String parametro, Pageable pageable);
 
 	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
 			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
 			+"LEFT JOIN FETCH s.grupo sg "
+			+"LEFT JOIN FETCH pc.atributos a "
+			+	"LEFT JOIN FETCH p.componentes c "
+			+	"LEFT JOIN FETCH c.produto pco "
+			+	"LEFT JOIN FETCH pco.estoque ec "
+			+	"LEFT JOIN FETCH pco.preco pp "
+			+	"LEFT JOIN FETCH pco.subgrupo pcs "
+			+	"LEFT JOIN FETCH pcs.grupo pcg "
 			+ "WHERE     p.id =:parametro")
 	Page<Produto> buscarporId(Long parametro, Pageable pageable);
 
@@ -46,7 +60,15 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long>, Produt
 			+ "LEFT JOIN FETCH p.preco pe " 
 	+ "LEFT JOIN FETCH p.produtoDetalhe pc "
 			+ "LEFT JOIN FETCH p.subgrupo s "
-			+ "LEFT JOIN FETCH s.grupo sg " + "WHERE p.id =:id")
+			+ "LEFT JOIN FETCH s.grupo sg "
+			+"LEFT JOIN FETCH pc.atributos a "
+			+	"LEFT JOIN FETCH p.componentes c "
+			+	"LEFT JOIN FETCH c.produto pco "
+			+	"LEFT JOIN FETCH pco.estoque ec "
+			+	"LEFT JOIN FETCH pco.preco pp "
+			+	"LEFT JOIN FETCH pco.subgrupo pcs "
+			+	"LEFT JOIN FETCH pcs.grupo pcg "
+			+ "WHERE p.id =:id")
 	Optional<Produto> findProdutoWithDetalhesAndComponentes(Long id);
 
 }

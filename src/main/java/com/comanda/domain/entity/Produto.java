@@ -57,15 +57,13 @@ public class Produto extends GeradorId {
 	 @Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
-	private List<ProdutoDetalhe> produtoDetalhe = new ArrayList<>();
+	private Set<ProdutoDetalhe> produtoDetalhe = new HashSet<>();
 	@JsonIgnoreProperties(value = { "nomeSubgrupo" }, allowGetters = true)
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "subgrupo_id")
-	
 	private SubGrupo subgrupo;
 	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "produto_id")
-	
 	private Preco preco;
 	@Column(length = 15)
 	@Enumerated(EnumType.STRING)

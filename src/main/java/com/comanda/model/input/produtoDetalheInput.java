@@ -1,9 +1,12 @@
 package com.comanda.model.input;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.validator.constraints.EAN;
 
+import com.comanda.domain.entity.Atributo;
 import com.comanda.domain.enumerado.UnidadeMedida;
 
 import jakarta.persistence.EnumType;
@@ -29,5 +32,6 @@ public class produtoDetalheInput {
 	@NotNull
 	@Enumerated(EnumType.STRING )
 	private UnidadeMedida unidadeMedida;
-
+	
+	private Set<Atributo> atributos = new HashSet<>();
 }
