@@ -11,6 +11,7 @@ import org.hibernate.annotations.FetchMode;
 import com.comanda.domain.enumerado.UnidadeMedida;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -20,6 +21,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
@@ -50,8 +52,7 @@ public class ProdutoDetalhe extends GeradorId {
 	@Getter(value = AccessLevel.NONE)
 	private Integer qtdePorUnidade = 0;
 	@Fetch(FetchMode.SUBSELECT)
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "produto_atributo", joinColumns = @JoinColumn(name = "id"))
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "produtoDetalhe", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
 	private Set<Atributo> atributos = new HashSet<>();
 	public Integer getQtdePorUnidade() {

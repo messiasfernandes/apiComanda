@@ -15,13 +15,10 @@ import com.comanda.domain.query.ProdutoQuery;
 @Repository
 public interface ProdutosRepository extends JpaRepository<Produto, Long>, ProdutoQuery {
 
-	@Query(value = "SELECT DISTINCT (p) FROM Produto p " + "LEFT JOIN FETCH p.marca m " 
-	         + "LEFT JOIN FETCH p.estoque e "
-			+ "LEFT JOIN FETCH p.preco pe " 
-			+ "LEFT JOIN FETCH p.produtoDetalhe pc " 
-			+ "LEFT JOIN FETCH p.subgrupo s "
-			+ "LEFT JOIN FETCH p.subgrupo.grupo sg "
-		
+	@Query(value = "SELECT DISTINCT (p) FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
+			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
+			+ "LEFT JOIN FETCH p.subgrupo.grupo sg " + "LEFT JOIN FETCH pc.atributos a "
+
 			+ "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%  OR s.nomeSubgrupo LIKE %:parametro% "
 			+ "OR sg.nomeGrupo LIKE %:parametro% " + "ORDER BY  p.nome ")
 //	       countQuery = "SELECT COUNT(DISTINCT p.id) FROM Produto p " +
@@ -31,26 +28,25 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long>, Produt
 //	                    "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%")
 	Page<Produto> Listar(@Param("parametro") String parametro, Pageable pageable);
 
-	@Query(value = "SELECT DISTINCT p FROM Produto p " 
-	+ "LEFT JOIN FETCH p.marca m " 
-			 + "LEFT JOIN FETCH p.estoque e "
-			+ "LEFT JOIN FETCH p.preco pe " 
-	        + "LEFT JOIN FETCH p.produtoDetalhe pc " 
-			+ "LEFT JOIN FETCH p.subgrupo s "
-			
-			+ "LEFT JOIN FETCH p.subgrupo.grupo sg " + "WHERE pc.codigobarras = :parametro")
+	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
+			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
+
+			+ "WHERE     pc.codigobarras = :parametro")
 	Page<Produto> buscarPorEan(@Param("parametro") String parametro, Pageable pageable);
 
 	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
 			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
-		
-			+ "LEFT JOIN FETCH s.grupo sg " + "WHERE p.id =:parametro")
+			+"LEFT JOIN FETCH s.grupo sg "
+			+ "WHERE     p.id =:parametro")
 	Page<Produto> buscarporId(Long parametro, Pageable pageable);
 
-	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
-			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "  
-		+	"LEFT JOIN FETCH s.grupo sg " + "WHERE p.id =:id")
-
+	@Query(value = "SELECT DISTINCT p FROM Produto p " 
+	+"LEFT JOIN FETCH p.marca m " 
+			+ "LEFT JOIN FETCH p.estoque e "
+			+ "LEFT JOIN FETCH p.preco pe " 
+	+ "LEFT JOIN FETCH p.produtoDetalhe pc "
+			+ "LEFT JOIN FETCH p.subgrupo s "
+			+ "LEFT JOIN FETCH s.grupo sg " + "WHERE p.id =:id")
 	Optional<Produto> findProdutoWithDetalhesAndComponentes(Long id);
 
 }
