@@ -16,12 +16,13 @@ import com.comanda.domain.query.ProdutoQuery;
 public interface ProdutosRepository extends JpaRepository<Produto, Long>, ProdutoQuery {
 
 	@Query(value = "SELECT DISTINCT (p) FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
-			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
+			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pd " + "LEFT JOIN FETCH p.subgrupo s "
 			+ "LEFT JOIN FETCH p.subgrupo.grupo sg " +
-			"LEFT JOIN FETCH pc.atributos a "
+			"LEFT JOIN FETCH pd.atributos a "
 		+	"LEFT JOIN FETCH p.componentes c "
 		+	"LEFT JOIN FETCH c.produto pco "
 		+	"LEFT JOIN FETCH pco.estoque ec "
+		+	"LEFT JOIN FETCH pco.marca pm "
 		+	"LEFT JOIN FETCH pco.preco pp "
 		+	"LEFT JOIN FETCH pco.subgrupo pcs "
 		+	"LEFT JOIN FETCH pcs.grupo pcg "
@@ -36,6 +37,7 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long>, Produt
 			+	"LEFT JOIN FETCH c.produto pco "
 			+	"LEFT JOIN FETCH pco.estoque ec "
 			+	"LEFT JOIN FETCH pco.preco pp "
+			+	"LEFT JOIN FETCH pco.marca pm "
 			+	"LEFT JOIN FETCH pco.subgrupo pcs "
 			+	"LEFT JOIN FETCH pcs.grupo pcg "
 			+ "WHERE     pc.codigobarras = :parametro")
@@ -48,6 +50,7 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long>, Produt
 			+	"LEFT JOIN FETCH p.componentes c "
 			+	"LEFT JOIN FETCH c.produto pco "
 			+	"LEFT JOIN FETCH pco.estoque ec "
+			+	"LEFT JOIN FETCH pco.marca pm "
 			+	"LEFT JOIN FETCH pco.preco pp "
 			+	"LEFT JOIN FETCH pco.subgrupo pcs "
 			+	"LEFT JOIN FETCH pcs.grupo pcg "
@@ -66,6 +69,7 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long>, Produt
 			+	"LEFT JOIN FETCH c.produto pco "
 			+	"LEFT JOIN FETCH pco.estoque ec "
 			+	"LEFT JOIN FETCH pco.preco pp "
+			+	"LEFT JOIN FETCH pco.marca pm "
 			+	"LEFT JOIN FETCH pco.subgrupo pcs "
 			+	"LEFT JOIN FETCH pcs.grupo pcg "
 			+ "WHERE p.id =:id")

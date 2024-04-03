@@ -8,6 +8,7 @@ import com.comanda.utils.TolowerCase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,8 @@ import lombok.Setter;
  * @author messias
  *
  */
+
+@EqualsAndHashCode
 @Getter
 @Setter
 @Embeddable

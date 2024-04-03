@@ -34,8 +34,8 @@ public class ProdutoInput {
 	private String imagem;
 	private EstoqueInput estoque;
 //	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
-	private MarcaInput marca = new MarcaInput();
-	private PrecoInput preco =new PrecoInput();
+	private MarcaInput marca ;
+	private PrecoInput preco;
 	private SubGrupoInput subgrupo;
 	@Enumerated(EnumType.STRING)
 	private TipoProduto tipoProduto;
@@ -50,7 +50,7 @@ public class ProdutoInput {
 	}
 
 	@Valid
-	private List<produtoDetalheInput> produtoDetalhe = new ArrayList<>();
+	private Set<produtoDetalheInput> produtoDetalhe = new HashSet<>();
 	
 	
 	private Set<Componente> componentes = new HashSet<>();

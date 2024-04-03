@@ -3,6 +3,7 @@ package com.comanda.domain.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.hibernate.annotations.BatchSize;
@@ -24,6 +25,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
@@ -31,13 +33,14 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-@EqualsAndHashCode
+
 @Getter
 @Setter
 @Entity
 @Table(name = "tab_produtoDetalhe")
 public class ProdutoDetalhe implements Serializable  {
 
+	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +64,7 @@ public class ProdutoDetalhe implements Serializable  {
 	@Fetch(FetchMode.SUBSELECT)
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "produto_atributos", joinColumns = @JoinColumn(name = "produtodetalhe_id"))
+	@OrderColumn
 	@BatchSize(size = 10)
 	
 	private Set<Atributo> atributos = new HashSet<>();
@@ -72,5 +76,21 @@ public class ProdutoDetalhe implements Serializable  {
 			return qtdePorUnidade;
 		}
 
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProdutoDetalhe other = (ProdutoDetalhe) obj;
+		return Objects.equals(id, other.id);
 	}
 }
