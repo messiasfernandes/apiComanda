@@ -44,7 +44,7 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(produtoConverter.topage(produtoService.buscar(parametro, page)));
 	}
-	//@GetMapping("/componentes")
+	@GetMapping("/componentes")
 	
 	public ResponseEntity<Page<ProdutoComponenteDTo>> listarProdComponentes(
 			@RequestParam(value = "parametro", required = false, defaultValue = "") String parametro,

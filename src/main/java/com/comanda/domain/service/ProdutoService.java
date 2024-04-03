@@ -1,8 +1,5 @@
 package com.comanda.domain.service;
 
-import java.util.List;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -11,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.comanda.converter.ProdutoConverter;
 import com.comanda.domain.entity.Produto;
-import com.comanda.domain.entity.ProdutoDetalhe;
 import com.comanda.domain.repository.ProdutosRepository;
 import com.comanda.domain.service.exeption.EntidadeEmUsoExeption;
 import com.comanda.domain.service.exeption.NegocioException;
@@ -30,7 +26,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Autowired
 	private ProdutoConverter produtoConverter;
 
-	@Transactional
+//	@Transactional
 	@Override
 	public Page<Produto> buscar(String nome, Pageable pageable) {
 

@@ -30,7 +30,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,7 +46,7 @@ public class ProdutoDetalhe implements Serializable  {
 	private Long id;
 	@Column(length = 13)
 	private String codigobarras;
-	@JsonIgnore
+    @JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	private Produto produto;

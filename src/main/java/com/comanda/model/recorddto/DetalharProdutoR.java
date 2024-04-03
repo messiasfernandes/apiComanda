@@ -3,7 +3,6 @@ package com.comanda.model.recorddto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.comanda.domain.entity.Produto;
 import com.comanda.domain.entity.ProdutoDetalhe;
 
 public record DetalharProdutoR(Long id, String nome, String descricao, DetalharMarcaR marca,

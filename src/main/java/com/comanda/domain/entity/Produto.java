@@ -1,15 +1,12 @@
 package com.comanda.domain.entity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import com.comanda.domain.enumerado.SituacaoEstoque;
 import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
