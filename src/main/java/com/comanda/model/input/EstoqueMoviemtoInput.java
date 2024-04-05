@@ -22,7 +22,7 @@ import lombok.Data;
 public class EstoqueMoviemtoInput {
 	
 	@Enumerated(EnumType.STRING)
-	private TipoMovimentacao tipoMovimentacao;
+	private TipoMovimentacao tipo;
 	//@Column(columnDefinition = "TIMESTAMP")
 	@DateTimeFormat(pattern = " dd/MM/yyyy HH:mm ")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
