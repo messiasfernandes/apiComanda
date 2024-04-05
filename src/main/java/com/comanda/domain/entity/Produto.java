@@ -92,6 +92,14 @@ public class Produto extends GeradorId {
 		this.nome = TolowerCase.normalizarString(nome);
 	}
 
+	@Override
+	public String toString() {
+		return "Produto [nome=" + nome + ", descricao=" + descricao + ", imagem=" + imagem + ", estoque=" + estoque
+				+ ", marca=" + marca + ", produtoDetalhe=" + produtoDetalhe + ", subgrupo=" + subgrupo + ", preco="
+				+ preco + ", tipoProduto=" + tipoProduto + ", codigoFabricante=" + codigoFabricante + ", componentes="
+				+ componentes + ", qtdeEstoque=" + qtdeEstoque + "]";
+	}
+
 
 
 

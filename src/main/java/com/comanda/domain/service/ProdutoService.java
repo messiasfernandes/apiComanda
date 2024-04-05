@@ -87,7 +87,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 		}
 		if (!produtoEditado.getComponentes().isEmpty()) {
 
-			produtoEditado.getComponentes().forEach(c -> c.getProduto().setPreco(c.getProduto().getPreco()));
+		//	produtoEditado.getComponentes().forEach(c -> c.getProduto().setPreco(c.getProduto().getPreco()));
 			produtoEditado.getComponentes().forEach(c -> c.setProduto(c.getProduto()));
 
 		}
@@ -112,8 +112,9 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 			}
 			if (!objeto.getComponentes().isEmpty()) {
-
+               System.out.println(objeto);
 				objeto.getComponentes().forEach(c -> c.setProduto(c.getProduto()));
+				 System.out.println("altrado"+ objeto);
 			}
 		} catch (NegocioException e) {
 			throw new NegocioException("Erro ao persistir os dados");

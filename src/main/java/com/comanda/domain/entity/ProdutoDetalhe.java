@@ -76,10 +76,9 @@ public class ProdutoDetalhe implements Serializable  {
 		}
 
 	}
-	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(codigobarras, id);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -90,6 +89,8 @@ public class ProdutoDetalhe implements Serializable  {
 		if (getClass() != obj.getClass())
 			return false;
 		ProdutoDetalhe other = (ProdutoDetalhe) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(codigobarras, other.codigobarras) && Objects.equals(id, other.id);
 	}
+	
+
 }

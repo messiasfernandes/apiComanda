@@ -20,7 +20,7 @@ public class ProdutoComponenteDTo {
 	   
 	     private PrecoDto preco;
 	     
-	    private List<ProdutoDetalheLista> produtoDetalhe = new ArrayList<>();
+	    private List<ProdutoDetalheComponenteDto> produtoDetalhe = new ArrayList<>();
 		//private Set<ComponeteDTO> componentes;
 	   
 	    private Set<ComponeteDTO> componentes = new HashSet<>();

@@ -1,0 +1,23 @@
+package com.comanda.model.dto;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import lombok.Data;
+@JsonInclude(Include.NON_EMPTY)
+@Data
+public class ProdutoDetalhado {
+	
+	private Long id;
+	private String nome;
+	private PrecoDto preco;
+	private MarcaDto marca;
+	
+
+    private Set<ProdutoDetalheComponenteDto> componentes = new HashSet<>();
+	
+
+}

@@ -3,7 +3,6 @@ package com.comanda.model.input;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.comanda.domain.entity.Componente;
 import com.comanda.domain.enumerado.TipoProduto;
 import com.comanda.utils.TolowerCase;
 
@@ -19,8 +18,6 @@ import lombok.Setter;
 @Data
 public class ProdutoInput {
 
-	
-	
 
 	private Long id;
 	@Setter(value = AccessLevel.NONE)
@@ -51,7 +48,7 @@ public class ProdutoInput {
 	private Set<produtoDetalheInput> produtoDetalhe = new HashSet<>();
 	
 	
-	private Set<Componente> componentes = new HashSet<>();
+	private Set<ComponenteInput> componentes = new HashSet<>();
 
 	@Override
 	public String toString() {
@@ -60,6 +57,7 @@ public class ProdutoInput {
 				+ ", tipoProduto=" + tipoProduto + ", codigoFabricante=" + codigoFabricante + ", produtoDetalhe="
 				+ produtoDetalhe + ", componentes=" + componentes + "]";
 	}
+
 
 //	public void definirIdsAutomaticamente() {
 //		

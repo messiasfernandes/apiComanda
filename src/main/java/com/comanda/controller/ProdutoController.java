@@ -77,6 +77,7 @@ public class ProdutoController extends ControllerEvent implements ProdutoContrll
 	@Override
 	public ResponseEntity<ProdutoDto> Atualizar(@Valid @RequestBody ProdutoInput produto) {
 		System.out.println(produto);
+	//	var produtoEditado= produtoConverter.toEntity(produto)
 		// var produtocomId= produtoService.definirIdsAutomaticamente(produto);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(produtoConverter.toDtoDetalhe(produtoService.Alterar(produto)));

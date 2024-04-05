@@ -1,6 +1,8 @@
 package com.comanda.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.comanda.converter.EstoqueMovimemtoConvereter;
+import com.comanda.domain.entity.EstoqueMovimento;
+import com.comanda.domain.enumerado.ControlarEstoque;
 import com.comanda.domain.enumerado.TipoMovimentacao;
 import com.comanda.domain.service.EstoqueMovimentoService;
 import com.comanda.model.form.EstoqueMovimentoFormR;
+import com.comanda.model.input.EstoqueMoviemtoInput;
 import com.comanda.model.recorddto.EstoqueMoventoListaDtoR;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,12 +48,25 @@ public class EstoqueMovimentacaoController  extends ControllerEvent{
 				.topage(serviceEstoqueMovimento.listar(paramentro, tipo, dataincio, datafim, page)));
 	}
 
-	@PostMapping
+//	@PostMapping
 
 	public ResponseEntity<EstoqueMoventoListaDtoR> criar(@RequestBody @Valid EstoqueMovimentoFormR estoqueMovimentoFormR,
 			HttpServletResponse response) {
 		var estoquesalvo = serviceEstoqueMovimento.salvar(estoquemovimentoConverte.toEntity(estoqueMovimentoFormR));
 		criaevento(estoquesalvo.getId(), response);
 		return ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toDto(estoquesalvo));
+	}
+	
+	@PostMapping
+
+	public ResponseEntity<List<EstoqueMovimento>> adiconar(@RequestBody @Valid List<EstoqueMoviemtoInput>movimentacoes ,ControlarEstoque controlarEstoque,
+			HttpServletResponse response) {
+		List<EstoqueMovimento> mov = new ArrayList<>();
+		for(EstoqueMoviemtoInput movimetacao : movimentacoes) {
+         mov.add(serviceEstoqueMovimento.salvar(		estoquemovimentoConverte.paraEntidy(movimetacao)));
+		///estoquemovimentoConverte.toCollectionInput(movimentacoes);
+		
+		}
+		return ResponseEntity.status(HttpStatus.CREATED).body(mov);
 	}
 }

@@ -12,6 +12,10 @@ public class ProdutoComponenteInput {
 	private PrecoInput preco;
 //	private	MarcaInput marca;
 //	private SubGrupoInput subgurpo;
+	@Override
+	public String toString() {
+		return "ProdutoComponenteInput [id=" + id + ", nome=" + nome + ", preco=" + preco + "]";
+	}
 
 
 }

@@ -22,7 +22,7 @@ public class ItemComanda extends GeradorId {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
-	private Produto produto;
+	private ProdutoDetalhe produtoDetalhe;
 ///	@JsonIgnore
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)

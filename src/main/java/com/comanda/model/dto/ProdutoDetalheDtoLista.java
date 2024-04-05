@@ -5,20 +5,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.comanda.domain.entity.Atributo;
-import com.comanda.domain.entity.ProdutoDetalhe;
 import com.comanda.domain.enumerado.UnidadeMedida;
-import com.comanda.model.input.ProdutoComponenteInput;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-@Getter
-@Setter
-public class ProdutoDetalheDtoteste {
-  private ProdutoComponenteInput produto = new ProdutoComponenteInput();
+@JsonInclude(Include.NON_EMPTY)
+@Data
+public class ProdutoDetalheDtoLista {
 	private Long id;
+    private ProdutoDetalhado produto ;
+	
 	private String codigobarras;
 
 	@Digits(integer = 9, fraction = 3)
@@ -29,12 +28,6 @@ public class ProdutoDetalheDtoteste {
 	private Integer qtdePorUnidade=0;
 	private UnidadeMedida unidadeMedida;
 	 private Set<Atributo> atributos = new HashSet<>();
-	 public ProdutoDetalheDtoteste(ProdutoDetalhe produtoDetalhe) {
-	 produto.setId(produtoDetalhe.getId());
-	 produto.setNome(produtoDetalhe.getProduto().getNome());
-//	 produto.getPreco().setPrecocusto(produtoDetalhe.getProduto().getPreco().getPrecocusto());
-	 codigobarras= produtoDetalhe.getCodigobarras();
-	 
-	}
+	
 	 
 }
