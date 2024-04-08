@@ -5,13 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.comanda.domain.entity.Atributo;
-import com.comanda.domain.entity.ProdutoDetalhe;
 import com.comanda.domain.enumerado.UnidadeMedida;
 import com.comanda.model.input.ProdutoComponenteInput;
 
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Digits;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
