@@ -18,7 +18,7 @@ public class GradeContoller {
    private GradesRepository gradesRepository;
 	@GetMapping
 	public ResponseEntity<List<Grade>>lista(){
-		return ResponseEntity.status(HttpStatus.OK).body(gradesRepository.findAll());
+		return ResponseEntity.status(HttpStatus.OK).body(gradesRepository.buscartos());
 		
 	}
 }

@@ -12,6 +12,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
@@ -21,6 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+//@NamedEntityGraph(name = "Grade.caracteristicas", attributeNodes = @NamedAttributeNode("caracteristicas"))
 public class Grade extends GeradorId {
 	/**
 	 * 
@@ -34,8 +37,9 @@ public class Grade extends GeradorId {
 	private BigDecimal quantidade = BigDecimal.ZERO;
 	
 	//@JsonBackReference
+	
 	 @Fetch(FetchMode.SUBSELECT)
-		@OneToMany(fetch = FetchType.EAGER, mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "grade", cascade = CascadeType.ALL, orphanRemoval = true)
 		@BatchSize(size = 10)
 	private Set<Caracteristica> caracteristicas = new HashSet<>();
 }

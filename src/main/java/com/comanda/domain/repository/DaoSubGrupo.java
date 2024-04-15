@@ -2,6 +2,7 @@ package com.comanda.domain.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,8 @@ import com.comanda.domain.entity.SubGrupo;
 
 @Repository
 public interface DaoSubGrupo extends JpaRepository<SubGrupo, Long> {
+	
+
 	@Query("SELECT DISTINCT s FROM SubGrupo s  "
 			+ "LEFT JOIN FETCH s.grupo"
 			+ " WHERE s.nomeSubgrupo LIKE %:parametro% "

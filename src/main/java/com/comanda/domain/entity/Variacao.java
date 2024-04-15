@@ -25,16 +25,16 @@ public class Variacao implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonManagedReference
-	@ManyToOne(fetch = FetchType.EAGER)
+	//@JsonManagedReference
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	private Caracteristica caracteristica;
 //	@NotBlank
 //	@Column(length = 80)
 //	private String opcao;
 	//@JsonManagedReference
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
+	//@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 
 	private Combinacao combinacao;

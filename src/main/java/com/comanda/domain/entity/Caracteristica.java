@@ -20,6 +20,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -28,10 +30,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+
 public class Caracteristica implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +46,7 @@ public class Caracteristica implements Serializable {
 	private Grade grade;
 	@JsonBackReference
 	@Fetch(FetchMode.SUBSELECT)
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "caracteristica", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "caracteristica", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
 	private Set<Variacao> variacoes = new HashSet<>();
 
