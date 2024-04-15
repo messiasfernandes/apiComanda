@@ -59,11 +59,12 @@ public class EstoqueMovimentacaoController  extends ControllerEvent{
 	
 	@PostMapping
 
-	public ResponseEntity<List<EstoqueMoventoListaDtoR>> adiconar(@RequestBody @Valid List<EstoqueMoviemtoInput>movimentacoes ,ControlarEstoque controlarEstoque,
+	public ResponseEntity<List<EstoqueMoventoListaDtoR>> adicionar(@RequestBody @Valid List<EstoqueMoviemtoInput>movimentacoes ,
+																  ControlarEstoque controlarEstoque,
 			HttpServletResponse response) {
 		List<EstoqueMovimento> mov = new ArrayList<>();
-		for(EstoqueMoviemtoInput movimetacao : movimentacoes) {
-         mov.add(serviceEstoqueMovimento.salvar(estoquemovimentoConverte.paraEntidy(movimetacao)));
+		for(EstoqueMoviemtoInput movimentacao : movimentacoes) {
+         mov.add(serviceEstoqueMovimento.salvar(estoquemovimentoConverte.paraEntidy(movimentacao)));
 		
 		}
 		return 	ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toCollectionDto(mov));
