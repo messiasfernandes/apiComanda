@@ -21,6 +21,7 @@ import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.domain.enumerado.ControlarEstoque;
 import com.comanda.domain.enumerado.TipoMovimentacao;
 import com.comanda.domain.service.EstoqueMovimentoService;
+import com.comanda.model.dto.EstoqueMovimentoDTo;
 import com.comanda.model.form.EstoqueMovimentoFormR;
 import com.comanda.model.input.EstoqueMoviemtoInput;
 import com.comanda.model.recorddto.EstoqueMoventoListaDtoR;
@@ -35,11 +36,11 @@ public class EstoqueMovimentacaoController  extends ControllerEvent{
 	private EstoqueMovimentoService serviceEstoqueMovimento;
 	@Autowired
 	private EstoqueMovimemtoConvereter estoquemovimentoConverte;
-
+//
 	@GetMapping
-	public ResponseEntity<Page<EstoqueMoventoListaDtoR>> listar(
+	public ResponseEntity<Page<EstoqueMovimentoDTo>> listar(
 			@RequestParam(value = "paramentro", required = false, defaultValue = "") String paramentro,
-			@RequestParam(value = "tipo", required = false, defaultValue = "") TipoMovimentacao tipo,
+			@RequestParam(value = "tipo", required = true) TipoMovimentacao tipo,
 			@RequestParam(value = "dataincio", required = false) LocalDate dataincio,
 			@RequestParam(value = "datafim", required = false) LocalDate datafim,
 			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
@@ -50,23 +51,23 @@ public class EstoqueMovimentacaoController  extends ControllerEvent{
 
 //	@PostMapping
 
-	public ResponseEntity<EstoqueMoventoListaDtoR> criar(@RequestBody @Valid EstoqueMovimentoFormR estoqueMovimentoFormR,
-			HttpServletResponse response) {
-		var estoquesalvo = serviceEstoqueMovimento.salvar(estoquemovimentoConverte.toEntity(estoqueMovimentoFormR));
-		criaevento(estoquesalvo.getId(), response);
-		return ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toDto(estoquesalvo));
-	}
+//	public ResponseEntity<EstoqueMoventoListaDtoR> criar(@RequestBody @Valid EstoqueMovimentoFormR estoqueMovimentoFormR,
+//			HttpServletResponse response) {
+//		var estoquesalvo = serviceEstoqueMovimento.salvar(estoquemovimentoConverte.toEntity(estoqueMovimentoFormR));
+//		criaevento(estoquesalvo.getId(), response);
+//		return ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toDto(estoquesalvo));
+//	}
 	
 	@PostMapping
 
-	public ResponseEntity<List<EstoqueMoventoListaDtoR>> adicionar(@RequestBody @Valid List<EstoqueMoviemtoInput>movimentacoes ,
+	public ResponseEntity<List<EstoqueMovimento >> adicionar(@RequestBody @Valid List<EstoqueMoviemtoInput>movimentacoes ,
 																  ControlarEstoque controlarEstoque,
 			HttpServletResponse response) {
 		List<EstoqueMovimento> mov = new ArrayList<>();
 		for(EstoqueMoviemtoInput movimentacao : movimentacoes) {
-         mov.add(serviceEstoqueMovimento.salvar(estoquemovimentoConverte.paraEntidy(movimentacao)));
-		
+        mov.add(serviceEstoqueMovimento.salvar(estoquemovimentoConverte.paraEntidy(movimentacao)));
+		 System.out.println(movimentacao.getItems().size());
 		}
-		return 	ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toCollectionDto(mov));
+		return 	ResponseEntity.status(HttpStatus.CREATED).body(mov);
 	}
 }

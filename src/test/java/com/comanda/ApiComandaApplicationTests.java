@@ -2,6 +2,7 @@ package com.comanda;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.comanda.domain.entity.Componente;
 import com.comanda.domain.entity.Marca;
+import com.comanda.domain.entity.Produto;
 import com.comanda.domain.repository.ComponentesRepository;
 import com.comanda.domain.repository.ProdutosRepository;
+
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 
 @SpringBootTest
 class ApiComandaApplicationTests {
@@ -21,6 +28,8 @@ class ApiComandaApplicationTests {
    private ComponentesRepository  componentesRepository ;
    @Autowired
 	private ProdutosRepository produtosRepository;
+   @PersistenceContext
+	EntityManager em;
 	void contextLoads() {
 		var marca = new Marca();
 //		marca.setId(1l);
@@ -45,7 +54,7 @@ class ApiComandaApplicationTests {
 
 		}
 	}
-	@Test
+	
 	void TestarSet() {
 	//	Long id= componentesRepository.getMaxId()+1l;
 	//	System.out.println(id++);
@@ -70,5 +79,21 @@ class ApiComandaApplicationTests {
 		}
 		
 	}
-
+	@Test
+   void testeEntiyGraph() {
+	   TypedQuery< Produto>query= em.createQuery("from Produto",Produto.class);
+	   EntityGraph<Produto> entityGraph= em.createEntityGraph(Produto.class);
+	   entityGraph.addAttributeNodes("marca");
+	   entityGraph.addSubgraph("subgrupo").addAttributeNodes("grupo");
+	   query.setHint("javax.peristence.fetchgraph", entityGraph);
+	   
+	   List<Produto>produtos= query.getResultList();
+	   
+	   for (Produto produto : produtos) {
+		   System.out.println("-------------------------");
+		   System.out.println(produto.getNome());
+		
+	}
+	   
+   }
 }

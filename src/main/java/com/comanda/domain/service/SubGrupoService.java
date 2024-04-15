@@ -48,7 +48,7 @@ public class SubGrupoService  extends ServiceFuncoes implements ServiceModel<Sub
 	@Override
 	public SubGrupo buccarporid(Long id) {
 		
-		return daoSubGrupo.findById(id).orElseThrow(()-> new RegistroNaoEncontrado("Registro não entcontrado") );
+		return daoSubGrupo.buscarporId(id).orElseThrow(()-> new RegistroNaoEncontrado("Registro não entcontrado") );
 	}
 
 	@Transactional

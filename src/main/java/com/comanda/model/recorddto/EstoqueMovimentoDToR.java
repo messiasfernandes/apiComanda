@@ -8,8 +8,8 @@ import com.comanda.domain.enumerado.TipoMovimentacao;
 public record EstoqueMovimentoDToR(TipoMovimentacao tipoMovimentacao, 
 		 BigDecimal qtde, BigDecimal saldoanterior) {
 	
-	public EstoqueMovimentoDToR(EstoqueMovimento estoqueMovimento) {
-		this(estoqueMovimento.getTipoMovimentacao(), estoqueMovimento.getQtde(), estoqueMovimento.getSaldoanterior());
-	}
+//	public EstoqueMovimentoDToR(EstoqueMovimento estoqueMovimento) {
+//		this(estoqueMovimento.getTipoMovimentacao(), estoqueMovimento.getQtde(), estoqueMovimento.getSaldoanterior());
+//	}
 
 }

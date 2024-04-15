@@ -4,8 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -14,32 +16,22 @@ import com.comanda.domain.query.ProdutoQuery;
 
 @Repository
 public interface ProdutosRepository extends JpaRepository<Produto, Long>, ProdutoQuery {
-
-	@Query(value = "SELECT DISTINCT (p) FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
-			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pd " + "LEFT JOIN FETCH p.subgrupo s "
-			+ "LEFT JOIN FETCH p.subgrupo.grupo sg " +
-			"LEFT JOIN FETCH pd.atributos a "
-		+	"LEFT JOIN FETCH p.componentes c "
-		+	"LEFT JOIN FETCH c.produto pco "
-		+	"LEFT JOIN FETCH pco.estoque ec "
-		+	"LEFT JOIN FETCH pco.marca pm "
-		+	"LEFT JOIN FETCH pco.preco pp "
-		+	"LEFT JOIN FETCH pco.subgrupo pcs "
-		+	"LEFT JOIN FETCH pcs.grupo pcg "
+	@EntityGraph(attributePaths = {"produtoDetalhe.atributos", "preco",
+			"marca","componentes","estoque"  }, type = EntityGraphType.FETCH)
+	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " 	
+			+ "LEFT JOIN FETCH p.subgrupo s "
+       + "LEFT JOIN FETCH p.subgrupo.grupo sg " 
 			+ "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%  OR s.nomeSubgrupo LIKE %:parametro% "
-			+ "OR sg.nomeGrupo LIKE %:parametro% " + "ORDER BY  p.nome ")
+			+ "OR sg.nomeGrupo LIKE %:parametro% " + "ORDER BY  p.nome " ,
+			countQuery = "Select count(p) from Produto p")
 	Page<Produto> Listar(@Param("parametro") String parametro, Pageable pageable);
-
-	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "
-			+ "LEFT JOIN FETCH p.preco pe " + "LEFT JOIN FETCH p.produtoDetalhe pc " + "LEFT JOIN FETCH p.subgrupo s "
-			+"LEFT JOIN FETCH pc.atributos a "
-			+	"LEFT JOIN FETCH p.componentes c "
-			+	"LEFT JOIN FETCH c.produto pco "
-			+	"LEFT JOIN FETCH pco.estoque ec "
-			+	"LEFT JOIN FETCH pco.preco pp "
-			+	"LEFT JOIN FETCH pco.marca pm "
-			+	"LEFT JOIN FETCH pco.subgrupo pcs "
-			+	"LEFT JOIN FETCH pcs.grupo pcg "
+	
+	
+	@EntityGraph(attributePaths = {"produtoDetalhe.produto", "preco", "subgrupo",
+			"marca","componentes.produto","estoque"  }, type = EntityGraphType.FETCH)
+	@Query(value = "SELECT DISTINCT p FROM Produto p " 
+			 + "LEFT JOIN FETCH p.produtoDetalhe pc "
+			
 			+ "WHERE     pc.codigobarras = :parametro")
 	Page<Produto> buscarPorEan(@Param("parametro") String parametro, Pageable pageable);
 

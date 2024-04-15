@@ -12,11 +12,14 @@ import org.springframework.stereotype.Service;
 import com.comanda.domain.entity.Componente;
 import com.comanda.domain.entity.Estoque;
 import com.comanda.domain.entity.EstoqueMovimento;
+import com.comanda.domain.entity.ItemMovimentacao;
+import com.comanda.domain.entity.Produto;
 import com.comanda.domain.enumerado.TipoMovimentacao;
 import com.comanda.domain.repository.MovimentoEstoqueRepository;
 import com.comanda.domain.service.exeption.NegocioException;
 import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
+import com.lowagie.text.pdf.AcroFields.Item;
 
 import jakarta.transaction.Transactional;
 
@@ -50,51 +53,54 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	@Transactional
 	@Override
 	public EstoqueMovimento salvar(EstoqueMovimento objeto) {
-	
-		var produto = produtoService.buccarporid(objeto.getProduto().getId());
-	
-		objeto.setProduto(produto);
-		objeto.setDatamovimento(LocalDateTime.now());
-		verificarMovimento(objeto);
-		if(!produto.getComponentes().isEmpty()) {
-			if(objeto.getTipoMovimentacao().equals(TipoMovimentacao.Saida)) {
-				for (Componente componente : produto.getComponentes()) {
-					movimentoEstoqueRepository.save(VerificarComponente(componente, componente.getQtde().intValueExact(), objeto.getTipoMovimentacao()));
-				}
-			}
+System.out.println("total"+		objeto.getItems().size());
+		for (var item : objeto.getItems()) {
+			item.setProduto(buscar(item.getProduto().getId()));
 		}
 		
+	
+		objeto.setDatamovimento(LocalDateTime.now());
+		objeto.getItems().forEach(im -> im.setEstoqueMovimento(objeto));
+		verificarMovimento(objeto);
+		for (ItemMovimentacao item : objeto.getItems()) {
+			if (!item.getProduto().getComponentes().isEmpty()) {
+				if (objeto.getTipoMovimentacao().equals(TipoMovimentacao.Saida)) {
+					for (Componente componente : item.getProduto().getComponentes()) {
+						movimentoEstoqueRepository.save(VerificarComponente(componente,
+								componente.getQtde().intValueExact(), objeto.getTipoMovimentacao()));
+					}
+				}
+			}
+
+		}
+
 		return movimentoEstoqueRepository.save(objeto);
 	}
 
-	public Page<EstoqueMovimento> listar(String paramentro, TipoMovimentacao tipo, LocalDate datanicio,
-			LocalDate datafim, Pageable pageable) {
-		paramentro = TolowerCase.normalizarString(paramentro);
-		return movimentoEstoqueRepository.listar(paramentro, tipo, datanicio, datafim, pageable);
-	}
-
 	private EstoqueMovimento verificarMovimento(EstoqueMovimento movimento) {
-		if (movimento.getTipoMovimentacao() == TipoMovimentacao.Entrada  ||movimento.getTipoMovimentacao().equals(TipoMovimentacao.Devolucao)) {
-			if (movimento.getProduto().getEstoque() != null) {
+		System.out.println("verificando"+ movimento.getItems().size());
+		if (movimento.getTipoMovimentacao() == TipoMovimentacao.Entrada
+				|| movimento.getTipoMovimentacao().equals(TipoMovimentacao.Devolucao)) {
+			for (int i=0;i< movimento.getItems().size();i++) {
+				if (movimento.getItems().get(i).getProduto().getEstoque() != null) {
+					SomarEstoque(movimento.getItems().get(i));
 
-				SomarEstoque(movimento);
-
-				serviceEstoque.salvar(movimento.getProduto().getEstoque());
-			} else {
-				movimento.setSaldoanterior(BigDecimal.ZERO);
-				serviceEstoque.salvar(adicionarEstoque(movimento));
+					serviceEstoque.salvar(movimento.getItems().get(i).getProduto().getEstoque());
+				} else {
+					movimento.getItems().get(i).setSaldoanterior(BigDecimal.ZERO);
+					serviceEstoque.salvar(adicionarEstoque(movimento.getItems().get(i)));
+				}
+				if (movimento.getTipoMovimentacao().equals(TipoMovimentacao.Saida)) {
+					movimento.getItems().get(i).getProduto().getEstoque().getProduto().setEstoque(serviceEstoque.salvar(baixarEstoque(movimento.getItems().get(i)).getProduto().getEstoque()));
+				}
+			
 			}
-
-		} 	if (movimento.getTipoMovimentacao().equals(TipoMovimentacao.Saida) ) {
-			movimento.getProduto()
-					.setEstoque(serviceEstoque.salvar(baixarEstoque(movimento).getProduto().getEstoque()));
+		
 		}
-
 		return movimento;
-
 	}
 
-	private EstoqueMovimento baixarEstoque(EstoqueMovimento movimento) {
+	private ItemMovimentacao baixarEstoque(ItemMovimentacao movimento) {
 		if (movimento.getProduto().getEstoque() == null) {
 			throw new NegocioException("Não possivel baixar estoque de um produto que não tenha estoque");
 		}
@@ -106,7 +112,16 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		return movimento;
 	}
 
-	private EstoqueMovimento SomarEstoque(EstoqueMovimento movimento) {
+	public Page<EstoqueMovimento> listar(String paramentro, TipoMovimentacao tipo, LocalDate datanicio,
+			LocalDate datafim, Pageable pageable) {
+		Page< EstoqueMovimento>page=null;
+		paramentro = TolowerCase.normalizarString(paramentro);
+		if(datafim==null && datanicio==null) {
+			page= movimentoEstoqueRepository.pesquisar(paramentro, tipo, pageable);
+		}
+		return page;
+	}
+	private ItemMovimentacao SomarEstoque(ItemMovimentacao movimento) {
 
 		movimento.setSaldoanterior(movimento.getProduto().getEstoque().getQuantidade());
 		movimento.getProduto().getEstoque().setQuantidade(movimento.getSaldoanterior().add(movimento.getQtde()));
@@ -115,19 +130,18 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		return movimento;
 
 	}
-
-	private Estoque adicionarEstoque(EstoqueMovimento movimento) {
+	private Estoque adicionarEstoque(ItemMovimentacao movimento) {
 		var estoque = new Estoque();
 		estoque.setProduto(movimento.getProduto());
 		estoque.setQuantidade(movimento.getQtde());
 		return estoque;
 	}
-
+	
 	private EstoqueMovimento VerificarComponente(Componente componente, Integer qtde, TipoMovimentacao tipo) {
-		var movimento = new EstoqueMovimento();
+		var movimento = new ItemMovimentacao();
 		movimento.setProduto(componente.getProduto());
-		movimento.setDatamovimento(LocalDateTime.now());
-		movimento.setTipoMovimentacao(tipo);
+		movimento.getEstoqueMovimento().setDatamovimento(LocalDateTime.now());
+		movimento.getEstoqueMovimento().setTipoMovimentacao(tipo);
 		movimento.setQtde(new BigDecimal(qtde));
 		System.out.println("movineto" + movimento.getQtde());
 
@@ -144,49 +158,27 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 			movimento.getProduto().setEstoque(
 					serviceEstoque.salvar(BaixarEstoqueComponte(movimento, qtde).getProduto().getEstoque()));
 		}
-		return movimento;
+		return movimento.getEstoqueMovimento();
 	}
-
-	private EstoqueMovimento BaixarEstoqueComponte(EstoqueMovimento movimento, Integer qtde) {
-		if (movimento.getProduto().getEstoque() == null) {
-			throw new NegocioException("Não possivel baixar estoque de um produto que não tenha estoque");
+	
+	private ItemMovimentacao BaixarEstoqueComponte(ItemMovimentacao movimento, Integer qtde) {
+		
+			if (movimento.getProduto().getEstoque() == null) {
+				throw new NegocioException("Não possivel baixar estoque de um produto que não tenha estoque");
+			}
+			movimento.setSaldoanterior(movimento.getProduto().getEstoque().getQuantidade());
+			movimento.getProduto().getEstoque()
+					.setQuantidade(movimento.getProduto().getEstoque().getQuantidade().subtract(new BigDecimal(qtde)));
+			movimento.getProduto().getEstoque().setProduto(movimento.getProduto());
+			System.out.println(movimento.getProduto().getEstoque().getQuantidade());
+			return  movimento;
 		}
 
-		movimento.setSaldoanterior(movimento.getProduto().getEstoque().getQuantidade());
-		movimento.getProduto().getEstoque()
-				.setQuantidade(movimento.getProduto().getEstoque().getQuantidade().subtract(new BigDecimal(qtde)));
-		movimento.getProduto().getEstoque().setProduto(movimento.getProduto());
-		System.out.println(movimento.getProduto().getEstoque().getQuantidade());
-		return movimento;
+	
+	private Produto buscar(Long id) {
+		var produto = produtoService.buccarporid(id);
+		return produto;
 	}
+	
+	
 }
-//	
-//	@Transactional(rollbackOn = Exception.class)
-//	void entradaEstoquue(EntradaNotaCabecario pEntrada) {
-//	
-//	
-//		
-//
-//		for (int i = 0; i < pEntrada.getItems_entrada().size(); i++) {
-//	     EstoqueMovimento estoquemovimento = new EstoqueMovimento();
-//	     estoquemovimento.setProduto(pEntrada.getItems_entrada().get(i).getProduto());
-//	     estoquemovimento.setTipoMovimentacao(TipoMovimentacao.Entrada);
-//	     estoquemovimento.setQtde(pEntrada.getItems_entrada().get(i).getQtde());
-//	     salvar(estoquemovimento);
-//		}
-//
-//	}
-//	public void CancelarEstoqueNota(EntradaNotaCabecario entrada) {
-//		
-//		for (int i = 0; i < entrada.getItems_entrada().size(); i++) {
-//		     EstoqueMovimento estoquemovimento = new EstoqueMovimento();
-//		     estoquemovimento.setProduto(entrada.getItems_entrada().get(i).getProduto());
-//		     estoquemovimento.setTipoMovimentacao(TipoMovimentacao.Devolucao);
-//		     estoquemovimento.setDatamovimento(LocalDateTime.now());
-//		     estoquemovimento.setQtde(entrada.getItems_entrada().get(i).getQtde());
-//		     verificarMovimento(estoquemovimento);
-//		
-//		     daoMovementacaoEstoque.save(estoquemovimento);
-//			}
-//		
-//	}

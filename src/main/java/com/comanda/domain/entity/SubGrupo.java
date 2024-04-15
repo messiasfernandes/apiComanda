@@ -18,6 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+
 @Table(name = "tab_subrupo")
 public class SubGrupo  extends GeradorId{
 

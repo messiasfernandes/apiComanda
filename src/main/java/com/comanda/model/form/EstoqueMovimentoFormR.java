@@ -9,10 +9,10 @@ public record EstoqueMovimentoFormR(
 		TipoMovimentacao tipo, ProdutoFormR produto,
 				 BigDecimal qtde, BigDecimal saldoanterior) {
 	
-	public EstoqueMovimentoFormR(EstoqueMovimento estoqueMovimento) {
-		this(estoqueMovimento.getTipoMovimentacao(),new ProdutoFormR(estoqueMovimento.getProduto().getId()), 
-				estoqueMovimento.getQtde(), estoqueMovimento.getSaldoanterior());
-		
-	}
+//	public EstoqueMovimentoFormR(EstoqueMovimento estoqueMovimento) {
+//		this(estoqueMovimento.getTipoMovimentacao(),new ProdutoFormR(estoqueMovimento.getProduto().getId()), 
+//				estoqueMovimento.getQtde(), estoqueMovimento.getSaldoanterior());
+//		
+//	}
 
 }
