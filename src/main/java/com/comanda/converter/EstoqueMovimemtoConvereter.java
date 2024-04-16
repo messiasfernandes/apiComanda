@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.model.dto.EstoqueMovimentoDTo;
-import com.comanda.model.form.EstoqueMovimentoFormR;
 import com.comanda.model.input.EstoqueMoviemtoInput;
-import com.comanda.model.recorddto.EstoqueMoventoListaDtoR;
 
 
 
@@ -36,11 +34,11 @@ public class EstoqueMovimemtoConvereter {
 
 		return objetos.map(obj -> toDto(obj));
 	}
-//
-//	public List<EstoqueMoventoListaDtoR> toCollectionDto(List<EstoqueMovimento> movimentos) {
-//		return movimentos.stream().map(this::toDto).collect(Collectors.toList());
-//	}
-//	
+
+	public List<EstoqueMovimentoDTo> toCollectionDto(List<EstoqueMovimento> movimentos) {
+		return movimentos.stream().map(this::toDto).collect(Collectors.toList());
+	}
+	
 	public EstoqueMovimento paraEntidy(EstoqueMoviemtoInput objeto) {
 
 		return modelMapper.map(objeto, EstoqueMovimento.class);

@@ -6,4 +6,5 @@ import lombok.Data;
 public class ProdutoDtoComponete {
 	private Long id;
 	private String nome;
+	private EstoqueDto estoque;
 }

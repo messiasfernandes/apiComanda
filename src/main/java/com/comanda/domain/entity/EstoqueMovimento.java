@@ -10,6 +10,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.comanda.domain.enumerado.Operacao;
 import com.comanda.domain.enumerado.TipoMovimentacao;
 import com.comanda.model.form.EstoqueMovimentoFormR;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -37,11 +38,15 @@ public class EstoqueMovimento extends GeradorId {
 	private static final long serialVersionUID = 1L;
 	@Column(length = 15, nullable = false)
 	@Enumerated(EnumType.STRING)
+	private Operacao operacao;
+	@Column(length = 15, nullable = false)
+	@Enumerated(EnumType.STRING)
 	private TipoMovimentacao tipoMovimentacao;
 	// @Column(columnDefinition = "TIMESTAMP")
 	@DateTimeFormat(pattern = " dd/MM/yyyy HH:mm ")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime datamovimento;
+	
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "estoqueMovimento", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)

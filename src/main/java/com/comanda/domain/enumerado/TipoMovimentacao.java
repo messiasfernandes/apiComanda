@@ -1,9 +1,8 @@
 package com.comanda.domain.enumerado;
 
 public enum TipoMovimentacao {
-	Entrada,
-	Saida,
-	Devolucao, 
+	Vendas,
+	Compras,
 	Trânsferencia,
 	Devolução_Fornecedor,
 	Devolução_cliente,
