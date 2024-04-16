@@ -38,11 +38,13 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 
 		}
 		if ((ehnumero(nome)) && (qtdecaraceteres(nome) != 13)) {
+			System.out.println("pasou aqui");
 			Long id = Sonumero(nome);
 			System.out.println("id" + id);
 			page = produtoRepository.buscarporId(id, pageable);
 		}
 		if ((ehnumero(nome)) && (qtdecaraceteres(nome) == 13)) {
+			System.out.println("e ena 13 ");
 			page = produtoRepository.buscarPorEan(nome, pageable);
 		}
 

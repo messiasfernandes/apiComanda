@@ -16,7 +16,7 @@ import com.comanda.domain.query.ProdutoQuery;
 
 @Repository
 public interface ProdutosRepository extends JpaRepository<Produto, Long>, ProdutoQuery {
-	@EntityGraph(attributePaths = {"produtoDetalhe.atributos", "preco",
+	@EntityGraph(attributePaths = { "preco","produtoDetalhe","produtoDetalhe.atributos",
 			"marca","componentes","estoque"  }, type = EntityGraphType.FETCH)
 	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " 	
 			+ "LEFT JOIN FETCH p.subgrupo s "
@@ -27,12 +27,13 @@ public interface ProdutosRepository extends JpaRepository<Produto, Long>, Produt
 	Page<Produto> Listar(@Param("parametro") String parametro, Pageable pageable);
 	
 	
-	@EntityGraph(attributePaths = {"produtoDetalhe.produto", "preco", "subgrupo",
-			"marca","componentes.produto","estoque"  }, type = EntityGraphType.FETCH)
+	@EntityGraph(attributePaths = {"produtoDetalhe.atributos", "preco",
+			"marca","componentes","estoque" , "subgrupo" }, type = EntityGraphType.FETCH)
 	@Query(value = "SELECT DISTINCT p FROM Produto p " 
 			 + "LEFT JOIN FETCH p.produtoDetalhe pc "
-			
-			+ "WHERE     pc.codigobarras = :parametro")
+			 + "LEFT JOIN FETCH  pc.atributos a "
+			+ "WHERE  pc.codigobarras = :parametro" ,
+			countQuery = "Select count(p) from Produto p")
 	Page<Produto> buscarPorEan(@Param("parametro") String parametro, Pageable pageable);
 
 	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " + "LEFT JOIN FETCH p.estoque e "

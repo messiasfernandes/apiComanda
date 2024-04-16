@@ -47,14 +47,5 @@ public class EstoqueMovimento extends GeradorId {
 	@BatchSize(size = 10)
 	private List<ItemMovimentacao> items = new ArrayList<>();
 
-	public EstoqueMovimento() {
-		// TODO Auto-generated constructor stub
-	}
-//   public EstoqueMovimento(EstoqueMovimentoFormR estoqueMovimentoFormR) {
-//	
-//	  this.tipoMovimentacao= estoqueMovimentoFormR.tipo();
-//	  this.produto =new Produto();
-//	  this.produto.setId(estoqueMovimentoFormR.produto().id());
-//	   this.qtde= estoqueMovimentoFormR.qtde();
-//}  
+ 
 }
