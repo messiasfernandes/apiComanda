@@ -118,12 +118,15 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		Page<EstoqueMovimento> page = null;
 		paramentro = TolowerCase.normalizarString(paramentro);
 		if (datafim == null && datanicio == null) {
+			System.out.println(paramentro);
 			page = movimentoEstoqueRepository.pesquisar(paramentro, tipo, pageable);
+			System.out.println("total primeiro"+ page.getNumberOfElements());
 		} else {
 			System.out.println(datafim);
 			page = movimentoEstoqueRepository.listar(paramentro, tipo, datanicio, datafim, pageable);
+			System.out.println("total"+ page.getNumberOfElements());
 		}
-		System.out.println("total"+ page.getNumberOfElements());
+		
 		return page;
 	}
 

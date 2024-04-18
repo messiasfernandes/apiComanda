@@ -39,7 +39,7 @@ public class EstoqueMovimento extends GeradorId {
 	@Column(length = 15, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Operacao operacao;
-	@Column(length = 15, nullable = false)
+	@Column(length = 50, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoMovimentacao tipoMovimentacao;
 	// @Column(columnDefinition = "TIMESTAMP")

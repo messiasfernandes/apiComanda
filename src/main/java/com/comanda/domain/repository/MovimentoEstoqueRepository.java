@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.domain.enumerado.Operacao;
-import com.comanda.domain.enumerado.TipoMovimentacao;
 import com.comanda.domain.query.EstoqueMovmentoQuery;
 
 @Repository
@@ -34,8 +33,9 @@ public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimen
 			@Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFim,
 			Pageable pageable);
 	
-	@EntityGraph(attributePaths = {"items","items.produto", "items.produto.produtoDetalhe"}, type = EntityGraphType.FETCH)
-	@Query("SELECT e FROM EstoqueMovimento e  inner JOIN  e.items i  where i.produto.nome LIKE %:parametro% and e.operacao = :tipo  ")
+	@EntityGraph(attributePaths = {"items","items.produto", "items.produto.produtoDetalhe", "items.produto.componentes", 
+			"items.produto.estoque"}, type = EntityGraphType.FETCH)
+	@Query("SELECT e FROM EstoqueMovimento e  inner JOIN  e.items i  where i.produto.nome LIKE %:parametro% or e.operacao = :tipo  ")
      Page<EstoqueMovimento> pesquisar (@Param("parametro") String parametro, @Param("tipo") Operacao tipo,
   	Pageable pageable);
 	

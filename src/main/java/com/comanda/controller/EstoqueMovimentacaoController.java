@@ -39,16 +39,15 @@ public class EstoqueMovimentacaoController  extends ControllerEvent{
 //
 	@GetMapping
 	public ResponseEntity<Page<EstoqueMovimentoDTo>> listar(
-			@RequestParam(value = "paramentro", required = false, defaultValue = "") String paramentro,
-			@RequestParam(value = "tipo", required = true) Operacao tipoOperacao,
-			@RequestParam(value = "dataincio", required = false) LocalDate dataincio,
+			@RequestParam(value = "parametro", required = false, defaultValue = "") String parametro,
+			@RequestParam(value = "tipo", required = false) Operacao tipoOperacao,
+			@RequestParam(value = "datainicio", required = false) LocalDate datainicio,
 			@RequestParam(value = "datafim", required = false) LocalDate datafim,
 			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "size", defaultValue = "10") Integer size, Pageable page) {
-		System.out.println(datafim);
-		System.out.println(tipoOperacao);
+	
 		return ResponseEntity.status(HttpStatus.OK).body(estoquemovimentoConverte
-				.topage(serviceEstoqueMovimento.listar(paramentro, tipoOperacao, dataincio, datafim, page)));
+				.topage(serviceEstoqueMovimento.listar(parametro, tipoOperacao, datainicio, datafim, page)));
 	}
 
 //	@PostMapping
