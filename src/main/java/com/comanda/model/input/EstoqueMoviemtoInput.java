@@ -2,7 +2,9 @@ package com.comanda.model.input;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,5 +29,5 @@ public class EstoqueMoviemtoInput {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime datamovimento;
 
-	private List<ItemMovimentacao> items = new ArrayList<>();
+	private Set<ItemMovimentacao> items = new HashSet<>();
 }

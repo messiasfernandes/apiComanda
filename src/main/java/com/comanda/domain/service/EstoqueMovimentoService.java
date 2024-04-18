@@ -15,7 +15,6 @@ import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.domain.entity.ItemMovimentacao;
 import com.comanda.domain.entity.Produto;
 import com.comanda.domain.enumerado.Operacao;
-import com.comanda.domain.enumerado.TipoMovimentacao;
 import com.comanda.domain.repository.MovimentoEstoqueRepository;
 import com.comanda.domain.service.exeption.NegocioException;
 import com.comanda.utils.ServiceFuncoes;
@@ -80,23 +79,26 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		System.out.println("verificando" + movimento.getItems().size());
 		int i=0;
 		if (movimento.getOperacao().equals(Operacao.Entrada) || movimento.getOperacao().equals(Operacao.Devolucao)) {
-			for ( i = 0; i < movimento.getItems().size(); i++) {
+			for ( var iTemM : movimento.getItems()) {
 				System.out.println("entrada");
-				if (movimento.getItems().get(i).getProduto().getEstoque() != null) {
-					SomarEstoque(movimento.getItems().get(i));
+				if (iTemM.getProduto().getEstoque() != null) {
+					SomarEstoque(iTemM);
 
-					serviceEstoque.salvar(movimento.getItems().get(i).getProduto().getEstoque());
+					serviceEstoque.salvar(iTemM.getProduto().getEstoque());
 				} else {
-					movimento.getItems().get(i).setSaldoanterior(BigDecimal.ZERO);
-					serviceEstoque.salvar(adicionarEstoque(movimento.getItems().get(i)));
+				iTemM.setSaldoanterior(BigDecimal.ZERO);
+					serviceEstoque.salvar(adicionarEstoque(iTemM));
 				}
 			
 
 			}
 		}else {
-			System.out.println("saida");
-			movimento.getItems().get(i).getProduto().getEstoque().getProduto().setEstoque(serviceEstoque
-					.salvar(baixarEstoque(movimento.getItems().get(i)).getProduto().getEstoque()));	
+			
+		       System.out.println("saida");
+	            movimento.getItems().forEach(mov -> {
+	                mov.getProduto().getEstoque().getProduto().setEstoque(serviceEstoque
+	                        .salvar(baixarEstoque(mov).getProduto().getEstoque()));
+	            });
 		}
 		return movimento;
 	}
@@ -118,15 +120,12 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		Page<EstoqueMovimento> page = null;
 		paramentro = TolowerCase.normalizarString(paramentro);
 		if (datafim == null && datanicio == null) {
-			System.out.println(paramentro);
 			page = movimentoEstoqueRepository.pesquisar(paramentro, tipo, pageable);
-			System.out.println("total primeiro"+ page.getNumberOfElements());
 		} else {
 			System.out.println(datafim);
 			page = movimentoEstoqueRepository.listar(paramentro, tipo, datanicio, datafim, pageable);
-			System.out.println("total"+ page.getNumberOfElements());
 		}
-		
+		System.out.println("total"+ page.getNumberOfElements());
 		return page;
 	}
 

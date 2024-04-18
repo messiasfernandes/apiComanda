@@ -3,7 +3,9 @@ package com.comanda.domain.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
@@ -50,7 +52,7 @@ public class EstoqueMovimento extends GeradorId {
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "estoqueMovimento", cascade = CascadeType.ALL, orphanRemoval = true)
 	@BatchSize(size = 10)
-	private List<ItemMovimentacao> items = new ArrayList<>();
+	private Set<ItemMovimentacao> items = new HashSet<>();
 
  
 }
