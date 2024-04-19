@@ -42,7 +42,8 @@ public class EstoqueMovimentacaoController  extends ControllerEvent implements E
 			@RequestParam(value = "datafim", required = false) LocalDate datafim,
 			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "size", defaultValue = "10") Integer size, Pageable page) {
-	
+		System.out.println(size);
+	System.out.println(pagina);
 		return ResponseEntity.status(HttpStatus.OK).body(estoquemovimentoConverte
 				.topage(serviceEstoqueMovimento.listar(parametro, tipoOperacao, datainicio, datafim, page)));
 	}

@@ -19,7 +19,7 @@ import com.comanda.domain.query.EstoqueMovmentoQuery;
 public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimento, Long>, EstoqueMovmentoQuery {
 	
 
-	@Query("SELECT DISTINCT em FROM EstoqueMovimento em " + "LEFT JOIN FETCH em.items i "
+	@Query(value = "SELECT DISTINCT em FROM EstoqueMovimento em " + "LEFT JOIN FETCH em.items i "
 			+ "LEFT JOIN FETCH i.produto p " 
 			+ "LEFT JOIN FETCH p.estoque e " 
 			+ "LEFT JOIN FETCH p.marca m  " 
@@ -28,7 +28,8 @@ public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimen
 			+ "LEFT JOIN FETCH s.grupo g  " 
 		    + "WHERE (p.nome LIKE %:parametro% ) " 
 			+ "AND (em.operacao = :tipo) " + "AND (CAST(em.datamovimento as Date) BETWEEN :dataInicio AND :dataFim) " + 																									
-			"ORDER BY em.datamovimento DESC")
+			"ORDER BY em.datamovimento DESC", countQuery = "SELECT count(em) FROM EstoqueMovimento em" )
+	
 	Page<EstoqueMovimento> listar(@Param("parametro") String parametro, @Param("tipo") Operacao tipo,
 			@Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFim,
 			Pageable pageable);
