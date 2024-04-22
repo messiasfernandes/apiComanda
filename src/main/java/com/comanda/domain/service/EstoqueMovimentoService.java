@@ -62,10 +62,10 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		verificarMovimento(objeto);
 		for (ItemMovimentacao item : objeto.getItems()) {
 			if (!item.getProduto().getComponentes().isEmpty()) {
-				if (objeto.getOperacao().equals(Operacao.Saida)) {
+				if (objeto.getTipoMovimentacaoEstoque().getOperacao().equals(Operacao.Saida)) {
 					for (Componente componente : item.getProduto().getComponentes()) {
 						movimentoEstoqueRepository.save(VerificarComponente(componente,
-								componente.getQtde().intValueExact(), objeto.getOperacao()));
+								componente.getQtde().intValueExact(), objeto.getTipoMovimentacaoEstoque().getOperacao()));
 					}
 				}
 			}
@@ -77,8 +77,8 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 
 	private EstoqueMovimento verificarMovimento(EstoqueMovimento movimento) {
 		System.out.println("verificando" + movimento.getItems().size());
-		int i=0;
-		if (movimento.getOperacao().equals(Operacao.Entrada) || movimento.getOperacao().equals(Operacao.Devolucao)) {
+	
+		if (movimento.getTipoMovimentacaoEstoque().getOperacao().equals(Operacao.Entrada) || movimento.getTipoMovimentacaoEstoque().getOperacao().equals(Operacao.Devolucao)) {
 			for ( var iTemM : movimento.getItems()) {
 				System.out.println("entrada");
 				if (iTemM.getProduto().getEstoque() != null) {
@@ -150,7 +150,7 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		var movimento = new ItemMovimentacao();
 		movimento.setProduto(componente.getProduto());
 		movimento.getEstoqueMovimento().setDatamovimento(LocalDateTime.now());
-		movimento.getEstoqueMovimento().setOperacao(operacao);
+		//movimento.getEstoqueMovimento().setOperacao(operacao);
 		movimento.setQtde(new BigDecimal(qtde));
 		System.out.println("movineto" + movimento.getQtde());
 

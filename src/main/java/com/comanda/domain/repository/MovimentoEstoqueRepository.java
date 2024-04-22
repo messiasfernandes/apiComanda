@@ -20,6 +20,7 @@ public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimen
 	
 
 	@Query(value = "SELECT DISTINCT em FROM EstoqueMovimento em " + "LEFT JOIN FETCH em.items i "
+			+ "LEFT JOIN FETCH em.tipoMovimentacaoEstoque t " 
 			+ "LEFT JOIN FETCH i.produto p " 
 			+ "LEFT JOIN FETCH p.estoque e " 
 			+ "LEFT JOIN FETCH p.marca m  " 
@@ -27,7 +28,7 @@ public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimen
 			+ "LEFT JOIN FETCH p.subgrupo s "  
 			+ "LEFT JOIN FETCH s.grupo g  " 
 		    + "WHERE (p.nome LIKE %:parametro% ) " 
-			+ "AND (em.operacao = :tipo) " + "AND (CAST(em.datamovimento as Date) BETWEEN :dataInicio AND :dataFim) " + 																									
+			+ "AND (t.operacao = :tipo) " + "AND (CAST(em.datamovimento as Date) BETWEEN :dataInicio AND :dataFim) " + 																									
 			"ORDER BY em.datamovimento DESC", countQuery = "SELECT count(em) FROM EstoqueMovimento em" )
 	
 	Page<EstoqueMovimento> listar(@Param("parametro") String parametro, @Param("tipo") Operacao tipo,
@@ -36,7 +37,9 @@ public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimen
 	
 	@EntityGraph(attributePaths = {"items","items.produto", "items.produto.produtoDetalhe", "items.produto.componentes", 
 			"items.produto.estoque"}, type = EntityGraphType.FETCH)
-	@Query("SELECT e FROM EstoqueMovimento e  inner JOIN  e.items i  where i.produto.nome LIKE %:parametro% or e.operacao = :tipo  ")
+	@Query("SELECT e FROM EstoqueMovimento e  inner JOIN  e.items i "
+			+ "LEFT JOIN FETCH e.tipoMovimentacaoEstoque t " 
+			+ " where i.produto.nome LIKE %:parametro% or t.operacao = :tipo  ")
      Page<EstoqueMovimento> pesquisar (@Param("parametro") String parametro, @Param("tipo") Operacao tipo,
   	Pageable pageable);
 	

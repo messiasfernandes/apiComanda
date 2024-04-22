@@ -50,6 +50,11 @@ public class ItemMovimentacao implements Serializable {
 		ItemMovimentacao other = (ItemMovimentacao) obj;
 		return Objects.equals(id, other.id) && Objects.equals(produto, other.produto);
 	}
+	@Override
+	public String toString() {
+		return "ItemMovimentacao [id=" + id + ", produto=" + produto + ", estoqueMovimento=" + estoqueMovimento
+				+ ", qtde=" + qtde + ", saldoanterior=" + saldoanterior + "]";
+	}
 	
 	
 

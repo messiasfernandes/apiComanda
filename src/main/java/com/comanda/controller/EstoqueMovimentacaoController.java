@@ -67,6 +67,7 @@ public class EstoqueMovimentacaoController  extends ControllerEvent implements E
 //        mov.add(serviceEstoqueMovimento.salvar(estoquemovimentoConverte.paraEntidy(movimentacao)));
 //		 System.out.println(movimentacao.getItems().size());
 //		}
+		System.out.println(movimentacoes.getItems().size());
 		var movimtentoSalvo = serviceEstoqueMovimento.salvar(estoquemovimentoConverte.paraEntidy(movimentacoes));
 		return 	ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toDto(movimtentoSalvo));
 	}

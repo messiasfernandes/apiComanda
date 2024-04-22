@@ -10,8 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.comanda.domain.entity.Componente;
+import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.domain.entity.Marca;
 import com.comanda.domain.entity.Produto;
+import com.comanda.domain.enumerado.TipoMovimentacao;
+import com.comanda.domain.enumerado.TipoProduto;
+import com.comanda.domain.enumerado.TipodeMovimentacaoEstoque;
 import com.comanda.domain.repository.ComponentesRepository;
 import com.comanda.domain.repository.ProdutosRepository;
 
@@ -79,7 +83,7 @@ class ApiComandaApplicationTests {
 		}
 		
 	}
-	@Test
+
    void testeEntiyGraph() {
 	   TypedQuery< Produto>query= em.createQuery("from Produto",Produto.class);
 	   EntityGraph<Produto> entityGraph= em.createEntityGraph(Produto.class);
@@ -96,4 +100,10 @@ class ApiComandaApplicationTests {
 	}
 	   
    }
+	@Test
+	void testeenum() {
+		EstoqueMovimento estoquem= new EstoqueMovimento();
+
+		
+	}
 }
