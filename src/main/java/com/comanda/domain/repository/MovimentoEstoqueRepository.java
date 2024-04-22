@@ -29,8 +29,7 @@ public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimen
 			+ "LEFT JOIN FETCH s.grupo g  " 
 		    + "WHERE (p.nome LIKE %:parametro% ) " 
 			+ "AND (t.operacao = :tipo) " + "AND (CAST(em.datamovimento as Date) BETWEEN :dataInicio AND :dataFim) " + 																									
-			"ORDER BY em.datamovimento DESC", countQuery = "SELECT count(em) FROM EstoqueMovimento em" )
-	
+			"ORDER BY em.datamovimento DESC", countQuery = "SELECT count(em) FROM EstoqueMovimento em" )	
 	Page<EstoqueMovimento> listar(@Param("parametro") String parametro, @Param("tipo") Operacao tipo,
 			@Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFim,
 			Pageable pageable);
