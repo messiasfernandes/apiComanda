@@ -16,6 +16,7 @@ import com.comanda.domain.entity.ItemMovimentacao;
 import com.comanda.domain.entity.Produto;
 import com.comanda.domain.enumerado.Operacao;
 import com.comanda.domain.repository.MovimentoEstoqueRepository;
+import com.comanda.domain.repository.TiposdeMovimentaceosRepository;
 import com.comanda.domain.service.exeption.NegocioException;
 import com.comanda.utils.ServiceFuncoes;
 import com.comanda.utils.TolowerCase;
@@ -30,6 +31,8 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	private EstoqueService serviceEstoque;
 	@Autowired
 	private ProdutoService produtoService;
+	@Autowired
+	private TiposdeMovimentaceosRepository tiposdeMovimentaceosRepository;
 
 	@Override
 	public Page<EstoqueMovimento> buscar(String nome, Pageable pageable) {
@@ -56,7 +59,8 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		for (var item : objeto.getItems()) {
 			item.setProduto(buscar(item.getProduto().getId()));
 		}
-
+       var tipoMovimento = tiposdeMovimentaceosRepository.findById(objeto.getTipoMovimentacaoEstoque().getId()).get();
+       objeto.setTipoMovimentacaoEstoque(tipoMovimento);
 		objeto.setDatamovimento(LocalDateTime.now());
 		objeto.getItems().forEach(im -> im.setEstoqueMovimento(objeto));
 		verificarMovimento(objeto);

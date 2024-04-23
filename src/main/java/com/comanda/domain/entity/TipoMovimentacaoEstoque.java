@@ -18,7 +18,7 @@ public class TipoMovimentacaoEstoque  extends GeradorId{
 	private static final long serialVersionUID = 1L;
 	@NotNull
 	@Column(length = 150, nullable = false)
-	private String tipoMovimentacao;
+	private String descricao;
 	@Column(length = 15, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Operacao operacao;

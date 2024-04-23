@@ -41,8 +41,7 @@ public class EstoqueMovimento extends GeradorId {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn()
-	private TipoMovimentacaoEstoque tipoMovimentacaoEstoque;
-	// @Column(columnDefinition = "TIMESTAMP")
+	private TipoMovimentacaoEstoque tipoMovimentacaoEstoque;	
 	@DateTimeFormat(pattern = " dd/MM/yyyy HH:mm ")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime datamovimento;
