@@ -9,12 +9,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
 @Entity
-public class TipoMovimentacaoEstoque  extends GeradorId{
+public class TipoMovimentacaoEstoque extends GeradorId {
 
-	
 	private static final long serialVersionUID = 1L;
 	@NotNull
 	@Column(length = 150, nullable = false)

@@ -13,9 +13,6 @@ import com.comanda.domain.entity.Componente;
 import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.domain.entity.Marca;
 import com.comanda.domain.entity.Produto;
-import com.comanda.domain.enumerado.TipoMovimentacao;
-import com.comanda.domain.enumerado.TipoProduto;
-import com.comanda.domain.enumerado.TipodeMovimentacaoEstoque;
 import com.comanda.domain.repository.ComponentesRepository;
 import com.comanda.domain.repository.ProdutosRepository;
 
