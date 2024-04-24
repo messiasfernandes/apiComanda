@@ -52,27 +52,23 @@ public class Componente implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, produto);
+		return Objects.hash(id, produtos);
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (obj == null)
 			return false;
-		Componente that = (Componente) o;
-		if (id == null || that.id == null) {
-			return super.equals(o); // Fallback para a implementação padrão de equals
-		}
-		return Objects.equals(id, that.id);
+		if (getClass() != obj.getClass())
+			return false;
+		Componente other = (Componente) obj;
+		return Objects.equals(id, other.id) && Objects.equals(produtos, other.produtos);
 	}
 
-	@Override
-	public String toString() {
-		return "Componente [id=" + id + ", qtde=" + qtde + ", subtotal=" + subtotal + ", produto=" + produto
-				+ ", produtos=" + produtos + "]";
-	}
+	
+
 
 
 }

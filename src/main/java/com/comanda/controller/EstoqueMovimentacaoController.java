@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +28,12 @@ import jakarta.validation.Valid;
 
 @RequestMapping("/movimentacoesestoque")
 @RestController
-public class EstoqueMovimentacaoController  extends ControllerEvent implements EstoqueMovimentocontrollerOpenApi {
+public class EstoqueMovimentacaoController extends ControllerEvent implements EstoqueMovimentocontrollerOpenApi {
 	@Autowired
 	private EstoqueMovimentoService serviceEstoqueMovimento;
 	@Autowired
 	private EstoqueMovimemtoConvereter estoquemovimentoConverte;
+
 //
 	@GetMapping
 	@Override
@@ -43,7 +45,7 @@ public class EstoqueMovimentacaoController  extends ControllerEvent implements E
 			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
 			@RequestParam(value = "size", defaultValue = "10") Integer size, Pageable page) {
 		System.out.println(size);
-	System.out.println(pagina);
+		System.out.println(pagina);
 		return ResponseEntity.status(HttpStatus.OK).body(estoquemovimentoConverte
 				.topage(serviceEstoqueMovimento.listar(parametro, tipoOperacao, datainicio, datafim, page)));
 	}
@@ -56,19 +58,21 @@ public class EstoqueMovimentacaoController  extends ControllerEvent implements E
 //		criaevento(estoquesalvo.getId(), response);
 //		return ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toDto(estoquesalvo));
 //	}
-	
+
 	@PostMapping
 	@Override
-	public ResponseEntity<EstoqueMovimentoDTo > adicionar(@RequestBody @Valid EstoqueMoviemtoInput movimentacoes ,
-																  ControlarEstoque controlarEstoque,
-			HttpServletResponse response) {
-//		List<EstoqueMovimento> mov = new ArrayList<>();
-//		for(EstoqueMoviemtoInput movimentacao : movimentacoes) {
-//        mov.add(serviceEstoqueMovimento.salvar(estoquemovimentoConverte.paraEntidy(movimentacao)));
-//		 System.out.println(movimentacao.getItems().size());
-//		}
+	public ResponseEntity<EstoqueMovimentoDTo> adicionar(@RequestBody @Valid EstoqueMoviemtoInput movimentacoes,
+			ControlarEstoque controlarEstoque, HttpServletResponse response) {
 		System.out.println(movimentacoes.getItems().size());
 		var movimtentoSalvo = serviceEstoqueMovimento.salvar(estoquemovimentoConverte.paraEntidy(movimentacoes));
-		return 	ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toDto(movimtentoSalvo));
+		criaevento(movimentacoes.getId(), response);
+		return ResponseEntity.status(HttpStatus.CREATED).body(estoquemovimentoConverte.toDto(movimtentoSalvo));
+	}
+
+	@GetMapping("{id}")
+	@Override
+	public ResponseEntity<EstoqueMovimentoDTo> detallhar(@PathVariable Long id) {
+		
+		return ResponseEntity.status(HttpStatus.OK).body(estoquemovimentoConverte.toDto(serviceEstoqueMovimento.buccarporid(id)));
 	}
 }

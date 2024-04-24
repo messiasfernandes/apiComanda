@@ -29,7 +29,7 @@ public interface MovimentoEstoqueRepository extends JpaRepository<EstoqueMovimen
 
 	@EntityGraph(attributePaths = { "items", "items.produto", "items.produto.produtoDetalhe",
 			"items.produto.componentes", "items.produto.estoque" }, type = EntityGraphType.FETCH)
-	@Query("SELECT e FROM EstoqueMovimento e  inner JOIN  e.items i " + "LEFT JOIN FETCH e.tipoMovimentacaoEstoque t "
+	@Query("SELECT e FROM EstoqueMovimento e  LEFT JOIN  e.items i " + "LEFT JOIN FETCH e.tipoMovimentacaoEstoque t "
 			+ " where i.produto.nome LIKE %:parametro% or t.operacao = :tipo  ")
 	Page<EstoqueMovimento> pesquisar(@Param("parametro") String parametro, @Param("tipo") Operacao tipo,
 			Pageable pageable);

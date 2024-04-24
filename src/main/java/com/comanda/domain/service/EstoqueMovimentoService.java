@@ -33,7 +33,7 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 	private ProdutoService produtoService;
 	@Autowired
 	private TiposdeMovimentaceosRepository tiposdeMovimentaceosRepository;
-
+ private int contador =0;
 	@Override
 	public Page<EstoqueMovimento> buscar(String nome, Pageable pageable) {
 		// TODO Auto-generated method stub
@@ -48,8 +48,8 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 
 	@Override
 	public EstoqueMovimento buccarporid(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	
+		return movimentoEstoqueRepository.findById(id).get() ;
 	}
 
 	@Transactional
@@ -58,6 +58,7 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		System.out.println("total" + objeto.getItems().size());
 		for (var item : objeto.getItems()) {
 			item.setProduto(buscar(item.getProduto().getId()));
+		System.out.println("total componentes"+	item.getProduto().getComponentes().size());
 		}
        var tipoMovimento = tiposdeMovimentaceosRepository.findById(objeto.getTipoMovimentacaoEstoque().getId()).get();
        objeto.setTipoMovimentacaoEstoque(tipoMovimento);
@@ -67,10 +68,14 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		for (ItemMovimentacao item : objeto.getItems()) {
 			if (!item.getProduto().getComponentes().isEmpty()) {
 				if (objeto.getTipoMovimentacaoEstoque().getOperacao().equals(Operacao.Saida)) {
+					System.out.println("entrou nos componentes");
+				     
 					for (Componente componente : item.getProduto().getComponentes()) {
+						System.out.println( "tamanho array"+ item.getProduto().getComponentes().size());
 						movimentoEstoqueRepository.save(VerificarComponente(componente,
-								componente.getQtde().intValueExact(), objeto.getTipoMovimentacaoEstoque().getOperacao()));
+								item.getQtde().intValueExact(), objeto));
 					}
+				    
 				}
 			}
 
@@ -150,15 +155,18 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		return estoque;
 	}
 
-	private EstoqueMovimento VerificarComponente(Componente componente, Integer qtde, Operacao operacao) {
+	private EstoqueMovimento VerificarComponente(Componente componente, Integer qtde, EstoqueMovimento objeto ) {
+		contador++;
+		System.err.println(contador);
 		var movimento = new ItemMovimentacao();
 		movimento.setProduto(componente.getProduto());
-		movimento.getEstoqueMovimento().setDatamovimento(LocalDateTime.now());
+		movimento.setEstoqueMovimento(objeto);
+	//	movimento.getEstoqueMovimento().setDatamovimento(LocalDateTime.now());
 		//movimento.getEstoqueMovimento().setOperacao(operacao);
-		movimento.setQtde(new BigDecimal(qtde));
+		movimento.setQtde(new BigDecimal(componente.getQtde().intValue()));
 		System.out.println("movineto" + movimento.getQtde());
 
-		if (operacao == Operacao.Entrada) {
+		if (objeto.getTipoMovimentacaoEstoque().getOperacao() == Operacao.Entrada) {
 			if (movimento.getProduto().getEstoque() != null) {
 				SomarEstoque(movimento);
 				serviceEstoque.salvar(movimento.getProduto().getEstoque());
@@ -166,10 +174,10 @@ public class EstoqueMovimentoService extends ServiceFuncoes implements ServiceMo
 		} else {
 			movimento.setSaldoanterior(BigDecimal.ZERO);
 			System.out.println("arr" + componente.getQtde());
-			// var qtdec = componente.getQtde().intValue()*
-			// componente.getProduto().getEstoque().getQuantidade().intValue();
+			 var qtdec = componente.getQtde().intValue()*
+			 qtde;
 			movimento.getProduto().setEstoque(
-					serviceEstoque.salvar(BaixarEstoqueComponte(movimento, qtde).getProduto().getEstoque()));
+					serviceEstoque.salvar(BaixarEstoqueComponte(movimento, qtdec).getProduto().getEstoque()));
 		}
 		return movimento.getEstoqueMovimento();
 	}

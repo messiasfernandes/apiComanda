@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.comanda.domain.enumerado.ControlarEstoque;
 import com.comanda.domain.enumerado.Operacao;
 import com.comanda.model.dto.EstoqueMovimentoDTo;
+import com.comanda.model.dto.ProdutoDto;
 import com.comanda.model.input.EstoqueMoviemtoInput;
 import com.comanda.model.recorddto.ProdutoListaDtoR;
 
@@ -39,4 +41,6 @@ public interface EstoqueMovimentocontrollerOpenApi extends ControllerCroossOring
 	public ResponseEntity<EstoqueMovimentoDTo > adicionar( EstoqueMoviemtoInput movimentacoes ,
 			  ControlarEstoque controlarEstoque, HttpServletResponse response);
 
+	
+	ResponseEntity<EstoqueMovimentoDTo> detallhar(@Param(value = "ID de um Produto") Long id);
 }
