@@ -1,8 +1,5 @@
 package com.comanda.model.dto;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import lombok.Data;
 
 @Data

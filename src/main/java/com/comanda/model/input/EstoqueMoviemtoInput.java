@@ -8,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.comanda.domain.entity.ItemMovimentacao;
 import com.comanda.domain.entity.TipoMovimentacaoEstoque;
-import com.comanda.model.dto.ItemEstoqueMovmentoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;

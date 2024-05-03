@@ -2,7 +2,6 @@ package com.comanda.model.recorddto;
 
 import java.math.BigDecimal;
 
-import com.comanda.domain.entity.EstoqueMovimento;
 import com.comanda.domain.enumerado.TipoMovimentacao;
 
 public record EstoqueMovimentoDToR(TipoMovimentacao tipoMovimentacao, 

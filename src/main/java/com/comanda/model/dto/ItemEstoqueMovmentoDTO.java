@@ -1,8 +1,6 @@
 package com.comanda.model.dto;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 import jakarta.validation.constraints.Digits;
 import lombok.Data;
