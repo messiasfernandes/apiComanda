@@ -13,14 +13,15 @@ import org.springframework.stereotype.Repository;
 
 import com.comanda.domain.entity.Produto;
 import com.comanda.domain.query.ProdutoQuery;
+import com.comanda.domain.query.ProdutoRepositoryCustom;
 
 @Repository
-public interface ProdutosRepository extends JpaRepository<Produto, Long>, ProdutoQuery {
+public interface ProdutosRepository extends JpaRepository<Produto, Long>, ProdutoQuery, ProdutoRepositoryCustom {
 	@EntityGraph(attributePaths = { "preco","produtoDetalhe","produtoDetalhe.atributos",
 			"marca","componentes","estoque"  }, type = EntityGraphType.FETCH)
 	@Query(value = "SELECT DISTINCT p FROM Produto p " + "LEFT JOIN FETCH p.marca m " 	
 			+ "LEFT JOIN FETCH p.subgrupo s "
-       + "LEFT JOIN FETCH p.subgrupo.grupo sg " 
+       + "LEFT JOIN FETCH s.grupo sg " 
 			+ "WHERE p.nome LIKE %:parametro% OR m.nomeMarca LIKE %:parametro%  OR s.nomeSubgrupo LIKE %:parametro% "
 			+ "OR sg.nomeGrupo LIKE %:parametro% " + "ORDER BY  p.nome " ,
 			countQuery = "Select count(p) from Produto p")
