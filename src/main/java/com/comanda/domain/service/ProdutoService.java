@@ -29,26 +29,27 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 //	@Transactional
 	@Override
 	public Page<Produto> buscar(String nome, Pageable pageable) {
-
-		Page<Produto> page = null;
-		if (!ehnumero(nome) && (qtdecaraceteres(nome) >= 0)) {
-
-			nome = TolowerCase.normalizarString(nome);
-			page = produtoRepository.Listar(nome, pageable);
-
-		}
-		if ((ehnumero(nome)) && (qtdecaraceteres(nome) != 13)) {
-			System.out.println("pasou aqui");
-			Long id = Sonumero(nome);
-			System.out.println("id" + id);
-			page = produtoRepository.buscarporId(id, pageable);
-		}
-		if ((ehnumero(nome)) && (qtdecaraceteres(nome) == 13)) {
-			System.out.println("e ena 13 ");
-			page = produtoRepository.buscarPorEan(nome, pageable);
-		}
-
-		return page;
+		nome = TolowerCase.normalizarString(nome);
+		return produtoRepository.listarProdutos(nome, pageable);
+//		Page<Produto> page = null;
+//		if (!ehnumero(nome) && (qtdecaraceteres(nome) >= 0)) {
+//
+//			nome = TolowerCase.normalizarString(nome);
+//			page = produtoRepository.Listar(nome, pageable);
+//
+//		}
+//		if ((ehnumero(nome)) && (qtdecaraceteres(nome) != 13)) {
+//			System.out.println("pasou aqui");
+//			Long id = Sonumero(nome);
+//			System.out.println("id" + id);
+//			page = produtoRepository.buscarporId(id, pageable);
+//		}
+//		if ((ehnumero(nome)) && (qtdecaraceteres(nome) == 13)) {
+//			System.out.println("e ena 13 ");
+//			page = produtoRepository.buscarPorEan(nome, pageable);
+//		}
+//
+//		return page;
 	}
 
 	@Transactional
