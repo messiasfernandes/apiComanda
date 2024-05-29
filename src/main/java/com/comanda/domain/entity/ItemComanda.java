@@ -2,6 +2,8 @@ package com.comanda.domain.entity;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -18,12 +20,12 @@ import lombok.Setter;
 public class ItemComanda extends GeradorId {
 	
 	private static final long serialVersionUID = 1L;
- //  @JsonBackReference
+
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
 	private ProdutoDetalhe produtoDetalhe;
-///	@JsonIgnore
+	@JsonIgnore
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn

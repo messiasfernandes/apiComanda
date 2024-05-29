@@ -30,7 +30,7 @@ public class ProdutoService extends ServiceFuncoes implements ServiceModel<Produ
 	@Override
 	public Page<Produto> buscar(String nome, Pageable pageable) {
 		nome = TolowerCase.normalizarString(nome);
-		return produtoRepository.listarProdutos(nome, pageable);
+		return  produtoRepository.listarProdutos(nome, pageable);
 //		Page<Produto> page = null;
 //		if (!ehnumero(nome) && (qtdecaraceteres(nome) >= 0)) {
 //

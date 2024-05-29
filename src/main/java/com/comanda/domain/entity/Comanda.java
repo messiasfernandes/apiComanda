@@ -9,6 +9,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.comanda.domain.enumerado.StatusPagamentoComanda;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,11 +41,11 @@ public class Comanda implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private StatusPagamentoComanda statusPagamentoComanda;
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn()
 	private Mesa mesa;
-	//@JsonManagedReference
+	@JsonManagedReference
 	@Fetch(FetchMode.SUBSELECT)
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemComanda> itemsdaComanda = new ArrayList<>();
 }
