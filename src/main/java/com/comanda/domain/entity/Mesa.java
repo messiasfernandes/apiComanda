@@ -2,6 +2,9 @@ package com.comanda.domain.entity;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.comanda.domain.enumerado.Localizacao;
 import com.comanda.domain.enumerado.StatusMesa;
 
@@ -9,6 +12,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,4 +34,7 @@ public class Mesa extends GeradorId {
 	@Column(length = 30)
 	@Enumerated(EnumType.STRING)
 	private StatusMesa statusMesa;
+	
+	   @OneToMany(mappedBy = "mesa")
+	    private List<Comanda> comandas = new ArrayList<>();
 }

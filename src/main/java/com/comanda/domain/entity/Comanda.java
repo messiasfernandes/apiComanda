@@ -10,6 +10,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.comanda.domain.enumerado.StatusPagamentoComanda;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -45,6 +46,7 @@ public class Comanda implements Serializable {
 	@Column(length = 20)
 	@Enumerated(EnumType.STRING)
 	private StatusPagamentoComanda statusPagamentoComanda;
+	@JsonIgnore
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn()

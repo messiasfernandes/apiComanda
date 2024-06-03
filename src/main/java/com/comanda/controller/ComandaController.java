@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.comanda.converter.ComandaConverter;
 import com.comanda.domain.entity.Comanda;
-import com.comanda.domain.repository.ComandasRepository;
+import com.comanda.domain.service.ComandaService;
 import com.comanda.model.dto.ComandaDTo;
+import com.comanda.model.dto.MesaComComandasDTO;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
@@ -23,17 +24,23 @@ import jakarta.validation.Valid;
 @RequestMapping("/comandas")
 public class ComandaController {
 	@Autowired
-	private ComandasRepository comandasRepository;
+	private ComandaService comandaService;
 	@Autowired
 	private ComandaConverter comandaConverter;
-    @GetMapping
+   // @GetMapping
 	public ResponseEntity<List<ComandaDTo>> buscar(){
-		return ResponseEntity.status(HttpStatus.OK).body( comandaConverter.toCollectionDto(comandasRepository.findAll()));
+		return ResponseEntity.status(HttpStatus.OK).body( comandaConverter.toCollectionDto(comandaService.listarComandasAbertas()));
 	}
     
     @PostMapping
 	public ResponseEntity<ComandaDTo> adicionar( @Valid @RequestBody Comanda comanda){
-		return ResponseEntity.status(HttpStatus.OK).body(comandaConverter.toDto(comandasRepository.save(comanda)));
+		return ResponseEntity.status(HttpStatus.OK).body(comandaConverter.toDto(comandaService.salvar(comanda)));
 	}
+    
+    @GetMapping("/abertas/total-por-mesa")
+    public ResponseEntity<List<MesaComComandasDTO>> calcularTotalComandasAbertasPorMesa() {
+        List<MesaComComandasDTO> mesasComandas = comandaService.calcularTotalComandasAbertasPorMesa();
+        return ResponseEntity.ok(mesasComandas);
+    }
 }
 
