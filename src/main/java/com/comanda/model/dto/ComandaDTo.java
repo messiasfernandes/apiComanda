@@ -1,5 +1,6 @@
 package com.comanda.model.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,5 +30,6 @@ public class ComandaDTo {
 	private StatusPagamentoComanda statusPagamentoComanda;
 	@NotNull
 	private Mesa mesa;
+	private BigDecimal total;
 	private List<ItemdaComandaDTo> itemsdaComanda = new ArrayList<>();
 }

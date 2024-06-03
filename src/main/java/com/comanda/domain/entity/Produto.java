@@ -47,7 +47,7 @@ public class Produto extends GeradorId {
 	@JoinColumn(name = "produto_id")
 	private Estoque estoque;
 	@JsonIgnoreProperties(value = { "nomeMarca" }, allowGetters = true)
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "marca_id")
 	private Marca marca;
 	
@@ -56,7 +56,7 @@ public class Produto extends GeradorId {
 	@BatchSize(size = 10)
 	private Set<ProdutoDetalhe> produtoDetalhe = new HashSet<>();
 	@JsonIgnoreProperties(value = { "nomeSubgrupo" }, allowGetters = true)
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "subgrupo_id")
 	private SubGrupo subgrupo;
 	@OneToOne(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)

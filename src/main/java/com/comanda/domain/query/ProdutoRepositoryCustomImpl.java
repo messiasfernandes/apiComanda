@@ -24,9 +24,11 @@ public class ProdutoRepositoryCustomImpl extends ServiceFuncoes implements Produ
 		    boolean isId = isNumeric && qtdecaraceteres(parametro) != 13;
 
 		    List<Long> produtoIds = fetchProdutoIds(parametro, pageable, isNumeric, isEAN, isId);
+		 
 		    long total = countProdutos(parametro, isNumeric, isEAN, isId);
+		   
 		    List<Produto> produtos = fetchProdutos(produtoIds, parametro, isEAN, isId);
-
+		    
 		    return new PageImpl<>(produtos, pageable, total);
 		}
 
@@ -46,7 +48,7 @@ public class ProdutoRepositoryCustomImpl extends ServiceFuncoes implements Produ
 		}
 
 		private long countProdutos(String parametro, boolean isNumeric, boolean isEAN, boolean isId) {
-		    String countQuery = "SELECT COUNT(p) FROM Produto p";
+		    String countQuery = "SELECT COUNT(p) FROM Produto p" ;
 		    String condition = getCondition(parametro, isNumeric, isEAN, isId);
 
 		    String countQueryStr = countQuery + condition;
@@ -68,6 +70,12 @@ public class ProdutoRepositoryCustomImpl extends ServiceFuncoes implements Produ
 		        "LEFT JOIN FETCH s.grupo g " +
 		        "LEFT JOIN FETCH p.componentes pk " +
 		        "LEFT JOIN FETCH pc.atributos a " +
+		   		"LEFT JOIN FETCH pk.produto pco "
+						+	"LEFT JOIN FETCH pco.estoque ec "
+						+	"LEFT JOIN FETCH pco.marca pm "
+						+	"LEFT JOIN FETCH pco.preco pp "
+						+	"LEFT JOIN FETCH pco.subgrupo pcs "
+						+	"LEFT JOIN FETCH pcs.grupo pcg " +
 		        "WHERE p.id IN :ids " + (isEAN ? "AND pc.codigobarras = :parametro" : "") +
 		        (isId ? "AND p.id = :parametro" : "") +
 		        " ORDER BY p.nome", Produto.class);
