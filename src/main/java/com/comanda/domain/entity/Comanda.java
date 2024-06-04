@@ -29,12 +29,12 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "tab_comanda")
+@Table(name = "tab_comandas")
 public class Comanda implements Serializable {
 
 	private static final long serialVersionUID = 1L;

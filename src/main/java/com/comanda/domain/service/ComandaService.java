@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.comanda.domain.entity.Comanda;
 import com.comanda.domain.enumerado.StatusPagamentoComanda;
 import com.comanda.domain.repository.ComandasRepository;
+import com.comanda.model.dto.ComandaDTo;
 import com.comanda.model.dto.MesaComComandasDTO;
 
 @Service
@@ -41,7 +42,10 @@ public class ComandaService implements ServiceModel<Comanda> {
 	        return new ArrayList<>(mesaComandasMap.values());
 	    }
 
-       
+
+	    public List<ComandaDTo> calcularTotal() {
+	    return comandaRepository.buscarComandasTotal();
+	    }
     
 	@Override
 	public Page<Comanda> buscar(String nome, Pageable pageable) {

@@ -27,9 +27,9 @@ public class ComandaController {
 	private ComandaService comandaService;
 	@Autowired
 	private ComandaConverter comandaConverter;
-   // @GetMapping
+    @GetMapping
 	public ResponseEntity<List<ComandaDTo>> buscar(){
-		return ResponseEntity.status(HttpStatus.OK).body( comandaConverter.toCollectionDto(comandaService.listarComandasAbertas()));
+		return ResponseEntity.status(HttpStatus.OK).body( comandaService.calcularTotal());
 	}
     
     @PostMapping
@@ -37,7 +37,7 @@ public class ComandaController {
 		return ResponseEntity.status(HttpStatus.OK).body(comandaConverter.toDto(comandaService.salvar(comanda)));
 	}
     
-    @GetMapping("/abertas/total-por-mesa")
+  //  @GetMapping("/abertas/total-por-mesa")
     public ResponseEntity<List<MesaComComandasDTO>> calcularTotalComandasAbertasPorMesa() {
         List<MesaComComandasDTO> mesasComandas = comandaService.calcularTotalComandasAbertasPorMesa();
         return ResponseEntity.ok(mesasComandas);
