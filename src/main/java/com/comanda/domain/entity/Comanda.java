@@ -51,22 +51,22 @@ public class Comanda implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn()
 	private Mesa mesa;
-	@Getter(value = AccessLevel.NONE)
-	@Transient
-	private BigDecimal total;
+//	@Getter(value = AccessLevel.NONE)
+//	@Transient
+//	private BigDecimal total;
 	@JsonManagedReference
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemComanda> itemsdaComanda = new ArrayList<>();
-    public BigDecimal getTotal() {
-        calcularTotal();
-        return total;
-    }
-
-    private void calcularTotal() {
-        total = BigDecimal.ZERO;
-        for (ItemComanda item : itemsdaComanda) {
-            total = total.add(item.getSubtotal());
-        }
-    }
+//    public BigDecimal getTotal() {
+//        calcularTotal();
+//        return total;
+//    }
+//
+//    private void calcularTotal() {
+//        total = BigDecimal.ZERO;
+//        for (ItemComanda item : itemsdaComanda) {
+//            total = total.add(item.getSubtotal());
+//        }
+//    }
 }

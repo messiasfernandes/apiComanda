@@ -2,9 +2,8 @@ package com.comanda.domain.entity;
 
 
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 import com.comanda.domain.enumerado.Localizacao;
 import com.comanda.domain.enumerado.StatusMesa;
@@ -13,11 +12,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 @Table(name =  "tab_mesas")

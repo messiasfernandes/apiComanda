@@ -21,8 +21,8 @@ public class MesaComComandasDTO {
 	        this.total = BigDecimal.ZERO;
 	    }
 
-	    public void addComanda(Comanda comanda) {
-	        this.comandas.add(comanda);
-	        this.total = this.total.add(comanda.getTotal());
-	    }
+//	    public void addComanda(Comanda comanda) {
+//	        this.comandas.add(comanda);
+//	        this.total = this.total.add(comanda.getTotal());
+//	    }
 }

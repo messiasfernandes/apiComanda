@@ -28,6 +28,15 @@ public class ProdutoDetalheDtoLista {
 	private Integer qtdePorUnidade=0;
 	private UnidadeMedida unidadeMedida;
 	 private Set<Atributo> atributos = new HashSet<>();
+	public ProdutoDetalheDtoLista(Long id, String codigobarras,
+			@Digits(integer = 9, fraction = 3) BigDecimal desconto,ProdutoDetalhado produto  ) {
+	
+		this.id = id;
+	
+		this.codigobarras = codigobarras;
+		this.desconto = desconto;
+		this.produto= produto;
+	}
 	
 	 
 }

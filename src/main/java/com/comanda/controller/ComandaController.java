@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,10 +38,10 @@ public class ComandaController {
 		return ResponseEntity.status(HttpStatus.OK).body(comandaConverter.toDto(comandaService.salvar(comanda)));
 	}
     
-  //  @GetMapping("/abertas/total-por-mesa")
-    public ResponseEntity<List<MesaComComandasDTO>> calcularTotalComandasAbertasPorMesa() {
-        List<MesaComComandasDTO> mesasComandas = comandaService.calcularTotalComandasAbertasPorMesa();
-        return ResponseEntity.ok(mesasComandas);
+    @GetMapping("/{numeroMesa}")
+    public ResponseEntity<List<ComandaDTo>> detalhesComanda(@PathVariable Integer numeroMesa) {
+     
+        return ResponseEntity.status(HttpStatus.OK).body(comandaService.buscarComandasPorNumeroMesa(numeroMesa));
     }
 }
 

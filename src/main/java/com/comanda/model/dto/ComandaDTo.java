@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.comanda.domain.entity.Mesa;
 import com.comanda.domain.enumerado.StatusPagamentoComanda;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -14,27 +14,24 @@ import lombok.Data;
 public class ComandaDTo {
 
 	private Long id;
-
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime data_abertura;
-
+	private BigDecimal total;
 	private StatusPagamentoComanda statusPagamentoComanda;
 
-	private Mesa mesa;
-	private BigDecimal total;
+	private MesaDto mesa;
+
 	private List<ItemdaComandaDTo> itemsdaComanda = new ArrayList<>();
 
-//	public ComandaDTo(Long id, LocalDateTime data_abertura, StatusPagamentoComanda statusPagamentoComanda,
-//			@NotNull Mesa mesa, BigDecimal total, List<ItemdaComandaDTo> itemsdaComanda) {
-//		
-//		this.id = id;
-//		this.data_abertura = data_abertura;
-//		this.statusPagamentoComanda = statusPagamentoComanda;
-//		this.mesa = mesa;
-//		this.total = total;
-//		this.itemsdaComanda = itemsdaComanda;
-//	}
 
-	public ComandaDTo(StatusPagamentoComanda statusPagamentoComanda, Mesa mesa, BigDecimal total) {
+	public ComandaDTo() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public ComandaDTo(Long id, LocalDateTime data_abertura, StatusPagamentoComanda statusPagamentoComanda, MesaDto mesa,
+			BigDecimal total) {
+		this.id = id;
+		this.data_abertura = data_abertura;
 		this.statusPagamentoComanda = statusPagamentoComanda;
 		this.mesa = mesa;
 		this.total = total;

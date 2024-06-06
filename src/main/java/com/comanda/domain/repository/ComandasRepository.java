@@ -15,8 +15,23 @@ public interface ComandasRepository extends JpaRepository<Comanda, Long>{
 	  @Query("SELECT c FROM Comanda c JOIN FETCH c.mesa m WHERE c.statusPagamentoComanda NOT IN (:statusPagos) AND m.statusMesa = 'Ocupada'")
 	    List<Comanda> findComandasAbertas(@Param("statusPagos") List<StatusPagamentoComanda> statusPagos);
 	  
-	  @Query("SELECT new com.comanda.model.dto.ComandaDTo(c.statusPagamentoComanda, c.mesa,  SUM(ic.subtotal) as total) " +
-		       "FROM Comanda c JOIN c.itemsdaComanda ic GROUP BY c.statusPagamentoComanda, c.mesa")
+	  @Query("SELECT new com.comanda.model.dto.ComandaDTo(c.id, c.data_abertura, c.statusPagamentoComanda, " +
+		       "new com.comanda.model.dto.MesaDto(m.id, m.statusMesa, m.numerodaMesa, m.capacidade), SUM(ic.subtotal) as total) " +
+		       "FROM Comanda c JOIN c.itemsdaComanda ic JOIN c.mesa m " +
+		       "WHERE c.statusPagamentoComanda NOT IN (com.comanda.domain.enumerado.StatusPagamentoComanda.PAGO, "
+		       + "com.comanda.domain.enumerado.StatusPagamentoComanda.CANCELADO) " +
+		       "GROUP BY c.id, c.data_abertura, c.statusPagamentoComanda, m.id,  m.statusMesa, m.numerodaMesa, m.capacidade")
 		List<ComandaDTo> buscarComandasTotal();
-
+	  
+	  @Query("SELECT c FROM Comanda c JOIN FETCH c.mesa m  JOIN FETCH c.itemsdaComanda ic  JOIN FETCH ic.produtoDetalhe  "
+	  		+ "WHERE     m.id = :numeroMesa")
+	  List<Comanda> detalharComanda (Integer numeroMesa);
+	  
+	  
+	  @Query("SELECT new com.comanda.model.dto.ComandaDTo(c.id, c.data_abertura, c.statusPagamentoComanda, " +
+		       "new com.comanda.model.dto.MesaDto(m.id, m.statusMesa, m.numerodaMesa , m.capacidade), SUM(ic.subtotal) as total) " +
+		       "FROM Comanda c JOIN c.itemsdaComanda ic JOIN c.mesa m " +
+		       "WHERE   m.id = :numeroMesa  " +
+		       "GROUP BY c.id, c.data_abertura, c.statusPagamentoComanda, m.id,  m.statusMesa, m.numerodaMesa, m.capacidade")
+	  List<ComandaDTo> buscarComandasPorNumeroMesa(@Param("numeroMesa") Integer numeroMesa);
 }
