@@ -17,10 +17,11 @@ import lombok.Data;
 public class ProdutoDetalheDtoLista {
 	private Long id;
     private ProdutoDetalhado produto ;
-	
+   
 	private String codigobarras;
-
+	//@Getter(value = AccessLevel.NONE)
 	@Digits(integer = 9, fraction = 3)
+	
 	private BigDecimal desconto;
 	private Integer mutiplicador =1;
 	//@Getter(value = AccessLevel.NONE)
@@ -37,6 +38,10 @@ public class ProdutoDetalheDtoLista {
 		this.desconto = desconto;
 		this.produto= produto;
 	}
-	
-	 
+	 public BigDecimal getDesconto() {
+		 if(desconto== null) {
+			 desconto= BigDecimal.ZERO;
+		 }
+		return desconto;
+	}
 }
